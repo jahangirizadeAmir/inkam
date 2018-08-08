@@ -6,5 +6,5 @@
  * Time: 6:03 PM
  */
 include "inc/my_frame.php";
-$b = @smsForati("09166157859");
-echo $b;
+$D = @smsForati("09166157859");
+echo $D;
