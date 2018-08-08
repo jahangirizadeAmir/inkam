@@ -474,7 +474,7 @@ session_start();
                 </div>
 
                 <div  class="form-group" style="margin-top: 50px;display: none" id="Baste" >
-                    <br>
+
                     <span class="form-control"
                           onclick="showModelSim()"
                           id="modelSimText">
