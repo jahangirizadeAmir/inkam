@@ -148,6 +148,12 @@ function checkBoxOne() {
         checkThis();
 
     }else{
+        $('#Baste').fadeOut();
+        $('#modelSim').hide();
+        $('#basteLong').hide();
+        $('#basteSelect').hide();
+        $('#basteLast').hide();
+        $('#basteLastSelect').hide();
         // $('#operatorList').hide();
         $('#price').hide();
         $('#lastPrice').val("");
@@ -231,14 +237,19 @@ function ActiveThis(e) {
     }
     if(e==="btnModel3"){
         $('#Baste').fadeIn();
+        $('#modelSimText').text("می توانید یکی از مدلهای سیمکارت را انتخاب کنید");
+        $('#basteLong').text("مدت زمان بسته را انتخاب کنید");
+        $('#basteLast').text("حجم مورد نظر را وارد کنید");
     }else{
 
-        $('#Baste').fadeOut();
+        $('#Baste').hide();
         $('#modelSim').hide();
         $('#basteLong').hide();
         $('#basteSelect').hide();
         $('#basteLast').hide();
         $('#basteLastSelect').hide();
+
+
 
     }
     if( e==="btnModel4" || e==="btnModel5" || e==="btnModel6"){
@@ -391,6 +402,20 @@ function fillBasteLast(e) {
     $('#basteLastSelect').fadeOut();
 }
 function showModelSim() {
+    //e==1 =>rightell
+    //e==2 =>irancell
+    //e==3 =>hamrahAval
+    if(e===1){
+        $("#rightellSim").show();
+        $("#irancellSim").hide();
+    }
+    if (e===2){
+        $("#rightellSim").hide();
+        $("#irancellSim").show();
+    }if(e===3){
+        $("#rightellSim").hide();
+        $("#irancellSim").hide();
+    }
     $('#modelSim').show();
 }
 function fillGetSim(e) {
