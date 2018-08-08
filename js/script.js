@@ -288,6 +288,7 @@ function ActiveThis(e) {
             $('#price').show();
         }
     }
+    changeSrcImg(e);
 
 }
 
@@ -405,14 +406,14 @@ function showModelSim() {
     //e==1 =>rightell
     //e==2 =>irancell
     //e==3 =>hamrahAval
-    if(model==1){
+    if(model===1){
         $("#Sli4").show();
         $("#Sli1").hide();
     }
-    if (model==2){
+    if (model===2){
         $("#Sli4").hide();
         $("#Sli1").show();
-    }if(model==3){
+    }if(model===3){
         $("#Sli1").hide();
         $("#Sli4").hide();
     }
@@ -422,4 +423,13 @@ function fillGetSim(e) {
     $('#modelSimText').text(e);
     $('#modelSim').fadeOut();
     $('#basteLong').delay("slow").fadeIn();
+}
+function changeSrcImg(id){
+    $("#imgbtnModel1").attr("src","img/radio.png");
+    $("#imgbtnModel2").attr("src","img/radio.png");
+    $("#imgbtnModel3").attr("src","img/radio.png");
+    $("#imgbtnModel6").attr("src","img/radio.png");
+    $("#imgbtnModel4").attr("src","img/radio.png");
+    $("#imgbtnModel5").attr("src","img/radio.png");
+    $("#img"+id).attr("src","img/radio_ok.png");
 }
