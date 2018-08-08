@@ -473,6 +473,20 @@ session_start();
                     </ul>
                 </div>
                 <div  class="form-group" style="margin-top: 10px" id="Baste">
+                    <br>
+                    <span class="form-control"
+                          onclick="showModelBaste()"
+                          id="modelBaster">
+                        نوع سیمکارت خود را انتخاب کنید
+                    </span>
+                    <ul style="" class="priceSelect" id="modelSim">
+                        <li >می توانید یکی از مدلهای سیمکارت را انتخاب کنید</li>
+                        <li id="li1" onclick="fillBaste(this.innerText)" value="10000">TD-LTE</li>
+                        <li id="li2" onclick="fillBaste(this.innerText)" value="20000">دایمی</li>
+                        <li id="li3" onclick="fillBaste(this.innerText)" value="30000">اعتباری</li>
+                        <li id="li4" onclick="fillBaste(this.innerText)" value="40000">دیتا</li>
+                    </ul>
+                    <br>
                     <span class="form-control"
                             onclick="showBaste()"
                             id="basteLong">
