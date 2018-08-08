@@ -128,6 +128,14 @@ function checkBoxOne() {
         btnModel5.removeClass("active");
         btnModel6.removeClass("active");
 
+        $('#Baste').fadeOut();
+        $('#modelSim').hide();
+        $('#basteLong').hide();
+        $('#basteSelect').hide();
+        $('#basteLast').hide();
+        $('#basteLastSelect').hide();
+
+
         if($('#Onerightell').is(":checked")){
             $('#Onerightell').prop('checked', false);
         }
@@ -221,7 +229,18 @@ function ActiveThis(e) {
     }else{
         $('#price').hide();
     }
+    if(e==="btnModel3"){
+        $('#Baste').fadeIn();
+    }else{
 
+        $('#Baste').fadeOut();
+        $('#modelSim').hide();
+        $('#basteLong').hide();
+        $('#basteSelect').hide();
+        $('#basteLast').hide();
+        $('#basteLastSelect').hide();
+
+    }
     if( e==="btnModel4" || e==="btnModel5" || e==="btnModel6"){
         $('#price').show();
         btnModel4.removeClass("active");
@@ -238,7 +257,7 @@ function ActiveThis(e) {
     if(model===2){
         if(e==="btnModel1"){
             $("#model2").show();
-            $("#btnModel6").css("visibility","visible");
+            btnModel6.css("visibility","visible");
             $("#chargeModelLog").removeClass("col-lg-offset-2 col-md-offset-2 col-xs-offset-2 col-md-offset-2");
         }else if(e==="btnModel2" || e==="btnModel3"){
             $("#model2").hide();

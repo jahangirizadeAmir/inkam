@@ -472,7 +472,8 @@ session_start();
                         <li id="li7" onclick="fillPrice('li7')" value="200000">200000</li>
                     </ul>
                 </div>
-                <div  class="form-group" style="margin-top: 10px" id="Baste">
+
+                <div  class="form-group" style="margin-top: 10px;display: none" id="Baste" >
                     <br>
                     <span class="form-control"
                           onclick="showModelSim()"
