@@ -371,3 +371,11 @@ function fillBasteLast(e) {
     $('#basteLast').text(e);
     $('#basteLastSelect').fadeOut();
 }
+function showModelSim() {
+    $('#modelSim').show();
+}
+function fillGetSim(e) {
+    $('#modelSimText').text(e);
+    $('#modelSim').fadeOut();
+    $('#basteLong').delay("slow").fadeIn();
+}
