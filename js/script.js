@@ -405,16 +405,16 @@ function showModelSim() {
     //e==1 =>rightell
     //e==2 =>irancell
     //e==3 =>hamrahAval
-    if(e===1){
-        $("#rightellSim").show();
-        $("#irancellSim").hide();
+    if(model==1){
+        $("#Sli4").show();
+        $("#Sli1").hide();
     }
-    if (e===2){
-        $("#rightellSim").hide();
-        $("#irancellSim").show();
-    }if(e===3){
-        $("#rightellSim").hide();
-        $("#irancellSim").hide();
+    if (model==2){
+        $("#Sli4").hide();
+        $("#Sli1").show();
+    }if(model==3){
+        $("#Sli1").hide();
+        $("#Sli4").hide();
     }
     $('#modelSim').show();
 }

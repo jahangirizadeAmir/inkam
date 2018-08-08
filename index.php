@@ -482,10 +482,10 @@ session_start();
                     </span>
                     <ul style="" class="priceSelect" id="modelSim">
                         <li >می توانید یکی از مدلهای سیمکارت را انتخاب کنید</li>
-                        <li id="li1" onclick="fillGetSim(this.innerText)" id="irancellSim" value="10000">TD-LTE</li>
-                        <li id="li2" onclick="fillGetSim(this.innerText)" id="" value="20000">دایمی</li>
-                        <li id="li3" onclick="fillGetSim(this.innerText)" id="" value="30000">اعتباری</li>
-                        <li id="li4" onclick="fillGetSim(this.innerText)" id="rightellSim" value="40000">دیتا</li>
+                        <li id="Sli1" onclick="fillGetSim(this.innerText)"  value="10000">TD-LTE</li>
+                        <li id="Sli2" onclick="fillGetSim(this.innerText)"  value="20000">دایمی</li>
+                        <li id="Sli3" onclick="fillGetSim(this.innerText)"  value="30000">اعتباری</li>
+                        <li id="Sli4" onclick="fillGetSim(this.innerText)"  value="40000">دیتا</li>
                     </ul>
                     <br>
                     <span class="form-control"
@@ -495,11 +495,11 @@ session_start();
                     </span>
                     <ul style="" class="priceSelect" id="basteSelect">
                         <li >می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li id="li1" onclick="fillBaste(this.innerText)" value="10000">یکماه</li>
-                        <li id="li2" onclick="fillBaste(this.innerText)" value="20000">دوماه</li>
-                        <li id="li3" onclick="fillBaste(this.innerText)" value="30000">سه ماه</li>
-                        <li id="li4" onclick="fillBaste(this.innerText)" value="40000">شش ماه</li>
-                        <li id="li5" onclick="fillBaste(this.innerText)" value="50000">یکسال</li>
+                        <li  onclick="fillBaste(this.innerText)" value="10000">یکماه</li>
+                        <li  onclick="fillBaste(this.innerText)" value="20000">دوماه</li>
+                        <li  onclick="fillBaste(this.innerText)" value="30000">سه ماه</li>
+                        <li  onclick="fillBaste(this.innerText)" value="40000">شش ماه</li>
+                        <li  onclick="fillBaste(this.innerText)" value="50000">یکسال</li>
                     </ul>
                     <br>
                     <span class="form-control" style="display: none"
@@ -509,11 +509,11 @@ session_start();
                     </span>
                     <ul style="" class="priceSelect" id="basteLastSelect">
                         <li >می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li id="li1" onclick="fillBasteLast(this.innerText)" value="10000">یک گیگ</li>
-                        <li id="li2" onclick="fillBasteLast(this.innerText)" value="20000">دوگیگ</li>
-                        <li id="li3" onclick="fillBasteLast(this.innerText)" value="30000">سه گیگ</li>
-                        <li id="li4" onclick="fillBasteLast(this.innerText)" value="40000">چهار گیگ</li>
-                        <li id="li5" onclick="fillBasteLast(this.innerText)" value="50000">پنج گیگ</li>
+                        <li  onclick="fillBasteLast(this.innerText)" value="10000">یک گیگ</li>
+                        <li  onclick="fillBasteLast(this.innerText)" value="20000">دوگیگ</li>
+                        <li  onclick="fillBasteLast(this.innerText)" value="30000">سه گیگ</li>
+                        <li  onclick="fillBasteLast(this.innerText)" value="40000">چهار گیگ</li>
+                        <li  onclick="fillBasteLast(this.innerText)" value="50000">پنج گیگ</li>
                     </ul>
 
 
