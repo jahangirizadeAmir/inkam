@@ -526,11 +526,10 @@ session_start();
                             <div class="modal-body" style="padding:40px 50px;">
                                 <form role="form">
                                     <div class="form-group">
-                                        <label for="name" style="color:black">شماره موبایل</label>
-                                        <input type="text" class="form-control" id="test" placeholder="۰۹*********">
+                                        <label for="name" style="color:black">آزمایش پیش فاکتور</label>
                                     </div>
                                     <button type="submit" class="btn btn-success btn-block"><span
-                                                class="glyphicon glyphicon-off"></span>بازیابی با پیام کوتاه
+                                                class="glyphicon glyphicon-off"></span>آزمایش پیش فاکتور
                                     </button>
                                 </form>
                             </div>
@@ -548,35 +547,62 @@ session_start();
     </div>
 
     <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 120px;display: none">
-        <span class="back" onclick="back('ghabzStep2')">×</span>
+        <span class="back" onclick="back('bilit')">×</span>
         <div class="col-md-12">
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/gas.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part1Ghabz')"
-                     class="pull-right" style="width: 100%;">
+                <img src="img/ghatar.png" onclick="step2Charge('bilit','bilit2','part1Bilit')"
+                     class="pull-right" style="width: 70%;">
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ranandegi.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part2Ghabz')"
-                     class="pull-left" style="width: 100%;">
+                <img src="img/bus.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part2Ghabz')"
+                     class="pull-right" style="width: 70%;">
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/hamrahGhabz.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/irancellGhabz.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/gabztellphone.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part1Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ghazStep2.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part4Ghabz')" class="pull-left"
-                     style="width: 100%;">
+                <img src="img/airplan.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
+                     class="pull-right" style="width: 70%;">
             </div>
         </div>
     </div>
 
+    <div id="bilit2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
+        <span class="back" onclick="back('bilit2')">×</span>
+        <div class="col-md-12">
+    <div class="col-md-12" id="part1Bilit" style="display:none">
+        <p style="text-align: right;direction: rtl;    margin-top: 0;">
+            به فروشگاه اینکام خوش آمدید! در این قسمت می توانید با وارد کردن شماره همراه استعلام میان دوره و
+            پایان دوره قبض خود را بگیرید. <label for="hamrahavalGhabz">
+            </label>
+        <div class="form-group">
+            <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="0912*******">
+        </div>
+        <span class="btnPayment">پرداخت</span>
+        <br>
+        <h5>نکاتی که باید توجه داشت</h5>
+
+        <ul class="ulDes">
+            <li>حتما شماره را با صفر وارد کنید.
+            </li>
+            <li>شماره ای که وارد می کنید باید خط دائمی همراه اول باشد.
+            </li>
+            <li>صفر شدن مبلغ قبض پایان دوره شما تا پایان دوره طول می کشد. توجه کنید که دو بار پرداخت نکنید.
+            </li>
+            <li>صفر شدن مبلغ قبض میان دوره تا 72 ساعت پس از پرداخت انجام می شود اما مبلغ قبض پایان دوره تا
+                پایانِ دوره صفر نخواهد شد (دو بار پرداخت نکنید)
+            </li>
+            <li>اگر با این شرایط آشنا نبودید و پس از دیدن صفر نشدن قبض پایان دوره دوباره قبض را پرداخت کردید
+                نگران نباشید، مبلغ مازاد در بستانکاری شما نشسته و برای قبض های آینده مصرف می شود.
+            </li>
+            <li>به سفارش همراه اول بهتر است که یک روش برای پرداخت قبض خود انتخاب کنید (یا پایان دوره یا میان
+                دوره)
+            </li>
+            <li>در صورت تمایل به پرداخت با شناسه قبض و شناسه پرداخت به صفحه پرداخت قبوض شهری مراجعه کنید.
+            </li>
+        </ul>
+
+
+    </div>
+        </div>
+    </div>
 
 
 

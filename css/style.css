@@ -250,6 +250,15 @@ label {
     background: #c2c2c212;
     position: relative;
 }
+#bilit{
+    display: none;
+    float: none;
+    margin: auto;
+    overflow: hidden;
+    padding: 50px;
+    background: #c2c2c212;
+    position: relative;
+}
 
 #chageStep2 {
     position: relative;
@@ -269,6 +278,16 @@ span.back {
 }
 
 #ghabzStep3 {
+    position: relative;
+    padding: 50px;
+    background: #c2c2c212;
+    display: none;
+    float: none;
+    margin: auto;
+    overflow: hidden;
+
+}
+#bilit2 {
     position: relative;
     padding: 50px;
     background: #c2c2c212;
