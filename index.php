@@ -299,7 +299,7 @@ session_start();
             <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight1"
                  onmouseover="add('three')" id="three"
                  onmouseleave="remove('three')" style="padding: 10px;">
-                <img onclick="show('chargePart2Baste')" src="img/bilit.png" style="width: 80%">
+                <img onclick="show('bilit')" src="img/bilit.png" style="width: 80%">
                 <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">بلیط مسـافرتی</p>
                 <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">بلیط مسـافرتی</p>
 
@@ -310,8 +310,6 @@ session_start();
                 <img onclick="show('ghabzStep2')" src="img/ghabz.png" style="width: 80%">
                 <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">پرداخت قبوض</p>
                 <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">پرداخت قبوض</p>
-
-
             </div>
             <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight3"
                  onmouseover="add('one')" id="one"
@@ -413,7 +411,6 @@ session_start();
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel1">
                     </div>
                 </div>
-
                 <div class="col-md-4 col-xs-4 col-sm-4 "
                      style="text-align: center;"
                      id="">
@@ -428,7 +425,6 @@ session_start();
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel3')" id="btnModel3">
                         بسته اینترنتی
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel3">
-
                     </div>
                 </div>
             </div>
@@ -455,7 +451,6 @@ session_start();
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel6')" id="btnModel6">
                         سیمکارت دایمی
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel6">
-
                     </div>
                 </div>
             </div>
@@ -515,13 +510,44 @@ session_start();
                         <li  onclick="fillBasteLast(this.innerText)" value="40000">چهار گیگ</li>
                         <li  onclick="fillBasteLast(this.innerText)" value="50000">پنج گیگ</li>
                     </ul>
+                </div>
+                <div style="text-align: center;margin-top: 20px">
+                    <span class="btn btn-success btn-lg" style="float: none;margin: auto" onclick="$('#myModalFaktor').modal()">تایید</span>
+                </div>
 
-
+                <div class="modal fade" id="myModalFaktor" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding:35px 50px;">
+                                <button type="button" class="close" onclick="$('#myModalFaktor').modal('toggle')">&times;</button>
+                                <h4>تست</h4>
+                            </div>
+                            <div class="modal-body" style="padding:40px 50px;">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="name" style="color:black">شماره موبایل</label>
+                                        <input type="text" class="form-control" id="test" placeholder="۰۹*********">
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-block"><span
+                                                class="glyphicon glyphicon-off"></span>بازیابی با پیام کوتاه
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btn-default pull-left"
+                                        onclick="$('#myModal12').modal('toggle')"><span
+                                            class="glyphicon glyphicon-remove"></span> انصراف
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;">
+
+    <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 120px;display: none">
         <span class="back" onclick="back('ghabzStep2')">×</span>
         <div class="col-md-12">
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
@@ -545,7 +571,7 @@ session_start();
                      class="pull-left" style="width: 100%;">
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ghabzShahri.png" onclick="step2Charge('ghabzStep2','ghabzStep3')" class="pull-left"
+                <img src="img/ghazStep2.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part4Ghabz')" class="pull-left"
                      style="width: 100%;">
             </div>
         </div>
@@ -554,7 +580,69 @@ session_start();
 
 
 
-    <div id="ghabzStep3" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 120px;">
+        <span class="back" onclick="back('ghabzStep2')">×</span>
+        <div class="col-md-12">
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
+                <img src="img/gas.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part1Ghabz')"
+                     class="pull-right" style="width: 100%;">
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
+                <img src="img/ranandegi.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part2Ghabz')"
+                     class="pull-left" style="width: 100%;">
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
+                <img src="img/hamrahGhabz.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
+                     class="pull-left" style="width: 100%;">
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
+                <img src="img/irancellGhabz.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
+                     class="pull-left" style="width: 100%;">
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
+                <img src="img/gabztellphone.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part1Ghabz')"
+                     class="pull-left" style="width: 100%;">
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
+                <img src="img/ghazStep2.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part4Ghabz')" class="pull-left"
+                     style="width: 100%;">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="ghabzStep3" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
         <span class="back" onclick="back('ghabzStep3')">×</span>
         <div class="col-md-12">
             <div class="col-md-12" id="part1Ghabz" style="display:none">
@@ -646,6 +734,33 @@ session_start();
 
 
             </div>
+            <div class="col-md-12" id="part4Ghabz" style="display:none">
+                <div class="page-help-wrapper">
+                    <p>
+                        به فروشگاه اینکام خوش آمدید! در این قسمت شما می توانید کلیه قبوضی که دارای شناسه قبض و شناسه پرداخت هستند را پرداخت کنید.
+                    </p>
+                    <p>
+                        لطفاً توجه داشته باشید که تسویه شدن قبوض پرداختی تا <span style="color:red;">72 ساعت</span> طول می کشد.
+                    </p>
+                    <p>
+                        <b>مراحل کار :</b>
+                    </p>
+                    <ol class="page-step-list" style="direction: rtl;">
+                        <li>وارد کردن شناسه قبض و شناسه پرداخت</li>
+                        <li>مشاهده وضعیت قبض</li>
+                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
+                        <li>تکمیل پرداخت</li>
+                    </ol>
+                </div>
+                <div class="form-group">
+                    <label for="hamrahavalGhabz">شناسه قبض</label>
+                    <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="شناسه قبض">
+                    <br>
+                    <label for="hamrahavalGhabz">شناسه پرداخت</label>
+                    <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="شناسه پرداخت">
+                </div>
+                <span class="btnPayment">پرداخت</span>
+            </div>
         </div>
     </div>
     <div class="footer" id="footer">
@@ -670,11 +785,9 @@ session_start();
 </div>
 <div style="" id="showMenu" onclick="hideMenu()">
 </div>
-
 <!--login sbmit recover-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header" style="padding:35px 50px;">
