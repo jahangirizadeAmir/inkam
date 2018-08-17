@@ -36,6 +36,7 @@ function step2Charge(e, g, f) {
     $('#part1Ghabz').hide();
     $('#part2Ghabz').hide();
     $('#part3Ghabz').hide();
+    $('#part4Ghabz').hide();
     $('#' + e).hide();
     $('#' + g).show();
     f = typeof f !== 'undefined' ? f : '';

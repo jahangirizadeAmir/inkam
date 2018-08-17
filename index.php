@@ -13,8 +13,11 @@ session_start();
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="css/animation.css" rel="stylesheet" type="text/css">
     <link href="css/iphoneCheckBox.css" rel="stylesheet" type="text/css">
+    <link href="css/datepicker.css" rel="stylesheet" type="text/css">
     <script src="js/script.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/persian-date.js"></script>
+    <script src="js/persian-datepicker.js"></script>
 
     <link href="css/vesam.css" rel="stylesheet">
 
@@ -44,6 +47,7 @@ session_start();
         <li>تست سوم</li>
     </ul>
 </div>
+
 <div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 888;margin-bottom: 15px">
     <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6" style="position: relative;z-index: 888;width: 100%">
         <li class=""><img src="img/logoType.png" class="logo"></li>
@@ -171,7 +175,8 @@ session_start();
     if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
         $display = true;
         ?>
-        <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()" style=""><?php echo $_SESSION['userName'] ?></span>;
+        <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()"
+              style=""><?php echo $_SESSION['userName'] ?></span>;
         <ul class="dropdown-menu extended logout" id="menuProfile" style="display: none">
             <div class="notify-arrow-center notify-arrow-green" style="    right: 55px;
     border-bottom-color: white!important;
@@ -218,7 +223,8 @@ session_start();
                 </div>
             </span></li>
 
-            <li class="col-md-9 col-sm-6 col-xs-12" style="height: 100%;padding: 70px;display: none;margin-top: 20px" id="payMoney">
+            <li class="col-md-9 col-sm-6 col-xs-12" style="height: 100%;padding: 70px;display: none;margin-top: 20px"
+                id="payMoney">
                 <div class="form-group">
                     <label for="getManey" style="color: black">مبلغ را به تومان وارد کنید</label>
                     <input type="text" class="form-control" id="payMoneyText">
@@ -254,13 +260,15 @@ session_start();
                 <a href="#" style="padding: 30px">اعتبار فعلی شما : ۲۰۰۰۰ تومان</a>
             </li>
             <li class="col-md-3 col-sm-6 col-xs-12">
-                <a href="#" onclick="profileShow('payMoney','getManey','dashbord')" style="padding: 30px"> افزایش اعتبار</a>
+                <a href="#" onclick="profileShow('payMoney','getManey','dashbord')" style="padding: 30px"> افزایش
+                    اعتبار</a>
             </li>
             <li class="col-md-3 col-sm-6 col-xs-12">
-                <a href="#" onclick="profileShow('getManey','payMoney','dashbord')" style="padding: 30px">درخواست واریز وجه</a>
+                <a href="#" onclick="profileShow('getManey','payMoney','dashbord')" style="padding: 30px">درخواست واریز
+                    وجه</a>
             </li>
             <li class="col-md-3 col-sm-6 col-xs-12">
-                <a href="#" onclick="profileShow('dashbord','getManey','payMoney')"  style="padding: 30px">داشتبورد</a>
+                <a href="#" onclick="profileShow('dashbord','getManey','payMoney')" style="padding: 30px">داشتبورد</a>
             </li>
             <li class="col-md-3 col-sm-6 col-xs-12">
                 <a href="logout.php" style="padding: 30px"> خروج</a>
@@ -272,7 +280,8 @@ session_start();
 
         ?>
         <span class="pull-right menu" id="loginSubmitBtn" onclick="$('#myModal').modal();">ورود / عضویت</span>
-        <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()" style="display: none"><?php echo $_SESSION['userName'] ?></span>;
+        <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()"
+              style="display: none"><?php echo $_SESSION['userName'] ?></span>;
 
         <?php
     }
@@ -408,7 +417,8 @@ session_start();
                      id="">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel1')" id="btnModel1">
                         شارژ مستقیم
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel1">
+                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                             id="imgbtnModel1">
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4 "
@@ -416,7 +426,8 @@ session_start();
                      id="">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel2')" id="btnModel2">
                         کد شارژ
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel2">
+                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                             id="imgbtnModel2">
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4 "
@@ -424,7 +435,8 @@ session_start();
                      id="">
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel3')" id="btnModel3">
                         بسته اینترنتی
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel3">
+                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                             id="imgbtnModel3">
                     </div>
                 </div>
             </div>
@@ -434,7 +446,8 @@ session_start();
                      id="chargeModelLog">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel4')" id="btnModel4">
                         شارژ معمولی
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel4">
+                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                             id="imgbtnModel4">
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4  "
@@ -442,7 +455,8 @@ session_start();
                      id="">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel5')" id="btnModel5">
                         شارژ شگفت انگیز
-                        <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;" id="imgbtnModel5">
+                        <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;"
+                             id="imgbtnModel5">
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4  "
@@ -450,16 +464,18 @@ session_start();
                      id="">
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel6')" id="btnModel6">
                         سیمکارت دایمی
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;" id="imgbtnModel6">
+                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                             id="imgbtnModel6">
                     </div>
                 </div>
             </div>
             <div>
                 <div class="form-group" style="margin-top: 20px;display: none" id="price">
                     <label>مبلغ شارژ را وارد کنید</label>
-                    <input class="form-control" onfocus="showPriceSelect(this.value)" onkeydown="CheckPrice(this.value)" type="text" placeholder="مبلغ به تومان" id="lastPrice">
+                    <input class="form-control" onfocus="showPriceSelect(this.value)" onkeydown="CheckPrice(this.value)"
+                           type="text" placeholder="مبلغ به تومان" id="lastPrice">
                     <ul style="" class="priceSelect" id="priceSelect">
-                        <li >می توانید یکی از مبالغ زیر را انتخاب کنید</li>
+                        <li>می توانید یکی از مبالغ زیر را انتخاب کنید</li>
                         <li id="li1" onclick="fillPrice('li1')" value="10000">10000</li>
                         <li id="li2" onclick="fillPrice('li2')" value="20000">20000</li>
                         <li id="li3" onclick="fillPrice('li3')" value="30000">30000</li>
@@ -469,50 +485,51 @@ session_start();
                         <li id="li7" onclick="fillPrice('li7')" value="200000">200000</li>
                     </ul>
                 </div>
-                <div  class="form-group" style="margin-top: 50px;display: none" id="Baste" >
+                <div class="form-group" style="margin-top: 50px;display: none" id="Baste">
                     <span class="form-control"
                           onclick="showModelSim()"
                           id="modelSimText">
                         نوع سیمکارت خود را انتخاب کنید
                     </span>
                     <ul style="" class="priceSelect" id="modelSim">
-                        <li >می توانید یکی از مدلهای سیمکارت را انتخاب کنید</li>
-                        <li id="Sli1" onclick="fillGetSim(this.innerText)"  value="10000">TD-LTE</li>
-                        <li id="Sli2" onclick="fillGetSim(this.innerText)"  value="20000">دایمی</li>
-                        <li id="Sli3" onclick="fillGetSim(this.innerText)"  value="30000">اعتباری</li>
-                        <li id="Sli4" onclick="fillGetSim(this.innerText)"  value="40000">دیتا</li>
+                        <li>می توانید یکی از مدلهای سیمکارت را انتخاب کنید</li>
+                        <li id="Sli1" onclick="fillGetSim(this.innerText)" value="10000">TD-LTE</li>
+                        <li id="Sli2" onclick="fillGetSim(this.innerText)" value="20000">دایمی</li>
+                        <li id="Sli3" onclick="fillGetSim(this.innerText)" value="30000">اعتباری</li>
+                        <li id="Sli4" onclick="fillGetSim(this.innerText)" value="40000">دیتا</li>
                     </ul>
                     <br>
                     <span class="form-control"
-                            onclick="showBaste()"
-                            id="basteLong" style="display: none">
+                          onclick="showBaste()"
+                          id="basteLong" style="display: none">
                         مدت زمان بسته را انتخاب کنید
                     </span>
                     <ul style="" class="priceSelect" id="basteSelect">
-                        <li >می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li  onclick="fillBaste(this.innerText)" value="10000">یکماه</li>
-                        <li  onclick="fillBaste(this.innerText)" value="20000">دوماه</li>
-                        <li  onclick="fillBaste(this.innerText)" value="30000">سه ماه</li>
-                        <li  onclick="fillBaste(this.innerText)" value="40000">شش ماه</li>
-                        <li  onclick="fillBaste(this.innerText)" value="50000">یکسال</li>
+                        <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
+                        <li onclick="fillBaste(this.innerText)" value="10000">یکماه</li>
+                        <li onclick="fillBaste(this.innerText)" value="20000">دوماه</li>
+                        <li onclick="fillBaste(this.innerText)" value="30000">سه ماه</li>
+                        <li onclick="fillBaste(this.innerText)" value="40000">شش ماه</li>
+                        <li onclick="fillBaste(this.innerText)" value="50000">یکسال</li>
                     </ul>
                     <br>
                     <span class="form-control" style="display: none"
-                            onclick="showLastBaste()"
-                            id="basteLast">
+                          onclick="showLastBaste()"
+                          id="basteLast">
                         حجم مورد نظر را وارد کنید
                     </span>
                     <ul style="" class="priceSelect" id="basteLastSelect">
-                        <li >می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li  onclick="fillBasteLast(this.innerText)" value="10000">یک گیگ</li>
-                        <li  onclick="fillBasteLast(this.innerText)" value="20000">دوگیگ</li>
-                        <li  onclick="fillBasteLast(this.innerText)" value="30000">سه گیگ</li>
-                        <li  onclick="fillBasteLast(this.innerText)" value="40000">چهار گیگ</li>
-                        <li  onclick="fillBasteLast(this.innerText)" value="50000">پنج گیگ</li>
+                        <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
+                        <li onclick="fillBasteLast(this.innerText)" value="10000">یک گیگ</li>
+                        <li onclick="fillBasteLast(this.innerText)" value="20000">دوگیگ</li>
+                        <li onclick="fillBasteLast(this.innerText)" value="30000">سه گیگ</li>
+                        <li onclick="fillBasteLast(this.innerText)" value="40000">چهار گیگ</li>
+                        <li onclick="fillBasteLast(this.innerText)" value="50000">پنج گیگ</li>
                     </ul>
                 </div>
                 <div style="text-align: center;margin-top: 20px">
-                    <span class="btn btn-success btn-lg" style="float: none;margin: auto" onclick="$('#myModalFaktor').modal()">تایید</span>
+                    <span class="btn btn-success btn-lg" style="float: none;margin: auto;display: none"
+                          onclick="$('#myModalFaktor').modal()">تایید</span>
                 </div>
 
                 <div class="modal fade" id="myModalFaktor" role="dialog">
@@ -520,7 +537,9 @@ session_start();
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="padding:35px 50px;">
-                                <button type="button" class="close" onclick="$('#myModalFaktor').modal('toggle')">&times;</button>
+                                <button type="button" class="close" onclick="$('#myModalFaktor').modal('toggle')">
+                                    &times;
+                                </button>
                                 <h4>تست</h4>
                             </div>
                             <div class="modal-body" style="padding:40px 50px;">
@@ -550,15 +569,15 @@ session_start();
         <span class="back" onclick="back('bilit')">×</span>
         <div class="col-md-12">
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ghatar.png" onclick="step2Charge('bilit','bilit2','part1Bilit')"
+                <img src="img/bus.png" onclick="step2Charge('bilit','bilit2','part1Bilit')"
                      class="pull-right" style="width: 70%;">
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/bus.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part2Ghabz')"
+                <img src="img/ghatar.png" onclick="step2Charge('bilit','bilit2','part2Bilit')"
                      class="pull-right" style="width: 70%;">
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/airplan.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
+                <img src="img/airplan.png" onclick="step2Charge('bilit','bilit2','part3Bilit')"
                      class="pull-right" style="width: 70%;">
             </div>
         </div>
@@ -567,74 +586,378 @@ session_start();
     <div id="bilit2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
         <span class="back" onclick="back('bilit2')">×</span>
         <div class="col-md-12">
-    <div class="col-md-12" id="part1Bilit" style="display:none">
-        <p style="text-align: right;direction: rtl;    margin-top: 0;">
-            به فروشگاه اینکام خوش آمدید! در این قسمت می توانید با وارد کردن شماره همراه استعلام میان دوره و
-            پایان دوره قبض خود را بگیرید. <label for="hamrahavalGhabz">
-            </label>
-        <div class="form-group">
-            <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="0912*******">
+            <div class="col-md-12" id="part1Bilit" style="display:none">
+                <div class="page-help-wrapper">
+                    <p>
+                        به اینکام خوش آمدید! در این قسمت امکان خرید بلیط اتوبوس در سرتاسر کشور وجود دارد.
+                    </p>
+                    <p>
+                        <b>مراحل خرید بلیط اتوبوس :</b>
+                    </p>
+                    <ol class="page-step-list" style="direction: rtl">
+                        <li>انتخاب مبدأ، مقصد، تاریخ و جستجوی سرویس</li>
+                        <li>انتخاب سرویس دلخواه</li>
+                        <li>انتخاب صندلی و وارد کردن نام</li>
+                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
+                        <li>تکمیل پرداخت و دریافت بلیط</li>
+                    </ol>
+                    <p>
+                        <b>توجه : در حال حاضر امکان استرداد بلیط تنها از ساعت 8 صبح الی 17 عصر امکان پذیر است.</b>
+                    </p>
+                </div>
+                <div class="page-form-wrapper">
+
+                    <div id="searchForm" class="search-form">
+                        <label>
+                            <b>مرحله 1 : </b>
+                            مبداء، مقصد و تاریخ خود را انتخاب کرده و روی جستجوی بلیط کلیک نمایید.
+                        </label>
+                        <hr>
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <label>انتخاب استان مبداء </label>
+                            <select id="" tabindex="-1" class="form-control" aria-hidden="true">
+                                <option value="" selected="" disabled="">انتخاب استان</option>
+                                <option value="36000000">استان خوزستان</option>
+                                <option value="41000000">استان فارس</option>
+                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
+                                <option value="67000000">استان زنجان</option>
+                                <option value="77000000">استان چهارمحال و بختیاری</option>
+                                <option value="81000000">استان لرستان</option>
+                                <option value="11000000">استان تهران</option>
+                                <option value="61000000">استان سیستان و بلوچستان</option>
+                                <option value="73000000">استان کردستان</option>
+                                <option value="21000000">استان اصفهان</option>
+                                <option value="18000000">استان البرز</option>
+                                <option value="26000000">استان آذربایجان شرقی</option>
+                                <option value="32000000">استان خراسان شمالی</option>
+                                <option value="45000000">استان کرمان</option>
+                                <option value="75000000">استان همدان</option>
+                                <option value="33000000">استان خراسان جنوبی</option>
+                                <option value="57000000">استان آذربایجان غربی</option>
+                                <option value="16000000">استان مازندران</option>
+                                <option value="97000000">استان گلستان</option>
+                                <option value="64000000">استان هرمزگان</option>
+                                <option value="93000000">استان یزد</option>
+                                <option value="87000000">استان سمنان</option>
+                                <option value="51000000">استان مرکزی</option>
+                                <option value="54000000">استان گیلان</option>
+                                <option value="83000000">استان ایلام</option>
+                                <option value="31000000">استان خراسان رضوی</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب پایانه مبداء </label>
+                            <select id="sourceTerminalCombo" tabindex="-1" class="form-control" aria-hidden="true">
+                                <option value="" selected="" disabled="">انتخاب پایانه</option>
+                                <option value="36310000">اهواز</option>
+                                <option value="36320000">آبادان</option>
+                                <option value="36330000">اندیمشک</option>
+                                <option value="36360001">بندرماهشهر</option>
+                                <option value="36370000">بهبهان</option>
+                                <option value="36380000">خرمشهر</option>
+                                <option value="36390000">دزفول</option>
+                                <option value="36420000">شوش</option>
+                                <option value="36450000">شوشتر</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب استان مقصد </label>
+                            <select id="destenationStateCombo" tabindex="-1" class="form-control" aria-hidden="true">
+                                <option value="" selected="" disabled="">انتخاب استان</option>
+                                <option value="11000000">استان تهران</option>
+                                <option value="14000000">استان قم</option>
+                                <option value="15000000">استان قزوین</option>
+                                <option value="16000000">استان مازندران</option>
+                                <option value="18000000">استان البرز</option>
+                                <option value="21000000">استان اصفهان</option>
+                                <option value="26000000">استان آذربایجان شرقی</option>
+                                <option value="36000000">استان خوزستان</option>
+                                <option value="41000000">استان فارس</option>
+                                <option value="45000000">استان کرمان</option>
+                                <option value="51000000">استان مرکزی</option>
+                                <option value="54000000">استان گیلان</option>
+                                <option value="57000000">استان آذربایجان غربی</option>
+                                <option value="64000000">استان هرمزگان</option>
+                                <option value="67000000">استان زنجان</option>
+                                <option value="71000000">استان کرمانشاه</option>
+                                <option value="73000000">استان کردستان</option>
+                                <option value="75000000">استان همدان</option>
+                                <option value="77000000">استان چهارمحال و بختیاری</option>
+                                <option value="81000000">استان لرستان</option>
+                                <option value="83000000">استان ایلام</option>
+                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
+                                <option value="93000000">استان یزد</option>
+                                <option value="95000000">استان بوشهر</option>
+                                <option value="97000000">استان گلستان</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب پایانه مقصد </label>
+                            <select id="destenationTerminalCombo" tabindex="-1" class="form-control" aria-hidden="true">
+                                <option value="" selected="" disabled="">انتخاب پایانه</option>
+                                <option value="11320000">تهران</option>
+                                <option value="11321006">پایانه جنوب(تهران)</option>
+                                <option value="11321007">پایانه بیهقی(تهران)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>تاریخ حرکت </label>
+                            <input id="goDate" readonly="" class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="btn btn--blue" title="جستجوی لیست سرویس ها" id="btn btn-primery">جستجوی
+                                بلیط</a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="col-md-12" id="part2Bilit" style="display:none">
+                <div class="page-help-wrapper">
+                    <p>
+                        به اینکام خوش آمدید! در این بخش می توانید بلیط قطار سرتاسر کشور را تهیه فرمایید.
+                    </p>
+                    <p>
+                        <b>مراحل خرید بلیط قطار :</b>
+                    </p>
+                    <ol class="page-step-list" style="direction: rtl">
+                        <li>انتخاب مسیر، نوع بلیط، نوع کوپه، تاریخ و تعداد بلیط و جستجوی بلیط</li>
+                        <li>انتخاب سرویس دلخواه</li>
+                        <li>وارد کردن اطلاعات مسافران</li>
+                        <li>بررسی صحت اطلاعات مسافران</li>
+                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
+                        <li>تکمیل پرداخت و دریافت بلیط</li>
+                    </ol>
+                </div>
+                <div class="page-form-wrapper">
+
+
+                    <div id="searchForm">
+                        <label>
+                            <b>مرحله 1 : </b>
+                            برای شروع مبداء، مقصد، تاریخ حرکت و تعداد بلیط را انتخاب کرده و روی کلید جستجوی بلیط کلیک
+                            نمایید.
+
+                        </label>
+                        <hr>
+                        <div id="pathTypeWrapper">
+                            <a id="singleWay" title="مسیر یک طرفه" class="switch-btn active" href="#">یک طرفه</a>
+                            <a id="twoWay" title="مسیر دو طرفه (رفت و برگشت)" class="switch-btn" href="#">رفت و
+                                برگشت</a>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب مبدا </label>
+                            <select id="sourceStation" tabindex="-1" class="form-control"
+                                    aria-hidden="true">
+                                <option value="36000000">استان خوزستان</option>
+                                <option value="41000000">استان فارس</option>
+                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
+                                <option value="67000000">استان زنجان</option>
+                                <option value="77000000">استان چهارمحال و بختیاری</option>
+                                <option value="81000000">استان لرستان</option>
+                                <option value="11000000">استان تهران</option>
+                                <option value="61000000">استان سیستان و بلوچستان</option>
+                                <option value="73000000">استان کردستان</option>
+                                <option value="21000000">استان اصفهان</option>
+                                <option value="18000000">استان البرز</option>
+                                <option value="26000000">استان آذربایجان شرقی</option>
+                                <option value="32000000">استان خراسان شمالی</option>
+                                <option value="45000000">استان کرمان</option>
+                                <option value="75000000">استان همدان</option>
+                                <option value="33000000">استان خراسان جنوبی</option>
+                                <option value="57000000">استان آذربایجان غربی</option>
+                                <option value="16000000">استان مازندران</option>
+                                <option value="97000000">استان گلستان</option>
+                                <option value="64000000">استان هرمزگان</option>
+                                <option value="93000000">استان یزد</option>
+                                <option value="87000000">استان سمنان</option>
+                                <option value="51000000">استان مرکزی</option>
+                                <option value="54000000">استان گیلان</option>
+                                <option value="83000000">استان ایلام</option>
+                                <option value="31000000">استان خراسان رضوی</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب مقصد </label>
+                            <select id="destenationStation" tabindex="-1" class="form-control"
+                                    aria-hidden="true">
+                                <option value="36000000">استان خوزستان</option>
+                                <option value="41000000">استان فارس</option>
+                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
+                                <option value="67000000">استان زنجان</option>
+                                <option value="77000000">استان چهارمحال و بختیاری</option>
+                                <option value="81000000">استان لرستان</option>
+                                <option value="11000000">استان تهران</option>
+                                <option value="61000000">استان سیستان و بلوچستان</option>
+                                <option value="73000000">استان کردستان</option>
+                                <option value="21000000">استان اصفهان</option>
+                                <option value="18000000">استان البرز</option>
+                                <option value="26000000">استان آذربایجان شرقی</option>
+                                <option value="32000000">استان خراسان شمالی</option>
+                                <option value="45000000">استان کرمان</option>
+                                <option value="75000000">استان همدان</option>
+                                <option value="33000000">استان خراسان جنوبی</option>
+                                <option value="57000000">استان آذربایجان غربی</option>
+                                <option value="16000000">استان مازندران</option>
+                                <option value="97000000">استان گلستان</option>
+                                <option value="64000000">استان هرمزگان</option>
+                                <option value="93000000">استان یزد</option>
+                                <option value="87000000">استان سمنان</option>
+                                <option value="51000000">استان مرکزی</option>
+                                <option value="54000000">استان گیلان</option>
+                                <option value="83000000">استان ایلام</option>
+                                <option value="31000000">استان خراسان رضوی</option>
+
+
+                            </select>
+
+                        <div class="form-group">
+                            <label>نوع بلیط</label>
+                            <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
+                                <option value="1">مسافرین عادی</option>
+                                <option value="2">ویژه برادران</option>
+                                <option value="3">ویژه خواهران</option>
+                                <option value="4">حمل خودرو</option>
+                            </select>
+                        </div>
+                            <br>
+                        <div class="form-item-wrapper busy">
+                            <label>کوپه دربستی باشد ؟ </label>
+                            <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
+                                <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
+                                <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی" href="#">بله</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-12" id="part3Bilit" style="display:none">
+                <div class="page-help-wrapper">
+                    <p>
+                        به اینکام خوش آمدید! در این بخش می توانید بلیط قطار سرتاسر کشور را تهیه فرمایید.
+                    </p>
+                    <p>
+                        <b>مراحل خرید بلیط قطار :</b>
+                    </p>
+                    <ol class="page-step-list" style="direction: rtl">
+                        <li>انتخاب مسیر، نوع بلیط، نوع کوپه، تاریخ و تعداد بلیط و جستجوی بلیط</li>
+                        <li>انتخاب سرویس دلخواه</li>
+                        <li>وارد کردن اطلاعات مسافران</li>
+                        <li>بررسی صحت اطلاعات مسافران</li>
+                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
+                        <li>تکمیل پرداخت و دریافت بلیط</li>
+                    </ol>
+                </div>
+                <div class="page-form-wrapper">
+
+
+                    <div id="searchForm">
+                        <label>
+                            <b>مرحله 1 : </b>
+                            برای شروع مبداء، مقصد، تاریخ حرکت و تعداد بلیط را انتخاب کرده و روی کلید جستجوی بلیط کلیک
+                            نمایید.
+
+                        </label>
+                        <hr>
+                        <div id="pathTypeWrapper">
+                            <a id="singleWay" title="مسیر یک طرفه" class="switch-btn active" href="#">یک طرفه</a>
+                            <a id="twoWay" title="مسیر دو طرفه (رفت و برگشت)" class="switch-btn" href="#">رفت و
+                                برگشت</a>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب مبدا </label>
+                            <select id="sourceStation" tabindex="-1" class="form-control"
+                                    aria-hidden="true">
+                                <option value="36000000">استان خوزستان</option>
+                                <option value="41000000">استان فارس</option>
+                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
+                                <option value="67000000">استان زنجان</option>
+                                <option value="77000000">استان چهارمحال و بختیاری</option>
+                                <option value="81000000">استان لرستان</option>
+                                <option value="11000000">استان تهران</option>
+                                <option value="61000000">استان سیستان و بلوچستان</option>
+                                <option value="73000000">استان کردستان</option>
+                                <option value="21000000">استان اصفهان</option>
+                                <option value="18000000">استان البرز</option>
+                                <option value="26000000">استان آذربایجان شرقی</option>
+                                <option value="32000000">استان خراسان شمالی</option>
+                                <option value="45000000">استان کرمان</option>
+                                <option value="75000000">استان همدان</option>
+                                <option value="33000000">استان خراسان جنوبی</option>
+                                <option value="57000000">استان آذربایجان غربی</option>
+                                <option value="16000000">استان مازندران</option>
+                                <option value="97000000">استان گلستان</option>
+                                <option value="64000000">استان هرمزگان</option>
+                                <option value="93000000">استان یزد</option>
+                                <option value="87000000">استان سمنان</option>
+                                <option value="51000000">استان مرکزی</option>
+                                <option value="54000000">استان گیلان</option>
+                                <option value="83000000">استان ایلام</option>
+                                <option value="31000000">استان خراسان رضوی</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>انتخاب مقصد </label>
+                            <select id="destenationStation" tabindex="-1" class="form-control"
+                                    aria-hidden="true">
+                                <option value="36000000">استان خوزستان</option>
+                                <option value="41000000">استان فارس</option>
+                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
+                                <option value="67000000">استان زنجان</option>
+                                <option value="77000000">استان چهارمحال و بختیاری</option>
+                                <option value="81000000">استان لرستان</option>
+                                <option value="11000000">استان تهران</option>
+                                <option value="61000000">استان سیستان و بلوچستان</option>
+                                <option value="73000000">استان کردستان</option>
+                                <option value="21000000">استان اصفهان</option>
+                                <option value="18000000">استان البرز</option>
+                                <option value="26000000">استان آذربایجان شرقی</option>
+                                <option value="32000000">استان خراسان شمالی</option>
+                                <option value="45000000">استان کرمان</option>
+                                <option value="75000000">استان همدان</option>
+                                <option value="33000000">استان خراسان جنوبی</option>
+                                <option value="57000000">استان آذربایجان غربی</option>
+                                <option value="16000000">استان مازندران</option>
+                                <option value="97000000">استان گلستان</option>
+                                <option value="64000000">استان هرمزگان</option>
+                                <option value="93000000">استان یزد</option>
+                                <option value="87000000">استان سمنان</option>
+                                <option value="51000000">استان مرکزی</option>
+                                <option value="54000000">استان گیلان</option>
+                                <option value="83000000">استان ایلام</option>
+                                <option value="31000000">استان خراسان رضوی</option>
+
+
+                            </select>
+
+                        <div class="form-group">
+                            <label>نوع بلیط</label>
+                            <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
+                                <option value="1">مسافرین عادی</option>
+                                <option value="2">ویژه برادران</option>
+                                <option value="3">ویژه خواهران</option>
+                                <option value="4">حمل خودرو</option>
+                            </select>
+                        </div>
+                            <br>
+                        <div class="form-item-wrapper busy">
+                            <label>کوپه دربستی باشد ؟ </label>
+                            <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
+                                <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
+                                <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی" href="#">بله</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
-        <span class="btnPayment">پرداخت</span>
-        <br>
-        <h5>نکاتی که باید توجه داشت</h5>
-
-        <ul class="ulDes">
-            <li>حتما شماره را با صفر وارد کنید.
-            </li>
-            <li>شماره ای که وارد می کنید باید خط دائمی همراه اول باشد.
-            </li>
-            <li>صفر شدن مبلغ قبض پایان دوره شما تا پایان دوره طول می کشد. توجه کنید که دو بار پرداخت نکنید.
-            </li>
-            <li>صفر شدن مبلغ قبض میان دوره تا 72 ساعت پس از پرداخت انجام می شود اما مبلغ قبض پایان دوره تا
-                پایانِ دوره صفر نخواهد شد (دو بار پرداخت نکنید)
-            </li>
-            <li>اگر با این شرایط آشنا نبودید و پس از دیدن صفر نشدن قبض پایان دوره دوباره قبض را پرداخت کردید
-                نگران نباشید، مبلغ مازاد در بستانکاری شما نشسته و برای قبض های آینده مصرف می شود.
-            </li>
-            <li>به سفارش همراه اول بهتر است که یک روش برای پرداخت قبض خود انتخاب کنید (یا پایان دوره یا میان
-                دوره)
-            </li>
-            <li>در صورت تمایل به پرداخت با شناسه قبض و شناسه پرداخت به صفحه پرداخت قبوض شهری مراجعه کنید.
-            </li>
-        </ul>
-
-
     </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 120px;">
         <span class="back" onclick="back('ghabzStep2')">×</span>
         <div class="col-md-12">
@@ -659,15 +982,12 @@ session_start();
                      class="pull-left" style="width: 100%;">
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ghazStep2.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part4Ghabz')" class="pull-left"
+                <img src="img/ghazStep2.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part4Ghabz')"
+                     class="pull-left"
                      style="width: 100%;">
             </div>
         </div>
     </div>
-
-
-
-
     <div id="ghabzStep3" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
         <span class="back" onclick="back('ghabzStep3')">×</span>
         <div class="col-md-12">
@@ -719,7 +1039,7 @@ session_start();
                     <li>در صورت تمایل به پرداخت با شناسه قبض و شناسه پرداخت به صفحه پرداخت قبوض شهری مراجعه کنید.
                     </li>
                     <li>در هر روز به میزان سقف تراکنش بانکیتان می توانید جریمه پرداخت کنید.</li>
-                    <li>اگر جریمه ای را پرداخت کردید و در سیم پی از ریز جرائم شما پاک نشد با پشتیبانی ما تماس
+                    <li>اگر جریمه ای را پرداخت کردید و در اینکام از ریز جرائم شما پاک نشد با پشتیبانی ما تماس
                         بگیرید. (41576-021)
                     </li>
                 </ul>
@@ -763,10 +1083,12 @@ session_start();
             <div class="col-md-12" id="part4Ghabz" style="display:none">
                 <div class="page-help-wrapper">
                     <p>
-                        به فروشگاه اینکام خوش آمدید! در این قسمت شما می توانید کلیه قبوضی که دارای شناسه قبض و شناسه پرداخت هستند را پرداخت کنید.
+                        به فروشگاه اینکام خوش آمدید! در این قسمت شما می توانید کلیه قبوضی که دارای شناسه قبض و شناسه
+                        پرداخت هستند را پرداخت کنید.
                     </p>
                     <p>
-                        لطفاً توجه داشته باشید که تسویه شدن قبوض پرداختی تا <span style="color:red;">72 ساعت</span> طول می کشد.
+                        لطفاً توجه داشته باشید که تسویه شدن قبوض پرداختی تا <span style="color:red;">72 ساعت</span> طول
+                        می کشد.
                     </p>
                     <p>
                         <b>مراحل کار :</b>
@@ -811,7 +1133,13 @@ session_start();
 </div>
 <div style="" id="showMenu" onclick="hideMenu()">
 </div>
-<!--login sbmit recover-->
+
+<script>
+    $(document).ready(function () {
+        $("#goDate").pDatepicker();
+    });
+</script>
+<!--login submit recover-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
