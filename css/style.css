@@ -539,6 +539,8 @@ ul.dropdown-menu.extended.logout {
     background: -moz-linear-gradient(left,#ddd 45%,#ddd 45%,#992b6b 100%);
     background: -webkit-linear-gradient(left,#ddd 45%,#ddd 45%,#992b6b 100%);
     background: linear-gradient(to right,#ddd 45%,#ddd 45%,#992b6b 100%);
+    border-radius: 5px;
+
 }
 
 .bgRightellModel:hover{
@@ -553,6 +555,8 @@ ul.dropdown-menu.extended.logout {
     background: -moz-linear-gradient(left,#ddd 45%,#ddd 45%,#ffbe00 100%);
     background: -webkit-linear-gradient(left,#ddd 45%,#ddd 45%,#ffbe00 100%);
     background: linear-gradient(to right,#ddd 45%,#ddd 45%,#ffbe00 100%);
+    border-radius: 5px;
+
 }
 
 .bgIrancellMode:hover{
@@ -566,6 +570,7 @@ ul.dropdown-menu.extended.logout {
     background: -moz-linear-gradient(left,#ddd 45%,#ddd 45%,#59c5d2 100%);
     background: -webkit-linear-gradient(left,#ddd 45%,#ddd 45%,#59c5d2 100%);
     background: linear-gradient(to right,#ddd 45%,#ddd 45%,#59c5d2 100%);
+    border-radius: 5px;
 }
 
 .bgHamrahMode:hover{
@@ -667,4 +672,18 @@ div#searchForm label {
     position: relative;
     z-index: 1;
     text-align: center;
+}
+.modal-dialog{
+    width: 484px!important;
+}
+.modal-header, h4, .close {
+    background-color: #5cb85c;
+    color: white !important;
+    text-align: center;
+    font-size: 22px!important;
+    padding: 5px 13px!important;
+    direction: rtl;
+}
+.logoSmall{
+    left:20px!important;
 }

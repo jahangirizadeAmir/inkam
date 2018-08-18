@@ -14,6 +14,7 @@ session_start();
     <link href="css/animation.css" rel="stylesheet" type="text/css">
     <link href="css/iphoneCheckBox.css" rel="stylesheet" type="text/css">
     <link href="css/datepicker.css" rel="stylesheet" type="text/css">
+    <link href="css/all.css" rel="stylesheet" type="text/css">
     <script src="js/script.js"></script>
     <script src="js/login.js"></script>
     <script src="js/persian-date.js"></script>
@@ -331,7 +332,8 @@ session_start();
             </div>
         </div>
     </div>
-    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="">
+    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="
+    background: rgba(66, 66, 66, 0.1);">
         <div class="col-md-6" style="margin: auto;float: none;">
             <div class="form-group" style="margin-bottom: 20px;overflow: hidden">
                 <label for="number1">شماره برای خرید مستقیم شارژ یا دریافت کد </label>
@@ -416,6 +418,7 @@ session_start();
                      style="text-align: center;"
                      id="">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel1')" id="btnModel1">
+                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         شارژ مستقیم
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                              id="imgbtnModel1">
@@ -425,6 +428,7 @@ session_start();
                      style="text-align: center;"
                      id="">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel2')" id="btnModel2">
+                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         کد شارژ
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                              id="imgbtnModel2">
@@ -434,6 +438,7 @@ session_start();
                      style="text-align: center;"
                      id="">
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel3')" id="btnModel3">
+                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         بسته اینترنتی
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                              id="imgbtnModel3">
@@ -441,10 +446,12 @@ session_start();
                 </div>
             </div>
             <div class="col-md-12" style="margin-top: 10px;display: none" id="model2">
+                <p style="color:#fff">نوع شارژ خود را انتخاب کنید</p>
                 <div class="col-md-4 col-xs-4 col-sm-4"
                      style="text-align: center;"
                      id="chargeModelLog">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel4')" id="btnModel4">
+                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         شارژ معمولی
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                              id="imgbtnModel4">
@@ -454,6 +461,7 @@ session_start();
                      style="text-align: center;"
                      id="">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel5')" id="btnModel5">
+                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         شارژ شگفت انگیز
                         <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;"
                              id="imgbtnModel5">
@@ -463,6 +471,8 @@ session_start();
                      style="text-align: center;"
                      id="">
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel6')" id="btnModel6">
+                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+
                         سیمکارت دایمی
                         <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                              id="imgbtnModel6">
@@ -472,46 +482,92 @@ session_start();
             <div>
                 <div class="form-group" style="margin-top: 20px;display: none" id="price">
                     <label>مبلغ شارژ را وارد کنید</label>
-                    <input class="form-control" onfocus="showPriceSelect(this.value)" onkeydown="CheckPrice(this.value)"
+                    <input class="form-control"
+                           onfocus="showPriceSelect(this.value)"
+                           onkeydown="CheckPrice(this.value)"
                            type="text" placeholder="مبلغ به تومان" id="lastPrice">
                     <ul style="" class="priceSelect" id="priceSelect">
                         <li>می توانید یکی از مبالغ زیر را انتخاب کنید</li>
-                        <li id="li1" onclick="fillPrice('li1')" value="10000">10000</li>
-                        <li id="li2" onclick="fillPrice('li2')" value="20000">20000</li>
-                        <li id="li3" onclick="fillPrice('li3')" value="30000">30000</li>
-                        <li id="li4" onclick="fillPrice('li4')" value="40000">40000</li>
-                        <li id="li5" onclick="fillPrice('li5')" value="50000">50000</li>
-                        <li id="li6" onclick="fillPrice('li6')" value="100000">100000</li>
-                        <li id="li7" onclick="fillPrice('li7')" value="200000">200000</li>
+                        <li id="li1" onclick="fillPrice('li1')" value="10000">10,000</li>
+                        <li id="li2" onclick="fillPrice('li2')" value="20000">20,000</li>
+                        <li id="li3" onclick="fillPrice('li3')" value="30000">50,000</li>
+                        <li id="li4" onclick="fillPrice('li4')" value="40000">10,0000</li>
+                        <li id="li5" onclick="fillPrice('li5')" value="50000">20,0000</li>
                     </ul>
                 </div>
+
                 <div class="form-group" style="margin-top: 50px;display: none" id="Baste">
-                    <span class="form-control"
-                          onclick="showModelSim()"
-                          id="modelSimText">
-                        نوع سیمکارت خود را انتخاب کنید
-                    </span>
-                    <ul style="" class="priceSelect" id="modelSim">
-                        <li>می توانید یکی از مدلهای سیمکارت را انتخاب کنید</li>
-                        <li id="Sli1" onclick="fillGetSim(this.innerText)" value="10000">TD-LTE</li>
-                        <li id="Sli2" onclick="fillGetSim(this.innerText)" value="20000">دایمی</li>
-                        <li id="Sli3" onclick="fillGetSim(this.innerText)" value="30000">اعتباری</li>
-                        <li id="Sli4" onclick="fillGetSim(this.innerText)" value="40000">دیتا</li>
-                    </ul>
-                    <br>
-                    <span class="form-control"
+                    <div style="width: 100%" id="modelSim">
+                        <p  style="padding: 0px;color:#fff;">
+                                    نوع سیمکارت  را انتخاب کنید
+                                </p>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 col-sm-4"
+                                 style="text-align: center;float: right"
+                                 id="Sli4">
+                                <div class="bgRightellModel" onclick="ActiveThis('btnModel23')" id="btnModel23">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+
+                                    دیتا
+                                    <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                                         id="imgbtnModel23">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4  "
+                                 style="text-align: center;float: right"
+                                 id="Sli2">
+                                <div class="bgIrancellMode" onclick="ActiveThis('btnModel24')" id="btnModel24">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+
+                                    دایمی
+                                    <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;"
+                                         id="imgbtnModel24">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4  "
+                                 style="text-align: center;float: right"
+                                 id="Sli3">
+                                <div class="bgHamrahMode" onclick="ActiveThis('btnModel25')" id="btnModel25">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+
+                                    اعتباری
+                                    <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                                         id="imgbtnModel25">
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4  "
+                             style="text-align: center;float: right"
+                                 id="Sli1">
+                                <div class="bgHamrahMode" onclick="ActiveThis('btnModel26')" id="btnModel26">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+                                    TD-LTE
+                                    <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                                         id="imgbtnModel26">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+
+                        <span  class="form-control"
                           onclick="showBaste()"
-                          id="basteLong" style="display: none">
+                          id="basteLong" style="display: none;margin-top: 20px">
                         مدت زمان بسته را انتخاب کنید
                     </span>
                     <ul style="" class="priceSelect" id="basteSelect">
                         <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li onclick="fillBaste(this.innerText)" value="10000">یکماه</li>
-                        <li onclick="fillBaste(this.innerText)" value="20000">دوماه</li>
-                        <li onclick="fillBaste(this.innerText)" value="30000">سه ماه</li>
-                        <li onclick="fillBaste(this.innerText)" value="40000">شش ماه</li>
-                        <li onclick="fillBaste(this.innerText)" value="50000">یکسال</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Hourly">ساعتی</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Daily">روزانه</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Weekly">هفتگی</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Monthly">یک ماهه</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Two Month">دو ماهه</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Three Month">سه ماهه</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Four Month">چهار ماهه</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Six Month">شش ماهه</li>
+                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Yearly">یکسال</li>
                     </ul>
+                    </div>
                     <br>
                     <span class="form-control" style="display: none"
                           onclick="showLastBaste()"
@@ -520,15 +576,10 @@ session_start();
                     </span>
                     <ul style="" class="priceSelect" id="basteLastSelect">
                         <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li onclick="fillBasteLast(this.innerText)" value="10000">یک گیگ</li>
-                        <li onclick="fillBasteLast(this.innerText)" value="20000">دوگیگ</li>
-                        <li onclick="fillBasteLast(this.innerText)" value="30000">سه گیگ</li>
-                        <li onclick="fillBasteLast(this.innerText)" value="40000">چهار گیگ</li>
-                        <li onclick="fillBasteLast(this.innerText)" value="50000">پنج گیگ</li>
                     </ul>
                 </div>
-                <div style="text-align: center;margin-top: 20px">
-                    <span class="btn btn-success btn-lg" style="float: none;margin: auto;display: none"
+                <div style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
+                    <span class="btn btn-success btn-lg" style="float: none;margin: auto"
                           onclick="$('#myModalFaktor').modal()">تایید</span>
                 </div>
 
@@ -540,21 +591,58 @@ session_start();
                                 <button type="button" class="close" onclick="$('#myModalFaktor').modal('toggle')">
                                     &times;
                                 </button>
-                                <h4>تست</h4>
+                                <h4>پیش فاکتور</h4>
                             </div>
                             <div class="modal-body" style="padding:40px 50px;">
                                 <form role="form">
                                     <div class="form-group">
-                                        <label for="name" style="color:black">آزمایش پیش فاکتور</label>
+                                        <label for="name" style="color:black" id="NameFacktor"> </label>
+                                        <br>
+                                        <br>
+                                        <label for="name" style="color:black" id="NumberFacktor">شماره سرویس</label>
+                                        <br>
+                                        <br>
+                                        <label for="name" style="color:black" id="priceFacktor">مبلغ</label>
+                                        <br>
+                                        <br>
+                                        <?php
+                                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
+                                            ?>
+                                            <label for="name" style="color:black" id="offerFacktor">تخفیف شما روی این
+                                                محصول</label>
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-block"><span
-                                                class="glyphicon glyphicon-off"></span>آزمایش پیش فاکتور
-                                    </button>
+                                    <div class="form-group" style="    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin-top: 10px;
+    top: 25px;
+direction: rtl  ">
+                                    <span type="submit" class="btn btn-success" onclick="GoBank()" style="float: right;"><span
+                                                class="fas fa-credit-card" style="    margin-left: 15px;
+    position: relative;
+    top: 1px;"></span>پرداخت آنلاین
+                                    </span>
+                                        <?php
+                                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
+                                            ?>
+                                            <button type="submit" class="btn btn-info " style="float: left;"><span
+                                                        style="    margin-left: 15px;
+    position: relative;
+    top: 1px;"
+                                                        class="fas fa-wallet"></span>پرداخت از اعتبار
+                                            </button>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger btn-default pull-left"
-                                        onclick="$('#myModal12').modal('toggle')"><span
+                                        onclick="$('#myModalFaktor').modal('toggle')"><span
                                             class="glyphicon glyphicon-remove"></span> انصراف
                                 </button>
                             </div>
@@ -582,7 +670,6 @@ session_start();
             </div>
         </div>
     </div>
-
     <div id="bilit2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
         <span class="back" onclick="back('bilit2')">×</span>
         <div class="col-md-12">

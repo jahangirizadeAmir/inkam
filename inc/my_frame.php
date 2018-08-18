@@ -433,15 +433,14 @@ function smsForati($mobile,$text){
         $parameters['isFlash'] = false;
         $recId = array();
         $status = array();
-        $parameters['recId'] = &$recId ;
-        $parameters['status'] = &$status ;
-
-
+        $parameters['recId'] = $recId ;
+        $parameters['status'] = $status ;
         return $sms_client->SendSMS($parameters)->SendSMSResult;
     }
     catch (Exception $e)
     {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
+
 }
 
