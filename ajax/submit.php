@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         !empty($_POST['pwd']) &&
         strlen($_POST['pwd']) >= 6
     ) {
-        include "../inc/conn.php";
+        include "../inc/db.php";
         include "../inc/my_frame.php";
         $userOwnerId = ''; //For IDE Don`t Show Error
         $conn = connection();

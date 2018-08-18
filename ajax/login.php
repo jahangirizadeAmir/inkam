@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         isset($_POST['pwd']) &&
         !empty($_POST['pwd'])
     ) {
-        include "../inc/conn.php";
+        include "../inc/db.php";
+        $db = new db();
         include "../inc/my_frame.php";
         $userOwnerId = ''; //For IDE Don`t Show Error
-        $conn = connection();
-        $name = mysqli_real_escape_string($conn, $_SESSION['mobile']);
-        $pwd = mysqli_real_escape_string($conn, $_POST['pwd']);
-        $pwd = passwordHash($pwd);
-
+        $conn = $db->conn();
+        $name = $db->real($_SESSION['mobile']);
+        $pwd  = $db->real($_POST['pwd']);
+        $pwd  = passwordHash($pwd);
         $selectUser = mysqli_query($conn,"
            SELECT * FROM user where 
            user.userMobile='$name' AND

@@ -8,10 +8,11 @@
 if($_SERVER['REQUEST_METHOD']=="POST"){
     session_start();
     if(isset($_POST['mobile']) && !empty($_POST['mobile'])){
-        include "../inc/conn.php";
+        include "../inc/db.php";
         include "../inc/my_frame.php";
-        $conn = connection();
-        $mobile = mysqli_real_escape_string($conn,$_POST['mobile']);
+        $db = new db();
+        $conn = $db->conn();
+        $mobile = $db->real($_POST['mobile']);
         $select = mysqli_query($conn,"SELECT * FROM user WHERE userMobile='$mobile'");
         if(mysqli_num_rows($select)==1){
             $call = array("Error"=>false,"Sms"=>false);
