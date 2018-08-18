@@ -14,6 +14,8 @@ class db
     private $db_userName="inkam";
 
     public function conn(){
+        ini_alter('date.timezone','Asia/Tehran');
+        date_default_timezone_set("Asia/Tehran");
         $conn = mysqli_connect('localhost',$this->db_userName,$this->db_password,$this->db_name);
         mysqli_set_charset($conn, "utf8");
         ini_alter('date.timezone','Asia/Tehran');
@@ -37,4 +39,5 @@ class db
         $real = mysqli_real_escape_string($this->conn(),$str);
         return $real;
     }
+
 }
