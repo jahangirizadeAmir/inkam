@@ -18,13 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         include "../inc/db.php";
         include "../inc/my_frame.php";
         $userOwnerId = ''; //For IDE Don`t Show Error
-        $conn = connection();
-        $code = mysqli_real_escape_string($conn, $_POST['code']);
-        $name = mysqli_real_escape_string($conn, $_POST['name']);
-        $pwd = mysqli_real_escape_string($conn, $_POST['pwd']);
+        $db = new db();
+        $conn = $db->conn();
+        $code = $db->real($_POST['code']);
+        $name = $db->real( $_POST['name']);
+        $pwd =  $db->real($_POST['pwd']);
         if (!empty($code)) {
             $selectInviteCode = mysqli_query($conn, "
-SELECT * FROM inviteCode where inviteCodeId ='$code'");
+              SELECT * FROM inviteCode where inviteCodeId ='$code'");
             if (mysqli_num_rows($selectInviteCode) == 0) {
                 $call = array("Error" => true, "MSG" => "کاربری با این کد معرف در سیستم موجود نیست");
                 echo json_encode($call);
@@ -35,18 +36,15 @@ SELECT * FROM inviteCode where inviteCodeId ='$code'");
             }
         }
         $pwd = passwordHash($pwd);
-        $id = generate_id();
-        $mobile = mysqli_real_escape_string($conn, $_SESSION['mobile']);
-        $code = mysqli_real_escape_string($conn, $_SESSION['code']);
+        $id = $db->generate_id();
+        $mobile = $db->real($_SESSION['mobile']);
+        $code = $db->real($_SESSION['code']);
         $date = _date();
         $time = _time();
-
 
         //user Level 1
         //agent Level 2
         //SubAgent Level 3
-
-
 
         $insertUser = mysqli_query($conn, "
           INSERT INTO user 
@@ -60,7 +58,7 @@ SELECT * FROM inviteCode where inviteCodeId ='$code'");
              '$date','$time','$userOwnerId',
              '1','$code','$pwd')
              ");
-        $idInviteCode = generate_id();
+        $idInviteCode = $db->generate_id();
         $InsertInviteCode = mysqli_query($conn, "INSERT INTO inviteCode
         (inviteCodeId, inviteCodeText, inviteCodeUserId)
          VALUES 

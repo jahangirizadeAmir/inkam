@@ -8,14 +8,16 @@
 if($_SERVER['REQUEST_METHOD']=="POST"){
     session_start();
     if(
-        isset($_POST['code']) && !empty($_POST['code'])
+        isset($_POST['code']) &&
+        !empty($_POST['code'])
         && isset($_SESSION['code'])
         && $_SESSION['code']!=''
     ){
-        include "../inc/conn.php";
+        include "../inc/db.php";
         include "../inc/my_frame.php";
-        $conn = connection();
-        $code = mysqli_real_escape_string($conn,$_POST['code']);
+        $db = new db();
+        $conn = $db->conn();
+        $code = $db->real($_POST['code']);
         if($code == $_SESSION['code']){
             $call = array("Error"=>false);
         }else{
