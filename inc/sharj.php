@@ -22,8 +22,23 @@ class sharj
         $this->url.="topup";
         $extra = array("amazing"=>$amazing);
         $arrayTopup = array("amount"=>$amount,"mobile"=>$mobile,"operator"=>$operator,"extra"=>$extra);
-        return $this->sendRequest($arrayTopup);
-
+        $result = $this->sendRequest($arrayTopup);
+        if($result["status"]){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function pin($operator,$amount){
+        $this->url.="pin";
+        $list = array([$operator,$amount,1]);
+        $array = array("list"=>$list);
+        $result = $this->sendRequest($array);
+        if($result["status"]){
+            return $result["pins"];
+        }else{
+            return false;
+        }
     }
     private function sendRequest($data_Json){
         $data_Json = json_encode($data_Json);

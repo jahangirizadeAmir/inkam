@@ -7,5 +7,5 @@
  */
 include "inc/sharj.php";
 $sharj = new sharj();
-$a = $sharj->topup("10000","09369124331","false","mci");
+$a = $sharj->pin("1","10000");
 print_r($a);
