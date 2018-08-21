@@ -22,18 +22,14 @@ function hideMenu() {
     document.getElementById("menuShow").setAttribute("src", "img/menuIcon.png");
     document.getElementById("menuShow").setAttribute("onclick", "menuShow()");
 }
-
-
 function show(e) {
     $('#part1').hide();
     $('#' + e).show();
 }
-
 function back(e) {
     $('#part1').show();
     $('#' + e).hide();
 }
-
 function step2Charge(e, g, f) {
     $('#part1Ghabz').hide();
     $('#part2Ghabz').hide();
@@ -50,21 +46,16 @@ function step2Charge(e, g, f) {
     $('#number2').val(number);
     $('#number3').val(number);
 }
-
 function add(e) {
     $('#' + e).addClass('animated').addClass('shake').addClass('infinite').removeClass('bounceInRight').removeClass('bounceInRight1').removeClass('bounceInRight2').removeClass('bounceInRight3');
 }
-
 function remove(e) {
     $('#' + e).removeClass('animated').removeClass('shake').removeClass('infinite');
 }
-
 function checkThis() {
     $('#AccBtnCharge').hide();
-
     var number = $('#number1').val();
     if (number.length > 2) {
-
         $('#checkThisIdDiv').show();
         $('#model').show();
     } else {
@@ -106,29 +97,22 @@ function checkThis() {
         model = 1;
     }
 }
-
 function reload() {
     $("#hamrah").css("background-color", "#dddddd");
     $('#irancell').css("background-color", "#dddddd");
     $('#rightell').css("background-color", "#dddddd");
 
 }
-
 function checkBoxOne() {
     $('#AccBtnCharge').hide();
-
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
-
     if ($('#go').is(":checked")) {
-
         $('#price').hide();
         $('#lastPrice').val("");
         $('#priceSelect').fadeOut();
         $('#operatorList').show();
         $('#trabord').hide();
-
-
         btnModel1 = $('#btnModel1');
         btnModel2 = $('#btnModel2');
         btnModel3 = $('#btnModel3');
@@ -139,7 +123,6 @@ function checkBoxOne() {
         btnModel24 = $('#btnModel24');
         btnModel25 = $('#btnModel25');
         btnModel26 = $('#btnModel26');
-
         btnModel1.removeClass("active");
         btnModel2.removeClass("active");
         btnModel3.removeClass("active");
@@ -150,15 +133,12 @@ function checkBoxOne() {
         btnModel24.removeClass("active");
         btnModel25.removeClass("active");
         btnModel26.removeClass("active");
-
         $('#Baste').fadeOut();
         $('#modelSim').hide();
         $('#basteLong').hide();
         $('#basteSelect').hide();
         $('#basteLast').hide();
         $('#basteLastSelect').hide();
-
-
         if ($('#Onerightell').is(":checked")) {
             $('#Onerightell').prop('checked', false);
         }
@@ -169,7 +149,6 @@ function checkBoxOne() {
             $('#OneHamrah').prop('checked', false);
         }
         checkThis();
-
     } else {
         $('#Baste').fadeOut();
         $('#modelSim').hide();
@@ -181,7 +160,6 @@ function checkBoxOne() {
         $('#price').hide();
         $('#lastPrice').val("");
         $('#priceSelect').fadeOut();
-
         btnModel1 = $('#btnModel1');
         btnModel2 = $('#btnModel2');
         btnModel3 = $('#btnModel3');
@@ -192,7 +170,6 @@ function checkBoxOne() {
         btnModel24 = $('#btnModel24');
         btnModel25 = $('#btnModel25');
         btnModel26 = $('#btnModel26');
-
         btnModel1.removeClass("active");
         btnModel2.removeClass("active");
         btnModel3.removeClass("active");
@@ -203,18 +180,14 @@ function checkBoxOne() {
         btnModel24.removeClass("active");
         btnModel25.removeClass("active");
         btnModel26.removeClass("active");
-
         $("#model2").hide();
         $('#trabord').show();
     }
 }
-
 function checkBoxTwo(e) {
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
     $('#AccBtnCharge').hide();
-
-
     btnModel1 = $('#btnModel1');
     btnModel2 = $('#btnModel2');
     btnModel3 = $('#btnModel3');
@@ -225,7 +198,6 @@ function checkBoxTwo(e) {
     btnModel24 = $('#btnModel24');
     btnModel25 = $('#btnModel25');
     btnModel26 = $('#btnModel26');
-
     btnModel1.removeClass("active");
     btnModel2.removeClass("active");
     btnModel3.removeClass("active");
@@ -236,14 +208,12 @@ function checkBoxTwo(e) {
     btnModel24.removeClass("active");
     btnModel25.removeClass("active");
     btnModel26.removeClass("active");
-
     $("#model2").hide();
     if (e === '1') {
         reload();
         $("#hamrah").css("background-color", "#53c4cd");
         $('#trabord').hide();
         cheangeModel('3');
-
         model = 3;
     }
     if (e === '2') {
@@ -261,13 +231,11 @@ function checkBoxTwo(e) {
         model = 2;
     }
 }
-
 function profileShow(e1, e2, e3) {
     $('#' + e1).show();
     $('#' + e2).hide();
     $('#' + e3).hide();
 }
-
 function ActiveThis(e) {
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
@@ -296,7 +264,6 @@ function ActiveThis(e) {
         showModelSim();
         $('#basteLong').text("مدت زمان بسته را انتخاب کنید");
         $('#basteLast').text("حجم مورد نظر را وارد کنید");
-
         if( e === "btnModel23" || e === "btnModel24" || e === "btnModel25"|| e === "btnModel26"){
             $('#basteLong').show();
             if(e==="btnModel23"){
@@ -358,19 +325,13 @@ function ActiveThis(e) {
         }
     }
     changeSrcImg(e);
-
 }
-
 function cheangeModel(e) {
     //e==1 =>rightell
     //e==2 =>irancell
     //e==3 =>hamrahAval
-
-
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
-
-
     btnModel1 = $('#btnModel1');
     btnModel2 = $('#btnModel2');
     btnModel3 = $('#btnModel3');
@@ -381,7 +342,6 @@ function cheangeModel(e) {
     btnModel24 = $('#btnModel24');
     btnModel25 = $('#btnModel25');
     btnModel26 = $('#btnModel26');
-
     if (e === '1') {
         $('.logoSmall').attr("src","img/rightell.png");
         btnModel1.removeClass("bgHamrahMode");
@@ -415,7 +375,6 @@ function cheangeModel(e) {
         btnModel25.addClass("bgRightellModel");
         btnModel26.addClass("bgRightellModel");
     }
-
     if (e === '2') {
         $('.logoSmall').attr("src","img/irancell.png");
         btnModel1.removeClass("bgHamrahMode");
@@ -448,12 +407,9 @@ function cheangeModel(e) {
         btnModel24.removeClass("bgRightellModel");
         btnModel25.removeClass("bgRightellModel");
         btnModel26.removeClass("bgRightellModel");
-
     }
-
     if (e === '3') {
         $('.logoSmall').attr("src","img/hamrahAval.png");
-
         btnModel1.addClass("bgHamrahMode");
         btnModel2.addClass("bgHamrahMode");
         btnModel3.addClass("bgHamrahMode");
@@ -484,36 +440,28 @@ function cheangeModel(e) {
         btnModel24.removeClass("bgRightellModel");
         btnModel25.removeClass("bgRightellModel");
         btnModel26.removeClass("bgRightellModel");
-
     }
 }
-
 function fillPrice(e) {
     $('#lastPrice').val($('#' + e).attr("value"));
     $('#priceSelect').fadeOut();
     $('#AccBtnCharge').show();
-
 }
-
 function CheckPrice(e) {
     if (e.length > 1) {
         $('#priceSelect').fadeOut();
     } else {
         $('#priceSelect').fadeIn();
-
     }
 }
-
 function showPriceSelect(e) {
     if (e.length < 3) {
         $('#priceSelect').show();
     }
 }
-
 function showBaste() {
     $('#basteSelect').show();
 }
-
 function fillBaste(e,f) {
     $('#basteLong').text(e);
     $('#basteSelect').fadeOut();
@@ -543,11 +491,9 @@ function fillBaste(e,f) {
         }
     });
 }
-
 function showLastBaste() {
     $('#basteLastSelect').show();
 }
-
 function fillBasteLast(e,f,j) {
     var number = $('#number1').val();
     $('#basteLast').text(e);
@@ -560,7 +506,6 @@ function fillBasteLast(e,f,j) {
     $('#priceFacktor').text("مبلغ : "+f+" ریال ");
     $('#offerFacktor').text("مبلغ تخفیف شما : 0");
 }
-
 function showModelSim() {
     //e==1 =>rightell
     //e==2 =>irancell

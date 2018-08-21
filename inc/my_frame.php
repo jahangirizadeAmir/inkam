@@ -423,7 +423,6 @@ function diff_in_weeks_and_days($from, $to) {
 function smsForati($mobile,$text){
     ini_set("soap.wsdl_cache_enabled", "0");
     $sms_client = new SoapClient('http://payamak-service.ir/SendService.svc?wsdl', array('encoding'=>'UTF-8'));
-
     try {
         $parameters['userName'] = "s.forati";
         $parameters['password'] = "4815162342";

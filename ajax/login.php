@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $call = array('Error'=>false,'userName'=>$userName);
             $_SESSION['userLogin']=true;
             $_SESSION['userName']=$userName;
+            $_SESSION['userId']=$userRow['userId'];
         }
         echo json_encode($call);
         endfile($conn);

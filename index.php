@@ -1,5 +1,10 @@
 <?php
 session_start();
+include "inc/db.php";
+$conn = new db();
+if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
+    $userId = $conn->real($_SESSION['userId']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,129 +55,133 @@ session_start();
 </div>
 
 <div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 888;margin-bottom: 15px">
-    <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6" style="position: relative;z-index: 888;width: 100%">
-        <li class=""><img src="img/logoType.png" class="logo"></li>
-        <li style="position: relative;">
-            <div class="dropdown">
-                <img src="img/plus.png" class="not img-responsive" id="menuLeft2" data-toggle="dropdown">
-                <ul class="dropdown-menu center dropdown-menu-left pull-left extended tasks-bar" role="menu"
-                    aria-labelledby="menuLeft2">
-                    <div class="notify-arrow-center notify-arrow-green"></div>
-                    <li style="width: 100%">
-                        <p class="green">دوستان خود را به اینکام دعوت کنید</p>
-                    </li>
-                    <li style="width: 100%;padding: 0 10px 0 10px">
-                        <div class="form-group">
-                            <label for="input" style="color: #000;">شماره تلفن</label>
-                            <input id="input" type="text" value="09166157859" class="form-control">
-                        </div>
-                    </li>
-                    <li style="width: 100%;padding: 0 10px 0 10px">
-                        <div class="form-group">
-                            <label for="input3" style="color: #000;">متن پیام</label>
-                            <textarea id="input3" class="form-control" disabled>تست شده است که شما ببینید این پیام به صورت پیشفرض است</textarea>
-                        </div>
-                    </li>
-                    <li style="width: 100%;padding: 0 10px 0 10px">
-                        <div class="form-group">
-                            <input type="button" value="ارسال" class="btn btn-group-vertical btn-success">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="" style="position: relative;">
-            <div class="dropdown">
-                <img src="img/not.png" class="not img-responsive" id="menuLeft1" data-toggle="dropdown">
-                <span class="badge bg-danger" style="left: 37px;top: 5px;background-color: red">۲۰</span>
-                <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
-                    aria-labelledby="menuLeft1">
-                    <div class="notify-arrow-left notify-arrow-green"></div>
-                    <li style="width: 100%">
-                        <p class="green">شما ۲۰ اعلان جدید دارید</p>
-                    </li>
-                    <li style="" class="noti active">
-                        <div class="notiBag" style=""></div>
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-                    </li>
-                    <li style="" class="noti">
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti active">
-                        <div class="notiBag" style=""></div>
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti active">
-                        <div class="notiBag" style=""></div>
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti">
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti">
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti">
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li class="form-group" style="    width: 100%;">
-                        <input type="button" class="form-control btn btn-sm btn-link" value="نمایش بیشتر">
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li style="position: relative;">
-            <div class="dropdown">
-                <img src="img/msg.png" class="not img-responsive" id="menuLeft3" data-toggle="dropdown">
-                <span class="badge bg-primary" style="left: 37px;top: 5px;background-color: orange">0</span>
-                <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
-                    aria-labelledby="menuLeft1">
-                    <div class="notify-arrow-left notify-arrow-green"></div>
-                    <li style="width: 100%">
-                        <p class="green">شما ۲۰ پیام جدید دارید</p>
-                    </li>
-                    <li style="" class="noti active">
-                        <div class="notiBag" style=""></div>
-                        <h5 style="    text-align: right;margin: 0 0 10px 0px;">اعلان اول</h5>
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti">
-                        <h6 style="    text-align: right;margin: 0 0 10px 0px;">اعلان اول</h6>
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-                    <li style="" class="noti active">
-                        <div class="notiBag" style=""></div>
-                        <h5 style="    text-align: right;margin: 0 0 10px 0px;">اعلان اول</h5>
-                        <p>اعلان اول</p>
-                        <p style="font-size: 10px;color: #999999;">دوشنبه ۷ خرداد ۱۳۹۷</p>
-
-                    </li>
-
-                    <li class="form-group" style="    width: 100%;">
-                        <input type="button" class="form-control btn btn-sm btn-link" value="نمایش بیشتر">
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
     <?php
+    if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
+        ?>
+        <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6"
+            style="position: relative;z-index: 888;width: 100%">
+            <li class=""><img src="img/logoType.png" class="logo"></li>
+            <li style="position: relative;">
+                <div class="dropdown">
+                    <img src="img/plus.png" class="not img-responsive" id="menuLeft2" data-toggle="dropdown">
+                    <ul class="dropdown-menu center dropdown-menu-left pull-left extended tasks-bar" role="menu"
+                        aria-labelledby="menuLeft2">
+                        <div class="notify-arrow-center notify-arrow-green"></div>
+                        <li style="width: 100%">
+                            <p class="green">دوستان خود را به اینکام دعوت کنید</p>
+                        </li>
+                        <li style="width: 100%;padding: 0 10px 0 10px">
+                            <div class="form-group">
+                                <label for="input" style="color: #000;">شماره تلفن</label>
+                                <input id="input" type="text" value="09166157859" class="form-control">
+                            </div>
+                        </li>
+                        <li style="width: 100%;padding: 0 10px 0 10px">
+                            <div class="form-group">
+                                <label for="input3" style="color: #000;">متن پیام</label>
+                                <textarea rows="17" style="direction: rtl" id="input3" class="form-control" disabled>
+                                    مشترک   { شماره موبایل } شما از طریق  <?php echo $_SESSION['userName']?> به اپلیکیشن اینکام دعوت شده اید
+با اینکام خرید شارژ, بسته اینترنتی , قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کتید
+لینک دانلود اپ : www.inkam.ir/app
+توجه : در زمان ثبت نام نام معرف را <?php echo $_SESSION['userName']?> وارد کنید
+
+
+                                </textarea>
+                            </div>
+                        </li>
+                        <li style="width: 100%;padding: 0 10px 0 10px">
+                            <div class="form-group">
+                                <input type="button" value="ارسال" class="btn btn-group-vertical btn-success">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="" style="position: relative;">
+                <div class="dropdown">
+                    <?php
+                    $i = 0;
+                    $htmlMsg = "";
+                    $selectMSg = mysqli_query($conn->conn(), "
+SELECT * From noti where noti.notiUserId='$userId'
+");
+                    while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
+                        if ($rowMsg['notiView'] == 0) {
+                            $i++;
+                            $htmlMsg .='<li style="" class="noti active">
+                            <div class="notiBag" style=""></div>
+                            <p>'.$rowMsg['notiShortText'].'</p>
+                            <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
+                        </li>';
+                        }
+                        else{
+                            $htmlMsg .='<li style="" class="noti ">
+                            <div class="notiBag" style=""></div>
+                            <p>'.$rowMsg['notiShortText'].'</p>
+                            <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
+                        </li>';
+                        }
+                    }
+                    ?>
+                    <img src="img/not.png" class="not img-responsive" id="menuLeft1" data-toggle="dropdown">
+                    <span class="badge bg-danger" style="left: 37px;top: 5px;background-color: red"><?php echo $i ?></span>
+                    <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
+                        aria-labelledby="menuLeft1">
+                        <div class="notify-arrow-left notify-arrow-green"></div>
+                        <?php
+                        echo '<li style="width: 100%">
+                            <p class="green">شما '.$i.' پیام جدید دارید</p>
+                        </li>';
+                        echo $htmlMsg;
+                        ?>
+
+                    </ul>
+                </div>
+            </li>
+            <li style="position: relative;">
+                <div class="dropdown">
+                    <?php
+                        $i = 0;
+                        $htmlMsg = "";
+                        $selectMSg = mysqli_query($conn->conn(), "
+SELECT * From msg where msg.msgUserId='$userId'
+");
+                        while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
+                            if ($rowMsg['msgView'] == 0) {
+                                $i++;
+                                $htmlMsg .='<li style="" class="noti active">
+                            <div class="notiBag" style=""></div>
+                            <h5 style="text-align: right;margin: 0 0 10px 0px;">'.$rowMsg['msgShortText'].'</h5>
+                            <p>'.$rowMsg['msgLongText'].'</p>
+                            <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
+                        </li>';
+                            }
+                            else{
+                                $htmlMsg .=' <li style="" class="noti">
+                            <h6 style="    text-align: right;margin: 0 0 10px 0px;">'.$rowMsg['msgShortText'].'</h6>
+                            <p>'.$rowMsg['msgLongText'].'</p>
+                            <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
+                        </li>';
+                            }
+                        }
+?>
+                    <img src="img/msg.png" class="not img-responsive" id="menuLeft3" data-toggle="dropdown">
+                    <span class="badge bg-primary" style="left: 37px;top: 5px;background-color: orange"><?php echo $i ?></span>
+                    <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
+                        aria-labelledby="menuLeft1">
+                        <div class="notify-arrow-left notify-arrow-green"></div>
+                       <?php
+                        echo '<li style="width: 100%">
+                            <p class="green">شما '.$i.' پیام جدید دارید</p>
+                        </li>';
+                        echo $htmlMsg;
+                        ?>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <?php
+    }
     if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
         $display = true;
         ?>
@@ -498,15 +507,16 @@ session_start();
 
                 <div class="form-group" style="margin-top: 50px;display: none" id="Baste">
                     <div style="width: 100%" id="modelSim">
-                        <p  style="padding: 0px;color:#fff;">
-                                    نوع سیمکارت  را انتخاب کنید
-                                </p>
+                        <p style="padding: 0px;color:#fff;">
+                            نوع سیمکارت را انتخاب کنید
+                        </p>
                         <div class="row">
                             <div class="col-md-4 col-xs-4 col-sm-4"
                                  style="text-align: center;float: right"
                                  id="Sli4">
                                 <div class="bgRightellModel" onclick="ActiveThis('btnModel23')" id="btnModel23">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                         class="logoSmall">
 
                                     دیتا
                                     <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
@@ -517,7 +527,8 @@ session_start();
                                  style="text-align: center;float: right"
                                  id="Sli2">
                                 <div class="bgIrancellMode" onclick="ActiveThis('btnModel24')" id="btnModel24">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                         class="logoSmall">
 
                                     دایمی
                                     <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;"
@@ -528,18 +539,20 @@ session_start();
                                  style="text-align: center;float: right"
                                  id="Sli3">
                                 <div class="bgHamrahMode" onclick="ActiveThis('btnModel25')" id="btnModel25">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                         class="logoSmall">
 
                                     اعتباری
                                     <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                                          id="imgbtnModel25">
                                 </div>
                             </div>
-                        <div class="col-md-4 col-xs-4 col-sm-4  "
-                             style="text-align: center;float: right"
+                            <div class="col-md-4 col-xs-4 col-sm-4  "
+                                 style="text-align: center;float: right"
                                  id="Sli1">
                                 <div class="bgHamrahMode" onclick="ActiveThis('btnModel26')" id="btnModel26">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                         class="logoSmall">
                                     TD-LTE
                                     <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
                                          id="imgbtnModel26">
@@ -550,23 +563,32 @@ session_start();
                     <div class="form-group">
 
 
-                        <span  class="form-control"
-                          onclick="showBaste()"
-                          id="basteLong" style="display: none;margin-top: 20px">
+                        <span class="form-control"
+                              onclick="showBaste()"
+                              id="basteLong" style="display: none;margin-top: 20px">
                         مدت زمان بسته را انتخاب کنید
                     </span>
-                    <ul style="" class="priceSelect" id="basteSelect">
-                        <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Hourly">ساعتی</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Daily">روزانه</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Weekly">هفتگی</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Monthly">یک ماهه</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Two Month">دو ماهه</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Three Month">سه ماهه</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Four Month">چهار ماهه</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Six Month">شش ماهه</li>
-                        <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Yearly">یکسال</li>
-                    </ul>
+                        <ul style="" class="priceSelect" id="basteSelect">
+                            <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Hourly">ساعتی</li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Daily">روزانه</li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Weekly">هفتگی</li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Monthly">یک ماهه
+                            </li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Two Month">دو
+                                ماهه
+                            </li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Three Month">سه
+                                ماهه
+                            </li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Four Month">چهار
+                                ماهه
+                            </li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Six Month">شش
+                                ماهه
+                            </li>
+                            <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Yearly">یکسال</li>
+                        </ul>
                     </div>
                     <br>
                     <span class="form-control" style="display: none"
@@ -620,7 +642,8 @@ session_start();
     margin-top: 10px;
     top: 25px;
 direction: rtl  ">
-                                    <span type="submit" class="btn btn-success" onclick="GoBank()" style="float: right;"><span
+                                    <span type="submit" class="btn btn-success" onclick="GoBank()"
+                                          style="float: right;"><span
                                                 class="fas fa-credit-card" style="    margin-left: 15px;
     position: relative;
     top: 1px;"></span>پرداخت آنلاین
@@ -902,25 +925,26 @@ direction: rtl  ">
 
                             </select>
 
-                        <div class="form-group">
-                            <label>نوع بلیط</label>
-                            <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
-                                <option value="1">مسافرین عادی</option>
-                                <option value="2">ویژه برادران</option>
-                                <option value="3">ویژه خواهران</option>
-                                <option value="4">حمل خودرو</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label>نوع بلیط</label>
+                                <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
+                                    <option value="1">مسافرین عادی</option>
+                                    <option value="2">ویژه برادران</option>
+                                    <option value="3">ویژه خواهران</option>
+                                    <option value="4">حمل خودرو</option>
+                                </select>
+                            </div>
                             <br>
-                        <div class="form-item-wrapper busy">
-                            <label>کوپه دربستی باشد ؟ </label>
-                            <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
-                                <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
-                                <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی" href="#">بله</a>
+                            <div class="form-item-wrapper busy">
+                                <label>کوپه دربستی باشد ؟ </label>
+                                <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
+                                    <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
+                                    <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی"
+                                       href="#">بله</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
             <div class="col-md-12" id="part3Bilit" style="display:none">
@@ -1022,25 +1046,26 @@ direction: rtl  ">
 
                             </select>
 
-                        <div class="form-group">
-                            <label>نوع بلیط</label>
-                            <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
-                                <option value="1">مسافرین عادی</option>
-                                <option value="2">ویژه برادران</option>
-                                <option value="3">ویژه خواهران</option>
-                                <option value="4">حمل خودرو</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label>نوع بلیط</label>
+                                <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
+                                    <option value="1">مسافرین عادی</option>
+                                    <option value="2">ویژه برادران</option>
+                                    <option value="3">ویژه خواهران</option>
+                                    <option value="4">حمل خودرو</option>
+                                </select>
+                            </div>
                             <br>
-                        <div class="form-item-wrapper busy">
-                            <label>کوپه دربستی باشد ؟ </label>
-                            <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
-                                <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
-                                <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی" href="#">بله</a>
+                            <div class="form-item-wrapper busy">
+                                <label>کوپه دربستی باشد ؟ </label>
+                                <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
+                                    <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
+                                    <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی"
+                                       href="#">بله</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
@@ -1189,10 +1214,10 @@ direction: rtl  ">
                 </div>
                 <div class="form-group">
                     <label for="hamrahavalGhabz">شناسه قبض</label>
-                    <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="شناسه قبض">
+                    <input class="form-control" type="text" id="hamrahavalGhabz1" placeholder="شناسه قبض">
                     <br>
                     <label for="hamrahavalGhabz">شناسه پرداخت</label>
-                    <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="شناسه پرداخت">
+                    <input class="form-control" type="text" id="hamrahavalGhabz2" placeholder="شناسه پرداخت">
                 </div>
                 <span class="btnPayment">پرداخت</span>
             </div>

@@ -65,10 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         ('$idInviteCode','$mobile','$id')
         ");
         if ($insertUser && $idInviteCode) {
+            include "../inc/msg.php";
+            $msg = new msg();
+            $msg->sendMsgDefault($id,"WellCome");
             $call = array("Error"=>false,"MSG"=>null);
             echo json_encode($call);
             endfile($conn);
-
         }else{
             $call = array("Error"=>true,"MSG"=>"خطایی در سیستم رخ داده لطفا مجدد سعی نمایید.");
             echo json_encode($call);
