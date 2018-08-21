@@ -5,7 +5,7 @@ class MellatBank {
 
     private $terminal = 3635866;
     private $username = 'in979';
-    private $password = '35537144';
+    private $password = '871611984';
     private $nameSpace = "http://interfaces.core.sw.bps.com/";
 
 

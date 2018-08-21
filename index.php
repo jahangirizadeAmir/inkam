@@ -79,19 +79,16 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                         <li style="width: 100%;padding: 0 10px 0 10px">
                             <div class="form-group">
                                 <label for="input3" style="color: #000;">متن پیام</label>
-                                <textarea rows="17" style="direction: rtl" id="input3" class="form-control" disabled>
-                                    مشترک   { شماره موبایل } شما از طریق  <?php echo $_SESSION['userName']?> به اپلیکیشن اینکام دعوت شده اید
+                                <textarea rows="17" style="direction: rtl" id="input3" class="form-control" disabled>مشترک   { شماره موبایل } شما از طریق  <?php echo $_SESSION['userName']?> به اپلیکیشن اینکام دعوت شده اید
 با اینکام خرید شارژ, بسته اینترنتی , قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کتید
 لینک دانلود اپ : www.inkam.ir/app
 توجه : در زمان ثبت نام نام معرف را <?php echo $_SESSION['userName']?> وارد کنید
-
-
-                                </textarea>
+</textarea>
                             </div>
                         </li>
                         <li style="width: 100%;padding: 0 10px 0 10px">
                             <div class="form-group">
-                                <input type="button" value="ارسال" class="btn btn-group-vertical btn-success">
+                                <span class="btn btn-group-vertical btn-success">ارسال</span>
                             </div>
                         </li>
                     </ul>
