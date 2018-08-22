@@ -231,7 +231,11 @@ function checkBoxTwo(e) {
         model = 2;
     }
 }
-function profileShow(e1, e2, e3) {
+function profileShow(e1, e2, e3,e4) {
+    $('#ThreePr').removeClass("active");
+    $('#OnePr').removeClass("active");
+    $('#TwoPr').removeClass("active");
+    $('#'+e4).addClass("active");
     $('#' + e1).show();
     $('#' + e2).hide();
     $('#' + e3).hide();
@@ -459,6 +463,15 @@ function showPriceSelect(e) {
         $('#priceSelect').show();
     }
 }
+function showShaba(e) {
+    if (e.length < 3) {
+        $('#selectShaba').show();
+    }else{
+        if(e.length>0 && e.length>3){
+            $('#selectShaba').hide();
+        }
+    }
+}
 function showBaste() {
     $('#basteSelect').show();
 }
@@ -567,4 +580,33 @@ function inv() {
             }
         }
     });
+}
+function fillPricePay(e) {
+    $('#getManeyText').val(e);
+}
+function fillShaba(e) {
+    $.ajax({
+        url:'ajax/shabaGet.php',
+        data:{
+            id: e
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+
+                $("#shaba").val(data['shabaNumber']);
+                $("#BankShaba").val(data['shabaBank']);
+                $("#selectShaba").hide();
+            }
+        }
+    });
+}
+function SendRequestGetMoney() {
+    let price, shaba, bankName;
+    price = $("#getManeyText2").val();
+    shaba=$("#shaba").val();
+    bankName = $("#BankShaba").val();
+
+
 }

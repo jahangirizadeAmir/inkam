@@ -483,14 +483,12 @@ tr td:last-child{
     cursor: pointer;
 }
 ul.dropdown-menu.extended.logout {
-    max-width: 80% !important;
-    min-width: 80% !important;
+     min-width: 42% !important;
     width: 235px !important;
     padding: 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;
     border: none !important;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
+    border-radius: 10px;
     top: 49px;
     right: 52px;
     float: right;
@@ -503,33 +501,59 @@ ul.dropdown-menu.extended.logout {
 }
 
 .dropdown-menu.extended li span {
-    padding: 15px 10px !important;
     width: 100%;
     display: inline-block;
+    margin-bottom: 10px;
 }
 .dropdown-menu.extended li a {
-    border-bottom: 1px solid #EBEBEB !important;
     font-size: 12px;
     list-style: none;
+    padding: 26px 10px 26px 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 3px solid #36758b;
 }
 
 .Circle div{
     border-radius: 100%;
     color: #ffffff;
-    padding: 60px;
+    width: 100px;
+    height: 100px;
+    position: relative;
 }
 .oneCircle{
-    background: #d63031;
+    background: #f6f6f6;
+    border: 2px solid #d9d9d9;
+    margin: auto;
 }
-.twoCircle{
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff719+0,fff719+10,fff719+25,fff719+37,fff719+50,00ff0c+51,00ff0c+83,00ff0c+100 */
-    background: #ffeaa7; /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #ffeaa7 0%, #ffeaa7 10%, #ffeaa7 25%, #ffeaa7 37%, #ffeaa7 50%, #55efc4 51%, #55efc4 83%, #55efc4 100%); /* FF3.6-15 */
-    background: linear-gradient(135deg, #ffeaa7 0%,#ffeaa7 10%,#ffeaa7 25%,#ffeaa7 37%,#ffeaa7 50%,#55efc4 51%,#55efc4 83%,#55efc4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeaa7', endColorstr='#55efc4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+.twoCircle {
+    margin: auto;
+    background: #f6f6f6;
+    border: 2px solid #d9d9d9;
 }
 .threeCircle{
-    background: #3498db;
+    margin: auto;
+    background: #f6f6f6;
+    border: 2px solid #d9d9d9;
+}
+.dropdown-menu.extended li a.active{
+    color: #ffffff;
+    background:#3a7f8f ;
+}
+.oneCircle:hover,.twoCircle:hover,.threeCircle:hover,.dropdown-menu.extended li a:hover{
+    color: #ffffff;
+    background:#3a7f8f ;
+}
+.oneCircle:hover span,.twoCircle:hover span,.threeCircle:hover span{
+    color: #ffffff;
+}
+.oneCircle span{
+    color: #000;
+}.twoCircle span{
+    color: #000;
+}.threeCircle span{
+    color: #000;
 }
 
 .bgRightellModel{
@@ -686,4 +710,25 @@ div#searchForm label {
 }
 .logoSmall{
     left:20px!important;
+}
+.btn-info2{
+    color:#000000;
+    border:2px solid #3a7f8f;
+}
+.btn-info2:hover{
+    color: #ffffff;
+    background: #3a7f8f;
+
+}
+.sul_verticallSplitter {
+    width: 1px;
+    float: right;
+    background-color: lightgray;
+    height: 200px;
+    margin-top: 36px;
+    position: absolute;
+    right: 0;
+}
+#payMoney div div input[type=button]{
+    margin-left: 10px;
 }

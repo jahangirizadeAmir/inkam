@@ -37,7 +37,6 @@ class PaySharj
                 $this->percentAgentInv = 1;
                 $this->percentUserInv = 1;
             }
-
         }
         if($operator=="2"){
                     if($model=="1") {
