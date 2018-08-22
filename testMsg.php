@@ -9,4 +9,4 @@ include "inc/msg.php";
 
 $msg = new msg();
 
-$msg->sendMsgDefault("20180821160232219813","WellCome");
+$msg->sendMsg("20180821160232219813","WellCome");

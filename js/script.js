@@ -551,3 +551,20 @@ function changeSrcImg(id) {
 function GoBank() {
     window.location.href="goBank.php?price="+price;
 }
+function inv() {
+    var mobile = $('#input3').val();
+    $.ajax({
+        url:'ajax/invSend.php',
+        data:{
+            mobile: mobile
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $("#okInv").text("پیام شما با موفقیت به شماره "+mobile+' ارسال شد .').show();
+                $("#menuLeft2").click();
+            }
+        }
+    });
+}

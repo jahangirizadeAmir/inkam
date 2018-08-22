@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
            ");
 
         if(mysqli_num_rows($selectUser)==0){
-            $call = array('Error'=>true);
+            $call = array('Error'=>$pwd);
         }else{
             $userRow = mysqli_fetch_assoc($selectUser);
             $userName = $userRow['userFullname'];

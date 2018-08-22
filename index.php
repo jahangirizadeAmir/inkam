@@ -55,40 +55,51 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
 </div>
 
 <div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 888;margin-bottom: 15px">
-    <?php
-    if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
-        ?>
+
         <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6"
             style="position: relative;z-index: 888;width: 100%">
             <li class=""><img src="img/logoType.png" class="logo"></li>
+            <?php
+            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
+            ?>
             <li style="position: relative;">
                 <div class="dropdown">
                     <img src="img/plus.png" class="not img-responsive" id="menuLeft2" data-toggle="dropdown">
                     <ul class="dropdown-menu center dropdown-menu-left pull-left extended tasks-bar" role="menu"
                         aria-labelledby="menuLeft2">
                         <div class="notify-arrow-center notify-arrow-green"></div>
+
                         <li style="width: 100%">
                             <p class="green">دوستان خود را به اینکام دعوت کنید</p>
+                        </li>
+
+                        <li>
+                            <div class="alert alert-success" id="okInv"
+                                 style="direction: rtl;text-align: right;display: none">
+
+                            </div>
                         </li>
                         <li style="width: 100%;padding: 0 10px 0 10px">
                             <div class="form-group">
                                 <label for="input" style="color: #000;">شماره تلفن</label>
-                                <input id="input" type="text" value="09166157859" class="form-control">
+                                <input id="input3" type="text" value="" onkeydown="complateInvMSG()" onkeyup="complateInvMSG()" placeholder="" class="form-control">
                             </div>
                         </li>
                         <li style="width: 100%;padding: 0 10px 0 10px">
                             <div class="form-group">
-                                <label for="input3" style="color: #000;">متن پیام</label>
-                                <textarea rows="17" style="direction: rtl" id="input3" class="form-control" disabled>مشترک   { شماره موبایل } شما از طریق  <?php echo $_SESSION['userName']?> به اپلیکیشن اینکام دعوت شده اید
-با اینکام خرید شارژ, بسته اینترنتی , قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کتید
-لینک دانلود اپ : www.inkam.ir/app
-توجه : در زمان ثبت نام نام معرف را <?php echo $_SESSION['userName']?> وارد کنید
-</textarea>
+                                <p  style="direction: rtl;height: auto" id="msgInv" class="form-control" disabled>مشترک <span id="InvTellShow" style="color: #000000;
+    width: auto;
+    padding: 0!important;">شماره تلفن</span> شما از طریق  <?php echo $_SESSION['userName']?> به اپلیکیشن اینکام دعوت شده اید
+                                    با اینکام خرید شارژ, بسته اینترنتی , قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کتید
+                                    لینک دانلود اپ : www.inkam.ir/app
+                                    توجه : در زمان ثبت نام نام معرف را <?php echo $_SESSION['userName']?> وارد کنید
+
+                                </p>
                             </div>
                         </li>
                         <li style="width: 100%;padding: 0 10px 0 10px">
                             <div class="form-group">
-                                <span class="btn btn-group-vertical btn-success">ارسال</span>
+                                <p onclick="inv()" class="btn btn-group-vertical btn-success">ارسال</>
                             </div>
                         </li>
                     </ul>
@@ -99,20 +110,22 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                     <?php
                     $i = 0;
                     $htmlMsg = "";
+                    $cot="'";
+
                     $selectMSg = mysqli_query($conn->conn(), "
-SELECT * From noti where noti.notiUserId='$userId'
+SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
 ");
                     while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                         if ($rowMsg['notiView'] == 0) {
                             $i++;
-                            $htmlMsg .='<li style="" class="noti active">
+                            $htmlMsg .='<li style="" class="noti active" onclick="showModalMsg('.$cot.$rowMsg["notiId"].$cot.','.$cot.'noti'.$cot.')">
                             <div class="notiBag" style=""></div>
                             <p>'.$rowMsg['notiShortText'].'</p>
                             <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
                         </li>';
                         }
                         else{
-                            $htmlMsg .='<li style="" class="noti ">
+                            $htmlMsg .='<li style="" class="noti " onclick="showModalMsg('.$cot.$rowMsg["notiId"].$cot.','.$cot.'noti'.$cot.')">
                             <div class="notiBag" style=""></div>
                             <p>'.$rowMsg['notiShortText'].'</p>
                             <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
@@ -141,12 +154,12 @@ SELECT * From noti where noti.notiUserId='$userId'
                         $i = 0;
                         $htmlMsg = "";
                         $selectMSg = mysqli_query($conn->conn(), "
-SELECT * From msg where msg.msgUserId='$userId'
+SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
 ");
                         while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                             if ($rowMsg['msgView'] == 0) {
                                 $i++;
-                                $htmlMsg .='<li style="" class="noti active">
+                                $htmlMsg .='<li style="" onclick="showModalMsg('.$cot.$rowMsg["msgId"].$cot.','.$cot.'msg'.$cot.')" class="noti active">
                             <div class="notiBag" style=""></div>
                             <h5 style="text-align: right;margin: 0 0 10px 0px;">'.$rowMsg['msgShortText'].'</h5>
                             <p>'.$rowMsg['msgLongText'].'</p>
@@ -154,7 +167,7 @@ SELECT * From msg where msg.msgUserId='$userId'
                         </li>';
                             }
                             else{
-                                $htmlMsg .=' <li style="" class="noti">
+                                $htmlMsg .=' <li style="" onclick="showModalMsg('.$cot.$rowMsg["msgId"].$cot.','.$cot.'msg'.$cot.')" class="noti">
                             <h6 style="    text-align: right;margin: 0 0 10px 0px;">'.$rowMsg['msgShortText'].'</h6>
                             <p>'.$rowMsg['msgLongText'].'</p>
                             <p style="font-size: 10px;color: #999999;">'.$conn->jalali($rowMsg['msgRegDate']).'</p>
@@ -1424,6 +1437,46 @@ direction: rtl  ">
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalMsgAlert" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="padding:35px 50px;">
+                <button type="button" class="close" onclick="$('#modalMsgAlert').modal('toggle')">&times;</button>
+                <h4><span class="glyphicon glyphicon-paste"></span> پیام </h4>
+            </div>
+            <div class="modal-body" style="padding:40px 50px;">
+
+                <p id="modalMsgAlretText"></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showModalMsg(e,f) {
+
+        $.ajax({
+            url:'ajax/getMsg.php',
+            data:{
+                id: e,
+                model: f
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                if(data["Error"]===false){
+                    $('#modalMsgAlert').modal();
+                    $("#modalMsgAlretText").text(data['MSG']);
+                }
+            }
+        });
+    }
+    function complateInvMSG() {
+        $("#InvTellShow").text($("#input3").val());
+    }
+</script>
 
 </body>
 </html>

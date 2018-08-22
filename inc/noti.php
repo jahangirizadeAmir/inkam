@@ -34,10 +34,6 @@ class noti
         }else{
     return false ;
 }
-
-
-
-
     }
     public function sendNoti($userId,$shortMsg,$msg=""){
         $userId = $this->conn->real($userId);
@@ -55,6 +51,4 @@ class noti
             return false ;
         }
     }
-
-
 }
