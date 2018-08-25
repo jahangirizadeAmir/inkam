@@ -11,12 +11,4 @@
 //$a = $sharj->pin("2","10000");
 //print_r($a);
 
-//include "inc/melatBank.php";
-//$melat = new MellatBank();
-//$melat->startPayment(3000, "http://google.com");
-
-include "inc/sharj.php";
-$sharj = new sharj();
-$a = $sharj->packges("Weekly","1","1");
-print_r($a);
 

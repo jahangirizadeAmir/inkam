@@ -54,18 +54,24 @@ class PaySharj
         }
         if($operator=="3"){
             if($model=="1") {
-                $this->percentAgent = 1.5;
-                $this->percentUser = 0.5;
-                $this->percentAgentInv = 1;
-                $this->percentUserInv = 1;
-            }
-            if($model=="2") {
+
                 $this->percentAgent = 2.5;
                 $this->percentUser = 0.5;
                 $this->percentAgentInv = 1;
                 $this->percentUserInv = 1;
+
+            }
+            if($model=="2") {
+
+                $this->percentAgent = 2.5;
+                $this->percentUser = 0.5;
+                $this->percentAgentInv = 1;
+                $this->percentUserInv = 1;
+
             }
         }
+
+
         require_once "db.php";
         $this->conn = new db();
     }
@@ -122,6 +128,20 @@ class PaySharj
         }else{
             return false;
         }
+    }
+    public function beforPay($price,$model){
+        //$model 1 =>user
+        //$model 2=>agent
+        if($model=='1'){
+            $precent = $this->percentUser;
+
+        }else if($model=='2'){
+            $precent = $this->percentAgent;
+        }else{
+            return false;
+        }
+        $last = (((int) $price / 100)*$precent)/10;
+        return round($last);
     }
 
 }

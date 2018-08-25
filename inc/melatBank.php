@@ -3,10 +3,12 @@
 class MellatBank {
 
 
-    private $terminal = 3635866;
-    private $username = 'in979';
-    private $password = '871611984';
+    private $terminal = 1535231;
+    private $username = 'pgpisp95';
+    private $password = '72711237';
     private $nameSpace = "http://interfaces.core.sw.bps.com/";
+    private $callBackUrl = "http://inkam.ir/vrf.php";
+
 
 
     public function __construct($terminal = '', $username = '', $password = '')
@@ -22,10 +24,10 @@ class MellatBank {
     }
 
 
-    public function startPayment($amount, $callBackUrl)
+    public function startPayment($amount)
     {
-            $client = new SoapClient('https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl');
 
+        $client = new SoapClient('https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl');
         $terminalId = $this->terminal ;
         $userName = $this->username;
         $userPassword = $this->password;
@@ -43,10 +45,9 @@ class MellatBank {
             'localDate' => $localDate,
             'localTime' => $localTime,
             'additionalData' => $additionalData,
-            'callBackUrl' => $callBackUrl,
+            'callBackUrl' => $this->callBackUrl,
             'payerId' => $payerId
         );
-
         $result = $client->bpPayRequest($parameters, $this->nameSpace);
         $res = $result->return;
                 $res = explode (',',$res);
@@ -57,7 +58,6 @@ class MellatBank {
                 else {
                     $this->error($ResCode);
                 }
-
     }
 
 
@@ -68,11 +68,6 @@ class MellatBank {
         $orderId = $params["SaleOrderId"];
         $verifySaleOrderId = $params["SaleOrderId"];
         $verifySaleReferenceId = $params['SaleReferenceId'];
-        $err = $client->getError();
-        if ($err) {
-            echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
-            die();
-        }
         $parameters = array(
             'terminalId'=> $this->terminal,
             'userName'=> $this->username,
@@ -80,42 +75,21 @@ class MellatBank {
             'orderId' => $orderId,
             'saleOrderId' => $verifySaleOrderId,
             'saleReferenceId' => $verifySaleReferenceId);
-        $result = $client->call('bpVerifyRequest', $parameters, 'http://interfaces.core.sw.bps.com/');
-        if ($client->fault) {
-            echo '<h2>Fault</h2><pre>';
-            print_r($result);
-            echo '</pre>';
-            die();
-        }
-        else {
-            $resultStr = $result;
-            $err = $client->getError();
-            if ($err) {
-                echo '<h2>Error</h2><pre>' . $err . '</pre>';
-                die();
-            }
-            else {
+        $result = $client->bpVerifyRequest($parameters, $this->nameSpace);
+            $resultStr = $result->return;
                 if( $resultStr == '0' ) {
                     return true;
+                }else{
+                    return false;
                 }
-            }
-        }
-        return false;
     }
-
-
-
     protected function settlePayment($params)
     {
         $client = new SoapClient( 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl' ) ;
         $orderId = $params["SaleOrderId"];
         $settleSaleOrderId = $params["SaleOrderId"];
         $settleSaleReferenceId = $params['SaleReferenceId'];
-        $err = $client->getError();
-        if ($err) {
-            echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
-            die();
-        }
+
         $parameters = array(
             'terminalId'=> $this->terminal,
             'userName'=> $this->username,
@@ -123,35 +97,21 @@ class MellatBank {
             'orderId' => $orderId,
             'saleOrderId' => $settleSaleOrderId,
             'saleReferenceId' => $settleSaleReferenceId);
-        $result = $client->call('bpSettleRequest', $parameters, 'http://interfaces.core.sw.bps.com/');
-        if ($client->fault) {
-            echo '<h2>Fault</h2><pre>';
-            print_r($result);
-            echo '</pre>';
-            die();
-        }
-        else {
-            $resultStr = $result;
-            $err = $client->getError();
-            if ($err) {
-                echo '<h2>Error</h2><pre>' . $err . '</pre>';
-                die();
-            }
-            else {
+        $result = $client->bpSettleRequest($parameters,$this->nameSpace);
+
+            $resultStr = $result->return;
+
                 if( $resultStr == '0' ) {
                     return true;
+                }else{
+                    return false;
                 }
-                return $resultStr ;
-            }
-        }
-        return false;
     }
 
 
 
     public function checkPayment($params)
     {
-;
         if( $params["ResCode"] == 0 )
         {
             if( $this->verifyPayment($params) == true ) {
@@ -161,11 +121,20 @@ class MellatBank {
                         "trans"=>$params["SaleReferenceId"]
                     );
                 }
+                else{
+                        return array(
+                            "status"=>"222"
+                        );
+                    }
+
+            }else{
+                return array(
+                    "status"=>"111"
+                );
             }
         }
         return null;
     }
-
 
     protected function postRefId($refIdValue)
     {

@@ -1,6 +1,11 @@
-var model;
-var simModel;
-var price;
+let model;
+let simModel;
+let price;
+let codeBaste;
+let amazing;
+let textSharj;
+let modelSharj;
+
 function menuShow() {
     var div = document.getElementById("menuDiv");
     div.style.display = "block";
@@ -11,7 +16,6 @@ function menuShow() {
     $('#menuDiv').removeClass('fadeOutRight').addClass('animated').addClass('fadeInRight');
     document.getElementById("menuShow").setAttribute("onclick", "hideMenu()");
 }
-
 function hideMenu() {
     var div = document.getElementById("menuDiv");
     $('#itemLeft').removeClass('blur');
@@ -56,9 +60,11 @@ function checkThis() {
     $('#AccBtnCharge').hide();
     var number = $('#number1').val();
     if (number.length > 2) {
+        $('#ContactList').hide();
         $('#checkThisIdDiv').show();
         $('#model').show();
     } else {
+        $('#ContactList').show();
         changeSrcImg("Error");
         $("#hamrah").css("background-color", "#ddd");
         $("#irancell").css("background-color", "#ddd");
@@ -232,6 +238,7 @@ function checkBoxTwo(e) {
     }
 }
 function profileShow(e1, e2, e3,e4) {
+    $("#getManeyText").val("");
     $('#ThreePr').removeClass("active");
     $('#OnePr').removeClass("active");
     $('#TwoPr').removeClass("active");
@@ -241,6 +248,45 @@ function profileShow(e1, e2, e3,e4) {
     $('#' + e3).hide();
 }
 function ActiveThis(e) {
+    if(e=="btnModel1"){
+        if(model==3) {
+            textSharj = " شارژ‌ مستقیم همراه اول"
+            modelSharj='1';
+        }
+    }
+    if(e=="btnModel2"){
+        if(model==1) {
+            textSharj = "کد شارژ‌ رایتل"
+        }if(model==2) {
+            textSharj = "کد شارژ ایرانسل"
+        }if(model==3) {
+            textSharj = "کد شارژ همراه اول"
+        }
+        modelSharj='2';
+    }
+    if(e=="btnModel5"){
+        modelSharj='1';
+        amazing = "true";
+        if(model==1) {
+            textSharj = "شارژ شگفت انگیز رایتل"
+        }if(model==2) {
+            textSharj = "شارژ شگفت انگیز ایرانسل"
+        }
+    }else{
+        if(e=="btnModel6"){
+            modelSharj='1';
+            textSharj = "شارژ دایمی ایرانسل"
+        }if(e=="btnModel4"){
+            modelSharj='1';
+            if(model==1) {
+                textSharj = "شارژ مستقیم رایتل"
+            }if(model==2) {
+                textSharj = "شارژ‌ مستقیم ایرانسل"
+            }
+        }
+        amazing = "false";
+    }
+
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
     $('#AccBtnCharge').hide();
@@ -256,7 +302,7 @@ function ActiveThis(e) {
     btnModel26 = $('#btnModel26');
     if (e === "btnModel2") {
         $('#price').show();
-        $("#lastPrice").attr('disabled','disabled');
+        $("#lastPrice").attr('disabled','disabled').val("");
 
     } else {
         $('#price').hide();
@@ -298,6 +344,8 @@ function ActiveThis(e) {
         btnModel4.removeClass("active");
         btnModel5.removeClass("active");
         btnModel6.removeClass("active");
+
+
     } else {
         btnModel1.removeClass("active");
         btnModel2.removeClass("active");
@@ -448,12 +496,25 @@ function cheangeModel(e) {
 }
 function fillPrice(e) {
     $('#lastPrice').val($('#' + e).attr("value"));
+    $('#NameFacktor').text(textSharj);
     $('#priceSelect').fadeOut();
+    $("#getManeyText").val($('#lastPrice').val());
     $('#AccBtnCharge').show();
+    $("#NumberFacktor").text("شماره سرویس : "+$('#number1').val());
+    $('#priceFacktor').text("مبلغ : "+$('#lastPrice').val()+" تومان ");
+    var toman = $('#lastPrice').val()*10;
+    beforPay(toman.toString(),modelSharj);
 }
 function CheckPrice(e) {
+    $("#NumberFacktor").text("شماره سرویس : "+$('#number1').val());
+    $('#priceFacktor').text("مبلغ : "+$('#lastPrice').val()+" تومان ");
+    $('#NameFacktor').text(textSharj);
+    $("#getManeyText").val($('#lastPrice').val());
+    var toman = $('#lastPrice').val()*10;
+    beforPay(toman.toString(),modelSharj);
     if (e.length > 1) {
         $('#priceSelect').fadeOut();
+        $('#AccBtnCharge').show();
     } else {
         $('#priceSelect').fadeIn();
     }
@@ -508,6 +569,7 @@ function showLastBaste() {
     $('#basteLastSelect').show();
 }
 function fillBasteLast(e,f,j) {
+    codeBaste = j;
     var number = $('#number1').val();
     $('#basteLast').text(e);
     $('#basteLastSelect').fadeOut();
@@ -516,8 +578,10 @@ function fillBasteLast(e,f,j) {
     price = f.replace(",","");
     $('#NameFacktor').text(e[0]);
     $("#NumberFacktor").text("شماره سرویس : "+number);
-    $('#priceFacktor').text("مبلغ : "+f+" ریال ");
-    $('#offerFacktor').text("مبلغ تخفیف شما : 0");
+    f =parseInt(price)/10;
+    $('#priceFacktor').text("مبلغ : "+f+" تومان ");
+    $("#getManeyText").val(price);
+    beforPay(price,'1');
 }
 function showModelSim() {
     //e==1 =>rightell
@@ -561,9 +625,6 @@ function changeSrcImg(id) {
     }
     $("#img" + id).attr("src", "img/radio_ok.png");
 }
-function GoBank() {
-    window.location.href="goBank.php?price="+price;
-}
 function inv() {
     var mobile = $('#input3').val();
     $.ajax({
@@ -605,8 +666,79 @@ function fillShaba(e) {
 function SendRequestGetMoney() {
     let price, shaba, bankName;
     price = $("#getManeyText2").val();
+
     shaba=$("#shaba").val();
     bankName = $("#BankShaba").val();
+    $.ajax({
+        url:'ajax/addGetMoney.php',
+        data:{
+            price: price.replace(/,/g,''),
+            shaba: shaba,
+            bankName: bankName
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===true){
 
+                $("#getMoneyError").show().text(data["MSG"]).css("background","rgba(255, 0, 0, 0.5)");
+            }else{
+                $("#getMoneyError").show().text(data["MSG"]).css("background","rgba(2, 131, 42, 0.5)");
+                $("#spanMoney").text("اعتبار فعلی شما "+data['money']+" تومان ");
 
+            }
+        }
+    });
+}
+function payMoney(e) {
+    let price = $("#getManeyText").val().replace(/,/g, '');
+    let mobile = $("#number1").val();
+    window.location.href="ajax/goToBank.php?price="+price+"&model="+e+"&code="+codeBaste+"&mobile="+mobile+'&operator='+model+'&sim='+simModel+'&azm='+amazing+'&modelSharj='+modelSharj;
+}
+function payMoneyEtebar(e) {
+    let price = $("#getManeyText").val().replace(/,/g, '');
+    let mobile = $("#number1").val();
+    window.location.href="ajax/goToBank.php?price="+price+"&model="+e+"&code="+codeBaste+"&mobile="+mobile+'&operator='+model+'&sim='+simModel+'&azm='+amazing+'&modelSharj='+modelSharj+'&etebar='+true;
+}
+function beforPay(price,model1) {
+    $.ajax({
+        url:'ajax/beforePay.php',
+        data:{
+            price: price.replace(/,/g,''),
+            model:model1,
+            operator:model
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $('#offerFacktor').text("تخفیف شما روی این محصول : "+data["percent"]+" تومان ");
+
+            }
+        }
+    });
+
+}
+function SelectNumberContact(e) {
+    $('#ContactList').hide();
+    $('#number1').val(e);
+}
+function SerachContact() {
+
+    var serach = $('#inputContact').val();
+    $.ajax({
+        url:'ajax/serachContact.php',
+        data:{
+            price: price.replace(/,/g,''),
+            model:model1,
+            operator:model
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $('#listContact').html(data[html]);
+            }
+        }
+    });
 }

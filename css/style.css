@@ -422,10 +422,15 @@ p, h5 {
 }
 
 span.menu{
+    border-radius: 7px;
     right: 60px;
     position: absolute;
-    top: 20px;
-    color: #fff;
+    top: 11px;
+    color: #000;
+    /* border: 2px solid #3b8290; */
+    background: #fff;
+    padding: 10px;
+    width: 165px;
 }
 li.noti{
     width: 100%;
@@ -483,13 +488,13 @@ tr td:last-child{
     cursor: pointer;
 }
 ul.dropdown-menu.extended.logout {
-     min-width: 42% !important;
+     min-width: 46% !important;
     width: 235px !important;
     padding: 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;
     border: none !important;
     border-radius: 10px;
-    top: 49px;
+    top: 53px;
     right: 52px;
     float: right;
     left: auto;
@@ -508,7 +513,7 @@ ul.dropdown-menu.extended.logout {
 .dropdown-menu.extended li a {
     font-size: 12px;
     list-style: none;
-    padding: 26px 10px 26px 10px;
+    padding: 26px 0px 26px 0px;
     margin-bottom: 10px;
     border-radius: 10px;
     margin-top: 10px;
@@ -731,4 +736,14 @@ div#searchForm label {
 }
 #payMoney div div input[type=button]{
     margin-left: 10px;
+}
+button.close {
+    color: white!important;
+    opacity: 1;
+    top: 7px;
+    position: relative;
+    left: 10px;
+}
+.modal-body {
+    overflow: hidden;
 }

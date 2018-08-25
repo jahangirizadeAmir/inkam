@@ -23,7 +23,9 @@ class sharj
         if($code!=null){
             $extra = array("internet"=>$code);
         }else{
-            $extra = array("amazing"=>$amazing);
+            if($amazing!="false") {
+                $extra = array("amazing" => $amazing);
+            }
         }
         $arrayTopup = array("amount"=>$amount,"mobile"=>$mobile,"operator"=>$operator,"extra"=>$extra);
         $result = $this->sendRequest($arrayTopup);
@@ -37,7 +39,7 @@ class sharj
         $list = array([$operator,$amount,1]);
         $array = array("list"=>$list);
         $result = $this->sendRequest($array);
-        if($result["status"]){
+        if(isset($result['status']) && $result['status']==true){
             return $result["pins"];
         }else{
             return false;

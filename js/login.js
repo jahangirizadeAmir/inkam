@@ -28,6 +28,7 @@ function errorHide() {
     $('#loginSubmitErrorCode').hide();
 }
 function firstLogin() {
+    $("#btnSms").html('<i class="fas fa-spinner fa-spin"></i>');
     $('#loginSubmitError').hide();
     $('#loginSubmitErrorCode').hide();
     var mobile = $('#mobile').val();
@@ -40,6 +41,7 @@ function firstLogin() {
         type: 'POST',
         success: function (data) {
             if(data['Error']===false){
+                $("#btnSms").html('بعدی');
                 if(data['Sms']===true){
                     $('#loginSubmitStep2').show();
                     $('#btnSms').hide();

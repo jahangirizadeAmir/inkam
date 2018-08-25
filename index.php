@@ -27,6 +27,7 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     <script src="js/login.js"></script>
     <script src="js/persian-date.js"></script>
     <script src="js/persian-datepicker.js"></script>
+    <script src="js/inputMask.js"></script>
 
     <link href="css/vesam.css" rel="stylesheet">
 
@@ -200,9 +201,12 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
         $display = true;
         ?>
         <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()"
-              style=""><?php echo $_SESSION['userName'] ?></span>;
+              style=""><i class="fas fa-sort-down" style="    font-size: 18px;
+    position: absolute;
+    left: 21px;
+    top: 8px;"></i> <?php echo $_SESSION['userName'] ?></span>;
         <ul class="dropdown-menu extended logout" id="menuProfile" style="display: none">
-            <div class="notify-arrow-center notify-arrow-green" style="    right: 14px;
+            <div class="notify-arrow-center notify-arrow-green" style="    right: 137px;
     border-bottom-color: white!important;
     /* border-top-color: red; */
     left: auto;"></div>
@@ -225,7 +229,7 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
     background: #3b8390;
     border-radius: 10px;
     color: #fff;
-">اعتبار فعلی شما : <?php echo toMoney($money) ?> ریال</span>
+" id="spanMoney"> فعلی شما : <?php echo toMoney($money) ?> تومان </span>
                 </p>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
                     <span>تعداد کاربران شما</span>
@@ -303,10 +307,16 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
             </li>
 
             <li class="col-md-9 col-sm-6 col-xs-12" style="padding :15px 70px 6px;display: none" id="getManey">
+                <p style="padding: 5px;
+    background: rgba(255, 0, 0, 0.5);
+    color: white;display: none" id="getMoneyError">مبلغ به درستی وارد نشده است</p>
                     <div class="form-group">
-                        <label for="getManeyText" style="color: black">مبلغ را به تومان وارد کنید</label>
-                        <input type="text" class="form-control" id="getManeyText2">
+                        <label for="getManeyText"  style="color: black">مبلغ را به تومان وارد کنید</label>
+                        <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control" id="getManeyText2">
                     </div>
+                <script>
+                    $("#getManeyText2").maskMoney();
+                </script>
                 <div class="form-group" style="position: relative;">
                 <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
                 <input class="form-control"
@@ -353,7 +363,6 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                     <div class="form-group">
                         <input type="button" value="پرداخت" onClick="SendRequestGetMoney()" class="btn btn-group-sm btn-info">
                     </div>
-
             </li>
             <li class="col-md-9 col-sm-6 col-xs-12" style="    height: 100%;
     padding: 70px;
@@ -361,37 +370,39 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
     padding-top: 51px;display: none" id="payMoney">
                 <div class="form-group" style="direction: rtl;">
                     <div class="row">
-                    <input type="button" onclick="fillPricePay('20000')" value="۲۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button" onclick="fillPricePay('50000')" value="۵۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button" onclick="fillPricePay('100000')" value="۱۰۰,۰۰۰ تومان" class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay('20,000')" value="۲۰,۰۰۰ تومان" class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay('50,000')" value="۵۰,۰۰۰ تومان" class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay('100,000')" value="۱۰۰,۰۰۰ تومان" class="btn btn-info2">
                     </div>
                     <div class="row" style="margin-top: 10px">
-                    <input type="button" onclick="fillPricePay('300000')" value="۳۰۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button" onclick="fillPricePay('500000')" value="۵۰۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button"onclick="fillPricePay('1000000')" value="۱,۰۰۰,۰۰۰ تومان" class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay('300,000')" value="۳۰۰,۰۰۰ تومان" class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay('500,000')" value="۵۰۰,۰۰۰ تومان" class="btn btn-info2">
+                    <input type="button"onclick="fillPricePay('1,000,000')" value="۱,۰۰۰,۰۰۰ تومان" class="btn btn-info2">
                     </div>
                 </div>
                     <div class="form-group">
                         <label for="getManeyText" style="color: black">می توانید مبلغ دلخواه خود را وارد کنید</label>
-                        <input type="text"  style="direction: rtl" class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText">
+                        <input data-allowzero="true" data-precision="0" data-decimal=" " type="text"  style="direction: rtl" class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText">
                     </div>
                     <div class="form-group">
-                        <input type="button" style="    background: #4fb2a0;
+                        <input type="button" onclick="payMoney('walet')" style="    background: #4fb2a0;
     color: #fff;" value="پرداخت" class="btn">
                     </div>
-
+                <script>
+                    $("#getManeyText").maskMoney();
+                </script>
             </li>
 
-            <li class="col-md-3 col-sm-6 col-xs-12"  style="    padding: 0px 20px 1px 20px;">
+            <li class="col-md-3 col-sm-6 col-xs-12"  style="padding:0px 10px 1px 10px;">
                 <div class="sul_verticallSplitter"></div>
                 <a href="#" id="OnePr" class="active"
                    onclick="profileShow('dashbord','getManey','payMoney','OnePr')">داشتبورد</a>
             </li>
-            <li class="col-md-3 col-sm-6 col-xs-12"  style="    padding: 0px 20px 1px 20px;">
+            <li class="col-md-3 col-sm-6 col-xs-12"  style="padding:0px 10px 1px 10px;">
                 <a href="#" id="TwoPr"
                    onclick="profileShow('payMoney','getManey','dashbord','TwoPr')">افزایش اعتبار</a>
             </li>
-            <li class="col-md-3 col-sm-6 col-xs-12"  style="    padding: 0px 20px 1px 20px;">
+            <li class="col-md-3 col-sm-6 col-xs-12"  style="padding:0px 10px 1px 10px;">
                 <a href="#" id="ThreePr"
                    onclick="profileShow('getManey','payMoney','dashbord','ThreePr')"> درخواست واریز اعتبار</a>
             </li>
@@ -403,7 +414,11 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
         $display = false;
 
         ?>
-        <span class="pull-right menu" id="loginSubmitBtn" onclick="$('#myModal').modal();">ورود / عضویت</span>
+        <input data-allowzero="true"  data-precision="0" data-decimal=" " type="text"  style="display: none;direction: rtl" class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText">
+
+        <span class="pull-right menu" style="    background: #fff190;
+    padding: 15px 27px 15px 27px;
+    font-size: 17px;cursor: pointer" id="loginSubmitBtn" onclick="$('#myModal').modal();">ورود / عضویت</span>
         <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()"
               style="display: none"><?php echo $_SESSION['userName'] ?></span>;
 
@@ -463,36 +478,57 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                 <input type="text" id="number1" onkeydown="checkThis()" style="" class="form-control"
                        placeholder="09*********">
             </div>
-            <div class="form-group" style="margin-bottom: -7px">
+            <?php
+            if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true) {
+                $selectContact = mysqli_query($conn->conn(),"SELECT * FROM contact where contact.contactUserId='$userId'");
 
-                <input type="text" class="form-control"
-                       style="direction: rtl"
-                       onfocus="$('.tableSearch').show()"
-                       onblur="$('.tableSearch').hide()"
-                       placeholder="نام ، شماره تلفن ،‌ شماره اختصاص یافته به کاربر">
+                ?>
+                <div class="form-group" style="margin-bottom: -7px;position: relative" id="ContactList">
+                    <input type="text" class="form-control"
+                           style="direction: rtl"
+                           onfocus="$('.tableSearch').show()"
+                           onblur="$('.tableSearch').hide()"
+                           onkeypress="SerachContact()"
+                           id="inputContact"
+                           placeholder="نام ، شماره تلفن ،‌ شماره اختصاص یافته به کاربر">
+                    <table style="position: absolute" class="tableSearch">
+                        <thead>
+                        <tr>
+                            <th>شماره اختصاص یافته به کاربر</th>
+                            <th>نام</th>
+                            <th>شماره تلفن همراه</th>
+                        </tr>
+                        </thead>
+                        <tbody id="listContact">
+                        <?php
+                        if(mysqli_num_rows($selectContact)==0){
+                        ?>
+                            <tr>
+                                <td>0</td>
+                                <td>کاربری موجود نیست</td>
+                                <td>***********</td>
+                            </tr>
+                        <?php
+                        }else{
+                            while ($rowContact =mysqli_fetch_assoc($selectContact)){
+                                ?>
+                                <tr onclick="SelectNumberContact('<?php echo $rowContact['contactMobile']?>')">
+                                    <td><?php echo $rowContact['contactNum']?></td>
+                                    <td><?php echo $rowContact['contactName']?></td>
+                                    <td><?php echo $rowContact['contactMobile']?></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
 
-                <table style="" class="tableSearch">
-                    <thead>
-                    <tr>
-                        <th>شماره اختصاص یافته به کاربر</th>
-                        <th>نام</th>
-                        <th>شماره تلفن همراه</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>امیر</td>
-                        <td>۰۹۱۶۶۱۵۷۸۵۹</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>امیر</td>
-                        <td>۰۹۱۶۶۱۵۷۸۵۹</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+            }
+            ?>
             <br>
             <div class="row" id="operatorList">
                 <div class="col-md-2 col-xs-2 col-sm-2
@@ -603,19 +639,21 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                 </div>
             </div>
             <div>
-                <div class="form-group" style="margin-top: 20px;display: none" id="price">
+                <div class="form-group" style="margin-top: 20px;display: none" id="price"
+                     onclick="showPriceSelect(document.getElementById('lastPrice').value)">
                     <label>مبلغ شارژ را وارد کنید</label>
                     <input class="form-control"
                            onfocus="showPriceSelect(this.value)"
                            onkeydown="CheckPrice(this.value)"
+                           onkeyup="CheckPrice(this.value)"
                            type="text" placeholder="مبلغ به تومان" id="lastPrice">
                     <ul style="" class="priceSelect" id="priceSelect">
                         <li>می توانید یکی از مبالغ زیر را انتخاب کنید</li>
-                        <li id="li1" onclick="fillPrice('li1')" value="10000">10,000</li>
-                        <li id="li2" onclick="fillPrice('li2')" value="20000">20,000</li>
-                        <li id="li3" onclick="fillPrice('li3')" value="30000">50,000</li>
-                        <li id="li4" onclick="fillPrice('li4')" value="40000">10,0000</li>
-                        <li id="li5" onclick="fillPrice('li5')" value="50000">20,0000</li>
+                        <li id="li1" onclick="fillPrice('li1')" value="1000">1,000</li>
+                        <li id="li2" onclick="fillPrice('li2')" value="2000">2,000</li>
+                        <li id="li3" onclick="fillPrice('li3')" value="5000">5,000</li>
+                        <li id="li4" onclick="fillPrice('li4')" value="10000">10,0000</li>
+                        <li id="li5" onclick="fillPrice('li5')" value="20000">20,0000</li>
                     </ul>
                 </div>
 
@@ -756,7 +794,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
     margin-top: 10px;
     top: 25px;
 direction: rtl  ">
-                                    <span type="submit" class="btn btn-success" onclick="GoBank()"
+                                    <span type="submit" class="btn btn-success" onclick="payMoney('baste')"
                                           style="float: right;"><span
                                                 class="fas fa-credit-card" style="    margin-left: 15px;
     position: relative;
@@ -765,7 +803,7 @@ direction: rtl  ">
                                         <?php
                                         if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
                                             ?>
-                                            <button type="submit" class="btn btn-info " style="float: left;"><span
+                                            <button type="submit" class="btn btn-info " onclick="payMoneyEtebar('baste')" style="float: left;"><span
                                                         style="    margin-left: 15px;
     position: relative;
     top: 1px;"
@@ -1372,7 +1410,8 @@ direction: rtl  ">
         <div class="modal-content">
             <div class="modal-header" style="padding:35px 50px;">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4><span class="glyphicon glyphicon-lock"></span> ورود / عضویت</h4>
+                <h4><span class="glyphicon glyphicon-user" style="    position: relative;
+    top: 5px;"></span> ورود / عضویت</h4>
             </div>
             <div class="modal-body" style="padding:40px 50px;">
                 <div class="alert alert-danger" id="loginSubmitError"
@@ -1385,32 +1424,57 @@ direction: rtl  ">
                 </div>
                 <p>برای ورود یا ثبت نام شماره تلفن همراه خود را وارد کنید</p>
                 <br>
-                <form role="form">
-                    <div class="form-group">
-                        <label for="mobile" style="color:black">شماره تماس</label>
-                        <input type="text" class="form-control" id="mobile" placeholder="۰۹*********">
+                <div class="col-xs-12">
+
+                <div class="form-group input-group has-feedback">
+                    <input type="text" id="mobile"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                           dir="ltr"
+                           style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                           >
+                    <i class="fa fa-phone fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon">شماره تماس</div>
+
                     </div>
+                </div>
+
+
                     <div class="form-group" id="loginSubmitStep2" style="display: none">
                         <br>
                         <p>لطفا کد دریافتی در تلفن همراه خود را وارد کنید</p>
-                        <label for="code" style="color:black">کد دریافتی</label>
-                        <input type="text" class="form-control" id="code" placeholder="****">
+
+                        <div class="col-xs-12">
+
+                            <div class="form-group input-group has-feedback">
+                                <input type="text" id="code"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                                       dir="ltr"
+                                       style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                                >
+                                <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                                <div class="input-group-addon">کد دریافتی</div>
+
+                            </div>
+                        </div>
+
                         <br>
-                        <span onclick="firstLogin()" id="btnSms1" class="btn btn-info pull-right ">ارسال مجدد کد
+                        <span onclick="firstLogin()" id="btnSms1" class="btn btn-info pull-left ">ارسال مجدد کد
                         </span>
-                        <span onclick="submitCode()" id="btnSms2" class="btn btn-success pull-left "> تایید کد
+                        <span onclick="submitCode()" id="btnSms2" class="btn btn-success pull-right "> تایید کد
                         </span>
                     </div>
-
-                    <span onclick="firstLogin()" id="btnSms" class="btn btn-success btn-block "> ورود
+<div class="col-xs-12">
+                    <span onclick="firstLogin()" id="btnSms" class="btn btn-success btn-block ">بعدی
                     </span>
-                </form>
+</div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" onclick="hideFirstLogin()" class="btn btn-danger  pull-left" data-dismiss="modal"><span
-                            class="glyphicon glyphicon-remove"></span> انصراف
-                </button>
-            </div>
+
         </div>
     </div>
 </div>
@@ -1466,15 +1530,25 @@ direction: rtl  ">
                 <div class="alert alert-danger" id="loginError" style="direction: rtl;text-align: right;display: none;">
                     <p id="">نام کاربری یا رمز عبور اشتباه است.</p>
                 </div>
-                <form role="form">
-                    <div class="form-group">
-                        <label for="name" style="color:black">password</label>
-                        <input type="password" class="form-control" id="password" placeholder="رمز عبور">
+                <div class="col-xs-12">
+
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="password"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                        >
+                        <i class="fa fa-lock fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon">رمز عبور</div>
+
                     </div>
-                    <button type="button" onclick="login('')" class="btn btn-success btn-block"><span
-                                class="glyphicon glyphicon-off"></span>ورود
+                </div>
+
+                    <button type="button" onclick="login('')" class="btn btn-success btn-block">ورود
                     </button>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger btn-default pull-left"
@@ -1556,6 +1630,197 @@ direction: rtl  ">
         </div>
     </div>
 </div>
+
+<?php
+if(isset($_POST['mode']) && $_POST['mode']!=''){
+    $model = $_POST['mode'];
+    if($model==1){
+        $textModel = "افزایش اعتبار";
+    }
+    if($model==2){
+        $textModel="خرید بسته اینترنتی";
+    }
+    if($model==3){
+        $textModel="خرید شارژ مستقیم ";
+    }
+    if($model==4){
+        $textModel="خرید پین ";
+    }
+?>
+    <div class="modal fade" id="modalPay" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+                    <button type="button" class="close" onclick="$('#modalPay').modal('toggle');$('#nameUser').click()">&times;</button>
+                    <h4>  <?php echo $textModel ?> با موفقیت انجام شد </h4>
+                </div>
+                <?php
+                if($model==1){
+                ?>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <p id="modalMsgAlretText">
+                        شماره پیگیری تراکنش :
+                        <?php echo $_POST['refId'] ?>
+                        <br>
+                        <br>
+                        مبلغ :
+                        <?php echo toMoney($_SESSION['price']) ?>
+                        تومان
+                        <br>
+                        <br>
+                         اعتبار فعلی شما :
+                        <?php echo toMoney($money)?>
+                        تومان
+                    </p>
+                <?php
+                }
+                ?>
+                <?php
+                if($model==2){
+                ?>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <p id="modalMsgAlretText">
+                        شماره پیگیری تراکنش :
+                        <?php echo $_POST['refId'] ?>
+                        <br>
+                        <br>
+                        مبلغ :
+                        <?php echo toMoney($_SESSION['price']/10) ?>
+                        تومان
+                        <br>
+                        <br>
+                        شماره سرویس :
+                        <?php echo $_POST['mobile'] ?>
+                    </p>
+                <?php
+                }
+                ?>
+
+                <?php
+                if($model==3){
+                ?>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <p id="modalMsgAlretText">
+                            شماره پیگیری تراکنش :
+                            <?php echo $_POST['refId'] ?>
+                            <br>
+                            <br>
+                            مبلغ :
+                            <?php echo toMoney($_SESSION['price']) ?>
+                            تومان
+                            <br>
+                            <br>
+                            شماره سرویس :
+                            <?php echo $_POST['mobile'] ?>
+                        </p>
+                <?php
+                }
+                ?>
+
+                <?php
+                if($model==4){
+                ?>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <p id="modalMsgAlretText">
+                            شماره پیگیری تراکنش :
+                            <?php echo $_POST['refId'] ?>
+                            <br>
+                            <br>
+                            مبلغ :
+                            <?php echo toMoney($_SESSION['price']) ?>
+                            تومان
+                            <br>
+                            <br>
+                            شماره پین :
+                            <?php echo $_POST['pin'] ?>
+                            <br>
+                            <br>
+                            شماره سریال :
+                            <?php echo $_POST['serial'] ?>
+
+                        </p>
+                <?php
+                }
+                if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
+                    ?>
+
+                        <div class="col-xs-12" style="border-top: 2px solid #e4e4e4;">
+                            <div class="alert alert-success" style="display: none;" id="SucContact">
+                                شماره با موفقیت به سیستم اضافه شد.
+                            </div>
+                            <div class="alert alert-danger" style="display: none;" id="DangerContact">
+                                وارد کردن نام اجباریست
+                            </div>
+                            <br>
+                            افزودن شماره سرویس به دفترچه تلفن
+                            <br>
+                            <input id="NumberContactAdd" value="<?php echo $_SESSION['number'] ?>" style="display: none;">
+                            <div class="form-group input-group has-feedback" style="    margin-top: 15px;">
+                                <input type="text" id="nameConctact"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                                       dir=""
+                                       style="text-align: right;
+    height: 50px;
+    padding-right: 9px;
+    padding-left: 42.5px;"
+                                >
+                                <i class="fa fa-address-book fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                                <div class="input-group-addon">نام و نام خانوادگی</div>
+
+
+                            </div>
+                            <div style="width: 100%;text-align: center">
+                            <span  class="btn btn-info2" style="cursor: pointer;" onclick="submitContact()">ثبت
+                            </span>
+                            </div>
+                            <script>
+                                function submitContact() {
+                                    $('#SucContact').hide();
+                                    $('#DangerContact').hide();
+                                    var name,mobile;
+
+                                    name = $('#nameConctact').val();
+                                    mobile = $('#NumberContactAdd').val();
+
+                                    if(name===""){
+                                        $('#DangerContact').show();
+                                    }
+                                    $.ajax({
+                                        url:'ajax/contactAdd.php',
+                                        data:{
+                                            price: price.replace(/,/g,''),
+                                            name:name,
+                                            number:mobile
+                                        },
+                                        dataType: 'json',
+                                        type: 'POST',
+                                        success: function (data) {
+                                            if(data["Error"]===false){
+
+                                                $('#SucContact').show();
+                                            }
+                                        }
+                                    });
+
+                                }
+                            </script>
+                            <?php
+                            }
+                            ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $('#modalPay').modal();
+</script>
+<?php
+}
+?>
 <script>
     function showModalMsg(e, f) {
 
