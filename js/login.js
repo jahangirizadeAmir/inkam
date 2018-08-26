@@ -59,8 +59,6 @@ function firstLogin() {
 function submit() {
 
     $('#submitError').hide();
-    $('#pwd').css("border","0px solid red");
-    $('#name').css("border","0px solid red");
     var name,pwd,code;
     name = $('#name').val();
     pwd = $('#pwd').val();

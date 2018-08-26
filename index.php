@@ -7,6 +7,9 @@ $sharj = new sharj();
 $conn = new db();
 if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     $userId = $conn->real($_SESSION['userId']);
+    $selectUser = mysqli_query($conn->conn(),"SELECT * FROM inviteCode where inviteCodeUserId='$userId' and status='1'");
+    $rowInviteCode = mysqli_fetch_assoc($selectUser);
+    $invCode = $rowInviteCode['inviteCodeText'];
 }
 ?>
 <!DOCTYPE html>
@@ -62,7 +65,7 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
 <div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 888;margin-bottom: 15px">
     <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6"
         style="position: relative;z-index: 888;width: 100%">
-        <li class=""><img src="img/logoType.png" class="logo"></li>
+        <li class=""><a href="index.php"><img src="img/logoType.png" class="logo"></a></li>
         <?php
         if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
         ?>
@@ -70,6 +73,7 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
             <div class="dropdown">
                 <img src="img/plus.png" class="not img-responsive" id="menuLeft2" data-toggle="dropdown">
                 <ul class="dropdown-menu center dropdown-menu-left pull-left extended tasks-bar" role="menu"
+                    style="width: 271px!important;"
                     aria-labelledby="menuLeft2">
                     <div class="notify-arrow-center notify-arrow-green"></div>
                     <li style="width: 100%">
@@ -91,14 +95,13 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                     <li style="width: 100%;padding: 0 10px 0 10px">
                         <div class="form-group">
                             <p style="direction: rtl;height: auto" id="msgInv" class="form-control" disabled>مشترک <span
-                                        id="InvTellShow" style="color: #000000;
+                                        id="InvTellShow" style="color: #000000;margin: 0;
     width: auto;
-    padding: 0!important;">شماره تلفن</span> شما از طریق <?php echo $_SESSION['userName'] ?> به اپلیکیشن اینکام دعوت شده
-                                اید
-                                با اینکام خرید شارژ, بسته اینترنتی , قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با
-                                معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کتید
+    padding: 0!important;">شماره تلفن</span>  شما از طرف <?php echo $_SESSION['userName'] ?> به اپلیکیشن اینکام دعوت شده اید با اینکام خرید شارژ ، بسته اینترنتی ، قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کنید
+                                <br>
                                 لینک دانلود اپ : www.inkam.ir/app
-                                توجه : در زمان ثبت نام نام معرف را <?php echo $_SESSION['userName'] ?> وارد کنید
+                                <br>
+                                توجه : در زمان ثبت نام کد معرف را <?php echo $invCode ?> وارد کنید
 
                             </p>
                         </div>
@@ -124,24 +127,23 @@ SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
                 while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                     if ($rowMsg['notiView'] == 0) {
                         $i++;
-                        $htmlMsg .= '<li style="" class="noti active" onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
-                            <div class="notiBag" style=""></div>
+                        $htmlMsg .= '<li style="" class="noti active" id="'.$rowMsg["notiId"].'" onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
+                            <div class="notiBag" id="bag'.$rowMsg["notiId"].'" style=""></div>
                             <p>' . $rowMsg['notiShortText'] . '</p>
-                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['msgRegDate']) . '</p>
+                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '</p>
                         </li>';
                     } else {
-                        $htmlMsg .= '<li style="" class="noti " onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
-                            <div class="notiBag" style=""></div>
+                        $htmlMsg .= '<li style="" id="'.$rowMsg["notiId"].'" class="noti " onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
                             <p>' . $rowMsg['notiShortText'] . '</p>
-                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['msgRegDate']) . '</p>
+                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '</p>
                         </li>';
                     }
                 }
                 ?>
                 <img src="img/not.png" class="not img-responsive" id="menuLeft1" data-toggle="dropdown">
-                <span class="badge bg-danger" style="left: 37px;top: 5px;background-color: red"><?php echo $i ?></span>
+                <span class="badge bg-danger" id="showMsgNoti" style="left: 37px;top: 5px;background-color: red"><?php echo $i ?></span>
                 <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
-                    aria-labelledby="menuLeft1">
+                    aria-labelledby="menuLeft1" style="width: 257px!important;">
                     <div class="notify-arrow-left notify-arrow-green"></div>
                     <?php
                     echo '<li style="width: 100%">
@@ -164,14 +166,14 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                 while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                     if ($rowMsg['msgView'] == 0) {
                         $i++;
-                        $htmlMsg .= '<li style="" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti active">
-                            <div class="notiBag" style=""></div>
+                        $htmlMsg .= '<li style="" id="'.$rowMsg["msgId"].'" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti active">
+                            <div class="notiBag" id="bag'.$rowMsg["msgId"].'" style=""></div>
                             <h5 style="text-align: right;margin: 0 0 10px 0px;">' . $rowMsg['msgShortText'] . '</h5>
                             <p>' . $rowMsg['msgLongText'] . '</p>
                             <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['msgRegDate']) . '</p>
                         </li>';
                     } else {
-                        $htmlMsg .= ' <li style="" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti">
+                        $htmlMsg .= ' <li style="" id="'.$rowMsg["msgId"].'" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti">
                             <h6 style="    text-align: right;margin: 0 0 10px 0px;">' . $rowMsg['msgShortText'] . '</h6>
                             <p>' . $rowMsg['msgLongText'] . '</p>
                             <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['msgRegDate']) . '</p>
@@ -180,7 +182,7 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                 }
                 ?>
                 <img src="img/msg.png" class="not img-responsive" id="menuLeft3" data-toggle="dropdown">
-                <span class="badge bg-primary"
+                <span class="badge bg-primary" id="showMsgMsg"
                       style="left: 37px;top: 5px;background-color: orange"><?php echo $i ?></span>
                 <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
                     aria-labelledby="menuLeft1">
@@ -217,19 +219,19 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
     /* padding: 10px; */
 ">
                     <?php
-                    $selectUser = mysqli_query($conn->conn(),"SELECT * FROM user where user.userId='$userId'");
+                    $selectUser = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userId'");
                     $rowSelectUser = mysqli_fetch_assoc($selectUser);
                     $money = $rowSelectUser['userMoney'];
 
                     ?>
-                <span style="
+                    <span style="
     width: auto;
     text-align: center;
     padding: 10px;
     background: #3b8390;
     border-radius: 10px;
     color: #fff;
-" id="spanMoney"> فعلی شما : <?php echo toMoney($money) ?> تومان </span>
+" id="spanMoney"> اعتبار فعلی شما : <?php echo toMoney($money) ?> تومان </span>
                 </p>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
                     <span>تعداد کاربران شما</span>
@@ -251,33 +253,45 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                     </button>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                                        <span>درآمد از خرید پنل</span>
+                    <span>درآمد از خرید پنل</span>
                     <div class="twoCircle">
                        <span style="    direction: rtl;
     font-size: 16px;
     top: 39px;
     left: 0px;
     position: absolute;">
-                            2000000
+                           <?php
+                           $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+                           $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+                           if($rowPriceOwne['sum']=='')
+                               echo '0 تومان';
+                           echo $rowPriceOwne['sum'];
+                           ?>
                         </span>
-                     </div>
-                     <button class="btn btn-info2" style="margin-top: 10px;">
+                    </div>
+                    <button class="btn btn-info2" style="margin-top: 10px;">
                         جزییات بیشتر
                     </button>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                                         <span>درآمد از خرید  کاربر</span>
+                    <span>درآمد از خرید  کاربر</span>
 
-                       <div class="threeCircle">
+                    <div class="threeCircle">
                           <span style="    direction: rtl;
     font-size: 16px;
     top: 39px;
     left: 0px;
     position: absolute;">
-                            2000000
+<?php
+$selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+$rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+if($rowPriceOwne['sum']=='')
+    echo '0 تومان';
+echo $rowPriceOwne['sum'];
+?>
                           </span>
-                       </div>
-                     <button class="btn btn-info2" style="margin-top: 10px;">
+                    </div>
+                    <button class="btn btn-info2" style="margin-top: 10px;">
                         جزییات بیشتر
                     </button>
                 </div>
@@ -310,59 +324,63 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                 <p style="padding: 5px;
     background: rgba(255, 0, 0, 0.5);
     color: white;display: none" id="getMoneyError">مبلغ به درستی وارد نشده است</p>
-                    <div class="form-group">
-                        <label for="getManeyText"  style="color: black">مبلغ را به تومان وارد کنید</label>
-                        <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control" id="getManeyText2">
-                    </div>
+                <div class="form-group">
+                    <label for="getManeyText" style="color: black">مبلغ را به تومان وارد کنید</label>
+                    <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control"
+                           id="getManeyText2">
+                </div>
                 <script>
                     $("#getManeyText2").maskMoney();
                 </script>
                 <div class="form-group" style="position: relative;">
-                <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
-                <input class="form-control"
-                       onfocus="showShaba(this.value)"
-                       onkeypress="showShaba(this.value)"
-                       type="text"  id="shaba">
-                <?php
-                $selectShaba = mysqli_query($conn->conn(),"SELECT * FROM shaba where shabaUserId = '$userId'");
-                if(mysqli_num_rows($selectShaba)>0){
-                    ?>
-                <ul style="
+                    <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
+                    <input class="form-control"
+                           onfocus="showShaba(this.value)"
+                           onkeypress="showShaba(this.value)"
+                           type="text" id="shaba">
+                    <?php
+                    $selectShaba = mysqli_query($conn->conn(), "SELECT * FROM shaba where shabaUserId = '$userId'");
+                    if (mysqli_num_rows($selectShaba) > 0) {
+                        ?>
+                        <ul style="
     position: absolute;
     width: 100%;
     border: 1px solid #e4e4e4;
 z-index: 9999999999" class="priceSelect" id="selectShaba">
-                    <li>می توانید یکی از شماره های شبا ذخیره شده را انتخاب نمایید.</li>
-                <?php
-                while ($rowSelectShaba = mysqli_fetch_assoc($selectShaba)){
-?>
-                    <li  onclick="fillShaba('<?php echo $rowSelectShaba['shabaId']?>')" >
-                        <?php echo $rowSelectShaba['shabaNumber'] ?> - <?php echo $rowSelectShaba['shabaBank'];?>
-                    </li>
+                            <li>می توانید یکی از شماره های شبا ذخیره شده را انتخاب نمایید.</li>
+                            <?php
+                            while ($rowSelectShaba = mysqli_fetch_assoc($selectShaba)) {
+                                ?>
+                                <li onclick="fillShaba('<?php echo $rowSelectShaba['shabaId'] ?>')">
+                                    <?php echo $rowSelectShaba['shabaNumber'] ?>
+                                    - <?php echo $rowSelectShaba['shabaBank']; ?>
+                                </li>
 
-                    <?php
+                                <?php
+                            }
+                            ?>
+                        </ul>
+
+                        <?php
                     }
                     ?>
-                </ul>
-
-                    <?php
-                }
-                ?>
 
                 </div>
                 <div class="form-group">
                     <label for="getManeyText" style="color: black">نام بانک را وارد کنید</label>
                     <input class="form-control"
-                       type="text"  id="BankShaba">
+                           type="text" id="BankShaba">
                 </div>
                 <div class="form-group">
                     <span style="float: right;color: #000000;width: auto;position: relative;top: 6px;margin-left: 5px;">ذخیره سازی شبا</span>
                     <input type="checkbox" id="shabaSave" checked>
                     <label for="go"></label>
                 </div>
-                    <div class="form-group">
-                        <input type="button" value="پرداخت" onClick="SendRequestGetMoney()" class="btn btn-group-sm btn-info">
-                    </div>
+                <div class="form-group">
+                    <input type="button" value="ثبت" style="    background: #4fb2a0;
+    color: #fff;" onClick="SendRequestGetMoney()"
+                           class="btn btn-group-sm btn-info">
+                </div>
             </li>
             <li class="col-md-9 col-sm-6 col-xs-12" style="    height: 100%;
     padding: 70px;
@@ -370,39 +388,46 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
     padding-top: 51px;display: none" id="payMoney">
                 <div class="form-group" style="direction: rtl;">
                     <div class="row">
-                    <input type="button" onclick="fillPricePay('20,000')" value="۲۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button" onclick="fillPricePay('50,000')" value="۵۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button" onclick="fillPricePay('100,000')" value="۱۰۰,۰۰۰ تومان" class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay('20,000')" value="۲۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay('50,000')" value="۵۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay('100,000')" value="۱۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
                     </div>
                     <div class="row" style="margin-top: 10px">
-                    <input type="button" onclick="fillPricePay('300,000')" value="۳۰۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button" onclick="fillPricePay('500,000')" value="۵۰۰,۰۰۰ تومان" class="btn btn-info2">
-                    <input type="button"onclick="fillPricePay('1,000,000')" value="۱,۰۰۰,۰۰۰ تومان" class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay('300,000')" value="۳۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay('500,000')" value="۵۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay('1,000,000')" value="۱,۰۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
                     </div>
                 </div>
-                    <div class="form-group">
-                        <label for="getManeyText" style="color: black">می توانید مبلغ دلخواه خود را وارد کنید</label>
-                        <input data-allowzero="true" data-precision="0" data-decimal=" " type="text"  style="direction: rtl" class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText">
-                    </div>
-                    <div class="form-group">
-                        <input type="button" onclick="payMoney('walet')" style="    background: #4fb2a0;
+                <div class="form-group">
+                    <label for="getManeyText" style="color: black">می توانید مبلغ دلخواه خود را وارد کنید</label>
+                    <input data-allowzero="true" data-precision="0" data-decimal=" " type="text" style="direction: rtl"
+                           class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText">
+                </div>
+                <div class="form-group">
+                    <input type="button" onclick="payMoney('walet')" style="    background: #4fb2a0;
     color: #fff;" value="پرداخت" class="btn">
-                    </div>
+                </div>
                 <script>
                     $("#getManeyText").maskMoney();
                 </script>
             </li>
 
-            <li class="col-md-3 col-sm-6 col-xs-12"  style="padding:0px 10px 1px 10px;">
+            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
                 <div class="sul_verticallSplitter"></div>
                 <a href="#" id="OnePr" class="active"
-                   onclick="profileShow('dashbord','getManey','payMoney','OnePr')">داشتبورد</a>
+                   onclick="profileShow('dashbord','getManey','payMoney','OnePr')">داشبورد</a>
             </li>
-            <li class="col-md-3 col-sm-6 col-xs-12"  style="padding:0px 10px 1px 10px;">
+            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
                 <a href="#" id="TwoPr"
                    onclick="profileShow('payMoney','getManey','dashbord','TwoPr')">افزایش اعتبار</a>
             </li>
-            <li class="col-md-3 col-sm-6 col-xs-12"  style="padding:0px 10px 1px 10px;">
+            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
                 <a href="#" id="ThreePr"
                    onclick="profileShow('getManey','payMoney','dashbord','ThreePr')"> درخواست واریز اعتبار</a>
             </li>
@@ -414,11 +439,15 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
         $display = false;
 
         ?>
-        <input data-allowzero="true"  data-precision="0" data-decimal=" " type="text"  style="display: none;direction: rtl" class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText">
+        <input data-allowzero="true" data-precision="0" data-decimal=" " type="text"
+               style="display: none;direction: rtl" class="form-control" placeholder="مبلغ را به تومان وارد کنید."
+               id="getManeyText">
 
-        <span class="pull-right menu" style="    background: #fff190;
-    padding: 15px 27px 15px 27px;
-    font-size: 17px;cursor: pointer" id="loginSubmitBtn" onclick="$('#myModal').modal();">ورود / عضویت</span>
+        <span class="pull-right menu" style=" background: #ffffff;
+    padding: 6px 17px 6px 17px;
+    font-size: 17px;
+    cursor: pointer;
+    width: 140px;" id="loginSubmitBtn" onclick="$('#myModal').modal();">ورود / عضویت</span>
         <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()"
               style="display: none"><?php echo $_SESSION['userName'] ?></span>;
 
@@ -473,22 +502,31 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
     <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="
     background: rgba(66, 66, 66, 0.1);">
         <div class="col-md-6" style="margin: auto;float: none;">
+
+            <div class="alert alert-danger" id="payemtError" style="direction: rtl;display: none">
+                مبلغ یا نوع بسته خود را انتخاب کنید.
+            </div>
+
             <div class="form-group" style="margin-bottom: 20px;overflow: hidden">
                 <label for="number1">شماره برای خرید مستقیم شارژ یا دریافت کد </label>
-                <input type="text" id="number1" onkeydown="checkThis()" style="" class="form-control"
+                <input type="text" id="number1"
+                       onkeydown="checkThis()"
+                       onkeyup="checkThis()"
+                       onkeypress="checkThis()"
+                       style="" class="form-control"
                        placeholder="09*********">
             </div>
             <?php
-            if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true) {
-                $selectContact = mysqli_query($conn->conn(),"SELECT * FROM contact where contact.contactUserId='$userId'");
+            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                $selectContact = mysqli_query($conn->conn(), "SELECT * FROM contact where contact.contactUserId='$userId'");
 
                 ?>
                 <div class="form-group" style="margin-bottom: -7px;position: relative" id="ContactList">
                     <input type="text" class="form-control"
                            style="direction: rtl"
                            onfocus="$('.tableSearch').show()"
-                           onblur="$('.tableSearch').hide()"
                            onkeypress="SerachContact()"
+                           onkeydown="SerachContact()"
                            id="inputContact"
                            placeholder="نام ، شماره تلفن ،‌ شماره اختصاص یافته به کاربر">
                     <table style="position: absolute" class="tableSearch">
@@ -501,21 +539,21 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                         </thead>
                         <tbody id="listContact">
                         <?php
-                        if(mysqli_num_rows($selectContact)==0){
-                        ?>
+                        if (mysqli_num_rows($selectContact) == 0) {
+                            ?>
                             <tr>
                                 <td>0</td>
                                 <td>کاربری موجود نیست</td>
                                 <td>***********</td>
                             </tr>
-                        <?php
-                        }else{
-                            while ($rowContact =mysqli_fetch_assoc($selectContact)){
+                            <?php
+                        } else {
+                            while ($rowContact = mysqli_fetch_assoc($selectContact)) {
                                 ?>
-                                <tr onclick="SelectNumberContact('<?php echo $rowContact['contactMobile']?>')">
-                                    <td><?php echo $rowContact['contactNum']?></td>
-                                    <td><?php echo $rowContact['contactName']?></td>
-                                    <td><?php echo $rowContact['contactMobile']?></td>
+                                <tr onclick="SelectNumberContact('<?php echo $rowContact['contactNumber'] ?>')">
+                                    <td><?php echo $rowContact['contactNum'] ?></td>
+                                    <td><?php echo $rowContact['contactName'] ?></td>
+                                    <td><?php echo $rowContact['contactNumber'] ?></td>
                                 </tr>
                                 <?php
                             }
@@ -754,7 +792,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                 </div>
                 <div style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
                     <span class="btn btn-success btn-lg" style="float: none;margin: auto"
-                          onclick="$('#myModalFaktor').modal()">تایید</span>
+                          onclick="showFactor()">تایید</span>
                 </div>
 
                 <div class="modal fade" id="myModalFaktor" role="dialog">
@@ -803,7 +841,8 @@ direction: rtl  ">
                                         <?php
                                         if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
                                             ?>
-                                            <button type="submit" class="btn btn-info " onclick="payMoneyEtebar('baste')" style="float: left;"><span
+                                            <button type="submit" class="btn btn-info "
+                                                    onclick="payMoneyEtebar('baste')" style="float: left;"><span
                                                         style="    margin-left: 15px;
     position: relative;
     top: 1px;"
@@ -1378,7 +1417,7 @@ direction: rtl  ">
     <div class="footer" id="footer">
         <div class="pull-left hidden-xs hidden-sm"
              style="position: absolute;bottom: 20px;left: 20px;width: 10%">
-            <img class="img-responsive" src="img/samandehi.png">
+            <img src="https://trustseal.enamad.ir/logo.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g" alt="" onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)" style="cursor:pointer;float: right;width: 50%" id="Eb1cp9upTf96fW4g">            <img class="img-responsive"  style="cursor: pointer;width: 50%;float: right" onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=1008235&p=rfthobpdobpdmcsiuiwkxlaodshw", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=1008235&p=nbpdlymalymaaqgwodrfqftiujyn'/>
         </div>
         <span style="border-top: 1px solid #ffffff;width: auto   ">
             <span>
@@ -1426,14 +1465,14 @@ direction: rtl  ">
                 <br>
                 <div class="col-xs-12">
 
-                <div class="form-group input-group has-feedback">
-                    <input type="text" id="mobile"
-                           class="form-control input-lg ng-pristine ng-valid ng-touched"
-                           dir="ltr"
-                           style="height: 50px;padding-right: 0;
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="mobile"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 0;
     padding-left: 42.5px;"
-                           >
-                    <i class="fa fa-phone fa-fw form-control-feedback" style="float: left;
+                        >
+                        <i class="fa fa-phone fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
                         <div class="input-group-addon">شماره تماس</div>
@@ -1442,37 +1481,37 @@ direction: rtl  ">
                 </div>
 
 
-                    <div class="form-group" id="loginSubmitStep2" style="display: none">
-                        <br>
-                        <p>لطفا کد دریافتی در تلفن همراه خود را وارد کنید</p>
+                <div class="form-group" id="loginSubmitStep2" style="display: none">
+                    <br>
+                    <p>لطفا کد دریافتی در تلفن همراه خود را وارد کنید</p>
 
-                        <div class="col-xs-12">
+                    <div class="col-xs-12">
 
-                            <div class="form-group input-group has-feedback">
-                                <input type="text" id="code"
-                                       class="form-control input-lg ng-pristine ng-valid ng-touched"
-                                       dir="ltr"
-                                       style="height: 50px;padding-right: 0;
+                        <div class="form-group input-group has-feedback">
+                            <input type="text" id="code"
+                                   class="form-control input-lg ng-pristine ng-valid ng-touched"
+                                   dir="ltr"
+                                   style="height: 50px;padding-right: 0;
     padding-left: 42.5px;"
-                                >
-                                <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
+                            >
+                            <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                                <div class="input-group-addon">کد دریافتی</div>
+                            <div class="input-group-addon">کد دریافتی</div>
 
-                            </div>
                         </div>
-
-                        <br>
-                        <span onclick="firstLogin()" id="btnSms1" class="btn btn-info pull-left ">ارسال مجدد کد
-                        </span>
-                        <span onclick="submitCode()" id="btnSms2" class="btn btn-success pull-right "> تایید کد
-                        </span>
                     </div>
-<div class="col-xs-12">
+
+                    <br>
+                    <span onclick="firstLogin()" id="btnSms1" class="btn btn-info pull-left ">ارسال مجدد کد
+                        </span>
+                    <span onclick="submitCode()" id="btnSms2" class="btn btn-success pull-right "> تایید کد
+                        </span>
+                </div>
+                <div class="col-xs-12">
                     <span onclick="firstLogin()" id="btnSms" class="btn btn-success btn-block ">بعدی
                     </span>
-</div>
+                </div>
             </div>
 
         </div>
@@ -1492,27 +1531,53 @@ direction: rtl  ">
                     <p id="errorSubmit"></p>
                 </div>
                 <form role="form">
-                    <div class="form-group">
-                        <label for="name" style="color:black">نام و نام خانوادگی</label>
-                        <input type="text" class="form-control" id="name" placeholder="۰۹*********">
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="name"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 5px;
+    padding-left: 42.5px;;text-align: right;direction: rtl;font-size:16px"
+                        >
+                        <i class="fa fa-user-alt fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="font-size: 13px">نام و نام خانوادگی / فروشگاه</div>
+
                     </div>
-                    <div class="form-group">
-                        <label for="psw1" style="color:black"> رمزعبور</label>
-                        <input type="text" class="form-control" id="pwd" placeholder="رمز عبور خود را وارد کنید">
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="pwd"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                        >
+                        <i class="fa fa-lock-open fa-fw form-control-feedback" style="float: left;
+    posit`ion: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon">رمز عبور</div>
+
                     </div>
-                    <div class="form-group">
-                        <label for="psw3" style="color:black">کد معرف</label>
-                        <input type="text" class="form-control" id="codeAgent" placeholder="کدمعرف خود را وارد کنید">
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="codeAgent"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                        >
+                        <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon">کد معرف</div>
+
                     </div>
-                    <span type="button" onclick="submit()" class="btn btn-success btn-block"><span
-                                class="glyphicon glyphicon-off"></span> ثبت نام
+                    <span type="button" onclick="submit()" class="btn btn-success btn-block"> ثبت نام
                     </span>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger btn-default pull-left"
                         onclick="$('#myModal1').modal('toggle');$('#myModal').modal();"><span
-                            class="glyphicon glyphicon-remove"></span> بازگشت
+                            class="glyphicon glyphicon-arrow-left"></span> صفحه قبل
                 </button>
             </div>
         </div>
@@ -1547,13 +1612,18 @@ direction: rtl  ">
                     </div>
                 </div>
 
-                    <button type="button" onclick="login('')" class="btn btn-success btn-block">ورود
-                    </button>
+                <button type="button" onclick="login('')" class="btn btn-success btn-block">ورود
+                </button>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger btn-default pull-left"
                         onclick="$('#myModal3').modal('toggle');$('#myModa').modal();"><span
-                            class="glyphicon glyphicon-remove"></span> بازگشت
+                            class="fa fa-arrow-left"></span> صفحه قبلی
+                </button>
+                <button type="submit" class="btn btn-info  pull-right"
+                        id="SendSmsReCover"
+                        onclick="firstRecover()">
+                    بازیابی کلمه عبور
                 </button>
             </div>
         </div>
@@ -1568,20 +1638,52 @@ direction: rtl  ">
                 <h4><span class="glyphicon glyphicon-paste"></span> بازیابی کلمه عبور </h4>
             </div>
             <div class="modal-body" style="padding:40px 50px;">
+                <div class="alert alert-danger" id="ForegetError" style="direction: rtl;text-align: right;display: none;">
+                    <p id="">کد وارد شده اشتباه است.</p>
+                </div>
                 <form role="form">
-                    <div class="form-group">
-                        <label for="name" style="color:black">شماره موبایل</label>
-                        <input type="text" class="form-control" id="test" placeholder="۰۹*********">
+                    <div class="col-xs-12" id="codeRecover">
+                        <div class="form-group input-group has-feedback">
+                            <input type="text" id="nemberBack"
+                                   class="form-control input-lg ng-pristine ng-valid ng-touched"
+                                   dir="ltr"
+                                   style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                            >
+                            <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                            <div class="input-group-addon">کد دریافی</div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-success btn-block"><span
-                                class="glyphicon glyphicon-off"></span>بازیابی با پیام کوتاه
+                    <div class="col-xs-12" id="newPassword" style="display: none">
+
+                        <div class="form-group input-group has-feedback">
+                            <input type="text" id="passrecover"
+                                   class="form-control input-lg ng-pristine ng-valid ng-touched"
+                                   dir="ltr"
+                                   style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                            >
+                            <i class="fa fa-lock-open fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                            <div class="input-group-addon"> رمز عبور جدید </div>
+                        </div>
+                    </div>
+
+
+                    <button type="button" id="recoverBtn" onclick="recoverPassword()" class="btn btn-success btn-block">
+                        تایید کد
                     </button>
+
+
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger btn-default pull-left"
-                        onclick="$('#myModal12').modal('toggle')"><span
-                            class="glyphicon glyphicon-remove"></span> انصراف
+                        onclick="$('#myModal3').modal('toggle');$('#myModal12').modal();"><span
+                            class="fa fa-arrow-left"></span>صفحه قبل
                 </button>
             </div>
         </div>
@@ -1632,52 +1734,54 @@ direction: rtl  ">
 </div>
 
 <?php
-if(isset($_POST['mode']) && $_POST['mode']!=''){
-    $model = $_POST['mode'];
-    if($model==1){
-        $textModel = "افزایش اعتبار";
-    }
-    if($model==2){
-        $textModel="خرید بسته اینترنتی";
-    }
-    if($model==3){
-        $textModel="خرید شارژ مستقیم ";
-    }
-    if($model==4){
-        $textModel="خرید پین ";
-    }
+if (isset($_POST['mode']) && $_POST['mode'] != ''){
+$model = $_POST['mode'];
+if ($model == 1) {
+    $textModel = "افزایش اعتبار";
+}
+if ($model == 2) {
+    $textModel = "خرید بسته اینترنتی";
+}
+if ($model == 3) {
+    $textModel = "خرید شارژ مستقیم ";
+}
+if ($model == 4) {
+    $textModel = "خرید پین ";
+}
 ?>
-    <div class="modal fade" id="modalPay" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" style="padding:35px 50px;">
-                    <button type="button" class="close" onclick="$('#modalPay').modal('toggle');$('#nameUser').click()">&times;</button>
-                    <h4>  <?php echo $textModel ?> با موفقیت انجام شد </h4>
-                </div>
-                <?php
-                if($model==1){
-                ?>
-                <div class="modal-body" style="padding:40px 50px;">
-                    <p id="modalMsgAlretText">
-                        شماره پیگیری تراکنش :
-                        <?php echo $_POST['refId'] ?>
-                        <br>
-                        <br>
-                        مبلغ :
-                        <?php echo toMoney($_SESSION['price']) ?>
-                        تومان
-                        <br>
-                        <br>
-                         اعتبار فعلی شما :
-                        <?php echo toMoney($money)?>
-                        تومان
-                    </p>
+<div class="modal fade" id="modalPay" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="padding:35px 50px;">
+                <button type="button" class="close" onclick="$('#modalPay').modal('toggle');$('#nameUser').click()">
+                    &times;
+                </button>
+                <h4>  <?php echo $textModel ?> با موفقیت انجام شد </h4>
+            </div>
+            <?php
+            if ($model == 1){
+            ?>
+            <div class="modal-body" style="padding:40px 50px;">
+                <p id="modalMsgAlretText">
+                    شماره پیگیری تراکنش :
+                    <?php echo $_POST['refId'] ?>
+                    <br>
+                    <br>
+                    مبلغ :
+                    <?php echo toMoney($_SESSION['price']) ?>
+                    تومان
+                    <br>
+                    <br>
+                    اعتبار فعلی شما :
+                    <?php echo toMoney($money) ?>
+                    تومان
+                </p>
                 <?php
                 }
                 ?>
                 <?php
-                if($model==2){
+                if ($model == 2){
                 ?>
                 <div class="modal-body" style="padding:40px 50px;">
                     <p id="modalMsgAlretText">
@@ -1686,20 +1790,20 @@ if(isset($_POST['mode']) && $_POST['mode']!=''){
                         <br>
                         <br>
                         مبلغ :
-                        <?php echo toMoney($_SESSION['price']/10) ?>
+                        <?php echo toMoney($_SESSION['price'] / 10) ?>
                         تومان
                         <br>
                         <br>
                         شماره سرویس :
                         <?php echo $_POST['mobile'] ?>
                     </p>
-                <?php
-                }
-                ?>
+                    <?php
+                    }
+                    ?>
 
-                <?php
-                if($model==3){
-                ?>
+                    <?php
+                    if ($model == 3){
+                    ?>
                     <div class="modal-body" style="padding:40px 50px;">
                         <p id="modalMsgAlretText">
                             شماره پیگیری تراکنش :
@@ -1714,137 +1818,153 @@ if(isset($_POST['mode']) && $_POST['mode']!=''){
                             شماره سرویس :
                             <?php echo $_POST['mobile'] ?>
                         </p>
-                <?php
-                }
-                ?>
+                        <?php
+                        }
+                        ?>
 
-                <?php
-                if($model==4){
-                ?>
-                    <div class="modal-body" style="padding:40px 50px;">
-                        <p id="modalMsgAlretText">
-                            شماره پیگیری تراکنش :
-                            <?php echo $_POST['refId'] ?>
-                            <br>
-                            <br>
-                            مبلغ :
-                            <?php echo toMoney($_SESSION['price']) ?>
-                            تومان
-                            <br>
-                            <br>
-                            شماره پین :
-                            <?php echo $_POST['pin'] ?>
-                            <br>
-                            <br>
-                            شماره سریال :
-                            <?php echo $_POST['serial'] ?>
+                        <?php
+                        if ($model == 4){
+                        ?>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <p id="modalMsgAlretText">
+                                شماره پیگیری تراکنش :
+                                <?php echo $_POST['refId'] ?>
+                                <br>
+                                <br>
+                                مبلغ :
+                                <?php echo toMoney($_SESSION['price']) ?>
+                                تومان
+                                <br>
+                                <br>
+                                شماره پین :
+                                <?php echo $_POST['pin'] ?>
+                                <br>
+                                <br>
+                                شماره سریال :
+                                <?php echo $_POST['serial'] ?>
 
-                        </p>
-                <?php
-                }
-                if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
-                    ?>
+                            </p>
+                            <?php
+                            }
+                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
+                            ?>
 
-                        <div class="col-xs-12" style="border-top: 2px solid #e4e4e4;">
-                            <div class="alert alert-success" style="display: none;" id="SucContact">
-                                شماره با موفقیت به سیستم اضافه شد.
-                            </div>
-                            <div class="alert alert-danger" style="display: none;" id="DangerContact">
-                                وارد کردن نام اجباریست
-                            </div>
-                            <br>
-                            افزودن شماره سرویس به دفترچه تلفن
-                            <br>
-                            <input id="NumberContactAdd" value="<?php echo $_SESSION['number'] ?>" style="display: none;">
-                            <div class="form-group input-group has-feedback" style="    margin-top: 15px;">
-                                <input type="text" id="nameConctact"
-                                       class="form-control input-lg ng-pristine ng-valid ng-touched"
-                                       dir=""
-                                       style="text-align: right;
+                            <div class="col-xs-12" style="border-top: 2px solid #e4e4e4;">
+                                <div class="alert alert-success" style="display: none;" id="SucContact">
+                                    شماره با موفقیت به سیستم اضافه شد.
+                                </div>
+                                <div class="alert alert-danger" style="display: none;" id="DangerContact">
+                                    وارد کردن نام اجباریست
+                                </div>
+                                <br>
+                                افزودن شماره سرویس به دفترچه تلفن
+                                <br>
+                                <input id="NumberContactAdd" value="<?php echo $_SESSION['number'] ?>"
+                                       style="display: none;">
+                                <div class="form-group input-group has-feedback" style="    margin-top: 15px;">
+                                    <input type="text" id="nameConctact"
+                                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                                           dir=""
+                                           style="text-align: right;
     height: 50px;
     padding-right: 9px;
     padding-left: 42.5px;"
-                                >
-                                <i class="fa fa-address-book fa-fw form-control-feedback" style="float: left;
+                                    >
+                                    <i class="fa fa-address-book fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                                <div class="input-group-addon">نام و نام خانوادگی</div>
+                                    <div class="input-group-addon">نام و نام خانوادگی</div>
 
 
-                            </div>
-                            <div style="width: 100%;text-align: center">
-                            <span  class="btn btn-info2" style="cursor: pointer;" onclick="submitContact()">ثبت
+                                </div>
+                                <div style="width: 100%;text-align: center">
+                            <span class="btn btn-info2" style="cursor: pointer;" onclick="submitContact()">ثبت
                             </span>
-                            </div>
-                            <script>
-                                function submitContact() {
-                                    $('#SucContact').hide();
-                                    $('#DangerContact').hide();
-                                    var name,mobile;
+                                </div>
+                                <script>
+                                    function submitContact() {
+                                        $('#SucContact').hide();
+                                        $('#DangerContact').hide();
+                                        var name, mobile;
 
-                                    name = $('#nameConctact').val();
-                                    mobile = $('#NumberContactAdd').val();
+                                        name = $('#nameConctact').val();
+                                        mobile = $('#NumberContactAdd').val();
 
-                                    if(name===""){
-                                        $('#DangerContact').show();
-                                    }
-                                    $.ajax({
-                                        url:'ajax/contactAdd.php',
-                                        data:{
-                                            price: price.replace(/,/g,''),
-                                            name:name,
-                                            number:mobile
-                                        },
-                                        dataType: 'json',
-                                        type: 'POST',
-                                        success: function (data) {
-                                            if(data["Error"]===false){
-
-                                                $('#SucContact').show();
-                                            }
+                                        if (name === "") {
+                                            $('#DangerContact').show();
                                         }
-                                    });
+                                        $.ajax({
+                                            url: 'ajax/contactAdd.php',
+                                            data: {
+                                                price: price.replace(/,/g, ''),
+                                                name: name,
+                                                number: mobile
+                                            },
+                                            dataType: 'json',
+                                            type: 'POST',
+                                            success: function (data) {
+                                                if (data["Error"] === false) {
 
+                                                    $('#SucContact').show();
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                </script>
+                                <?php
                                 }
-                            </script>
-                            <?php
-                            }
-                            ?>
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-<script>
-    $('#modalPay').modal();
-</script>
-<?php
-}
-?>
-<script>
-    function showModalMsg(e, f) {
-
-        $.ajax({
-            url: 'ajax/getMsg.php',
-            data: {
-                id: e,
-                model: f
-            },
-            dataType: 'json',
-            type: 'POST',
-            success: function (data) {
-                if (data["Error"] === false) {
-                    $('#modalMsgAlert').modal();
-                    $("#modalMsgAlretText").text(data['MSG']);
-                }
+            <script>
+                $('#modalPay').modal();
+            </script>
+            <?php
             }
-        });
-    }
+            ?>
+            <script>
+                function showModalMsg(e, f) {
 
-    function complateInvMSG() {
-        $("#InvTellShow").text($("#input3").val());
-    }
-</script>
 
+                    $.ajax({
+                        url: 'ajax/getMsg.php',
+                        data: {
+                            id: e,
+                            model: f
+                        },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (data) {
+                            if (data["Error"] === false) {
+                                if(f==="msg"){
+                                    $('#modalMsgAlert').modal();
+                                    $("#modalMsgAlretText").text(data['MSG']);
+                                }
+                                $("#"+e).removeClass("active");
+                                $("#bag"+e).hide();
+                                if(data["result"]===true) {
+                                    if (f == "noti") {
+                                        let countN = $('#showMsgNoti').text();
+                                        $('#showMsgNoti').text(countN - 1);
+                                    } else if (f == "msg") {
+                                        let countN = $('#showMsgMsg').text();
+                                        $('#showMsgMsg').text(countN - 1);
+
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                function complateInvMSG() {
+                    $("#InvTellShow").text($("#input3").val());
+                }
+            </script>
+            <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="98efa367-67d2-4844-8685-f5e613094620";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 </body>
 </html>

@@ -20,12 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $userOwnerId = ''; //For IDE Don`t Show Error
         $db = new db();
         $conn = $db->conn();
-        $code = $db->real($_POST['code']);
+        $codeAgent = $db->real($_POST['code']);
         $name = $db->real( $_POST['name']);
-        $pwd =  $db->real($_POST['pwd']);
+        $pwd1 =  $db->real($_POST['pwd']);
         if (!empty($code)) {
             $selectInviteCode = mysqli_query($conn, "
-              SELECT * FROM inviteCode where inviteCodeId ='$code'");
+              SELECT * FROM inviteCode where inviteCodeText ='$codeAgent'");
             if (mysqli_num_rows($selectInviteCode) == 0) {
                 $call = array("Error" => true, "MSG" => "کاربری با این کد معرف در سیستم موجود نیست");
                 echo json_encode($call);
@@ -33,9 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 $row = mysqli_fetch_assoc($selectInviteCode);
                 $userOwnerId = $row['inviteCodeUserId'];
+                require_once "../inc/noti.php";
+                $noti = new noti();
+                $noti->sendNoti($userOwnerId,"تبریک ! ".$_SESSION['mobile']." به کاربران شما اضافه شد. ");
             }
         }
-        $pwd = passwordHash($pwd);
+        $pwd = passwordHash($pwd1);
         $id = $db->generate_id();
         $mobile = $db->real($_SESSION['mobile']);
         $code = $db->real($_SESSION['code']);
@@ -60,14 +63,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
              ");
         $idInviteCode = $db->generate_id();
         $InsertInviteCode = mysqli_query($conn, "INSERT INTO inviteCode
-        (inviteCodeId, inviteCodeText, inviteCodeUserId)
+        (inviteCodeId, inviteCodeText, inviteCodeUserId,status)
          VALUES 
-        ('$idInviteCode','$mobile','$id')
+        ('$idInviteCode','$mobile','$id','1')
         ");
         if ($insertUser && $idInviteCode) {
             include "../inc/msg.php";
             $msg = new msg();
             $msg->sendMsgDefault($id,"WellCome");
+            require_once "../inc/my_frame.php";
+            @smsForati($mobile," با سلام 
+$name عزیز 
+به اینگام خوش آمدید
+
+اطلاعات کاربری جهت ورود :
+موبایل : $mobile
+کلمه عبور : $pwd1
+
+www.inkam.ir");
             $call = array("Error"=>false,"MSG"=>null);
             echo json_encode($call);
             endfile($conn);

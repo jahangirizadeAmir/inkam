@@ -59,12 +59,17 @@ function remove(e) {
 function checkThis() {
     $('#AccBtnCharge').hide();
     var number = $('#number1').val();
-    if (number.length > 2) {
+    if(number.length > 0){
         $('#ContactList').hide();
+    }else{
+        $('#ContactList').show();
+    }
+    if (number.length > 2) {
+        ActiveThis('btnModel1');
+        $('#AccBtnCharge').show();
         $('#checkThisIdDiv').show();
         $('#model').show();
     } else {
-        $('#ContactList').show();
         changeSrcImg("Error");
         $("#hamrah").css("background-color", "#ddd");
         $("#irancell").css("background-color", "#ddd");
@@ -72,6 +77,7 @@ function checkThis() {
         $("#model2").hide();
         $('#checkThisIdDiv').hide();
         $('#model').hide();
+        $('#price').hide();
     }
     if (number.substring(0, 3) === '091' || number.substring(0, 3) === '099' || number.substring(0, 3) === '91' || number.substring(0, 3) === '99') {
         reload();
@@ -82,10 +88,15 @@ function checkThis() {
         $("#model2").hide();
         cheangeModel('3');
         model = 3;
+        $('#btnModel1').click();
     }
     if (number.substring(0, 3) === '093' || number.substring(0, 3) === "090" || number.substring(0, 3) === '094' ||
         number.substring(0, 3) === '93' || number.substring(0, 3) === "90" || number.substring(0, 3) === '94') {
         reload();
+        $('#btnModel1').click();
+
+        $('#btnModel4').click();
+
         $('#irancell').css("background-color", "#fee64d");
         $("#rightellDiv").show();
         $("#irancellDiv").hide();
@@ -94,6 +105,8 @@ function checkThis() {
         model = 2;
     }
     if (number.substring(0, 3) === "092" || number.substring(0, 3) === "92") {
+        $('#btnModel1').click();
+        $('#btnModel4').click();
         reload();
         $('#rightell').css("background-color", "#992b6c");
         $("#rightellDiv").hide();
@@ -110,7 +123,6 @@ function reload() {
 
 }
 function checkBoxOne() {
-    $('#AccBtnCharge').hide();
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
     if ($('#go').is(":checked")) {
@@ -154,6 +166,7 @@ function checkBoxOne() {
         if ($('#OneHamrah').is(":checked")) {
             $('#OneHamrah').prop('checked', false);
         }
+        ActiveThis('btnModel1');
         checkThis();
     } else {
         $('#Baste').fadeOut();
@@ -193,7 +206,6 @@ function checkBoxOne() {
 function checkBoxTwo(e) {
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
-    $('#AccBtnCharge').hide();
     btnModel1 = $('#btnModel1');
     btnModel2 = $('#btnModel2');
     btnModel3 = $('#btnModel3');
@@ -221,6 +233,7 @@ function checkBoxTwo(e) {
         $('#trabord').hide();
         cheangeModel('3');
         model = 3;
+        ActiveThis('btnModel1');
     }
     if (e === '2') {
         reload();
@@ -228,6 +241,8 @@ function checkBoxTwo(e) {
         $('#trabord').hide();
         cheangeModel('1');
         model = 1;
+        ActiveThis('btnModel1');
+        ActiveThis('btnModel4');
     }
     if (e === '3') {
         reload();
@@ -235,6 +250,8 @@ function checkBoxTwo(e) {
         $('#trabord').hide();
         cheangeModel('2');
         model = 2;
+        ActiveThis('btnModel1');
+        ActiveThis('btnModel4');
     }
 }
 function profileShow(e1, e2, e3,e4) {
@@ -289,7 +306,6 @@ function ActiveThis(e) {
 
     var btnModel1, btnModel2, btnModel3, btnModel4, btnModel5, btnModel6;
     var btnModel26, btnModel25, btnModel24, btnModel23;
-    $('#AccBtnCharge').hide();
     btnModel1 = $('#btnModel1');
     btnModel2 = $('#btnModel2');
     btnModel3 = $('#btnModel3');
@@ -722,23 +738,94 @@ function beforPay(price,model1) {
 function SelectNumberContact(e) {
     $('#ContactList').hide();
     $('#number1').val(e);
+    checkThis();
 }
 function SerachContact() {
 
     var serach = $('#inputContact').val();
+    if(serach!='') {
+        $.ajax({
+            url: 'ajax/serachContact.php',
+            data: {
+                serach: serach
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                if (data["Error"] === false) {
+                    $('#listContact').html(data['html']);
+                }
+            }
+        });
+    }
+}
+
+function firstRecover() {
+    $("#SendSmsReCover").html('<i class="fas fa-spinner fa-spin"></i>');
+
     $.ajax({
-        url:'ajax/serachContact.php',
+        url:'ajax/newRecoverPassword.php',
         data:{
-            price: price.replace(/,/g,''),
-            model:model1,
-            operator:model
         },
         dataType: 'json',
         type: 'POST',
         success: function (data) {
             if(data["Error"]===false){
-                $('#listContact').html(data[html]);
+                $('#myModal3').modal('toggle');$('#myModal12').modal();
+                $("#SendSmsReCover").html('بازیابی کلمه عبور');
+
             }
         }
     });
+
+}
+function recoverPassword() {
+    $('#ForegetError').hide();
+    let a = $('#nemberBack').val();
+    $.ajax({
+        url:'ajax/smsCheckRecoverPassword.php',
+        data:{
+            code:a
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $('#codeRecover').hide();
+                $('#newPassword').show();
+                $('#recoverBtn').text("تغییر رمز عبور");
+                $('#recoverBtn').attr("onclick","recoverLast()");
+            }else{
+                $('#ForegetError').show();
+            }
+        }
+    });
+}
+function recoverLast() {
+    let password = $('#passrecover').val();
+    $.ajax({
+        url:'ajax/lastRecoverPassword.php',
+        data:{
+            password:password
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                location.reload();
+            }else{
+
+            }
+        }
+    });
+}
+function showFactor() {
+    let priceInside = $('#lastPrice').val();
+    if((price!="" || price!='0' || price==0 || price=="nudefine" || price<100) &&  priceInside=='' ){
+
+        $('#payemtError').show();
+    }else{
+        $('#payemtError').hide();
+        $('#myModalFaktor').modal();
+    }
 }

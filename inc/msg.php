@@ -15,7 +15,7 @@ class msg
         require_once "db.php";
         $this->conn = new db();
         $this->array = array(
-            "WellCome"=>["short"=>"hello","long"=>"hello Word"]
+            "WellCome"=>["short"=>"خوش آمدید","long"=>"ورود شما را به اینکام خوش آمد میگوییم."]
         );
 
     }

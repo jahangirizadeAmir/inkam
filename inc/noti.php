@@ -28,12 +28,12 @@ class noti
         $id = $this->conn->generate_id();
         $insert = mysqli_query($this->conn->conn(),"INSERT INTO noti
 (notiId, notiView, notiShortText, notiLongText, notiRegDate, notiRegTime, notiUserId) 
-        VALUES ('$id','0','$shortMsg','$msg','$time','$date','$userId')");
+        VALUES ('$id','0','$shortMsg','$msg','$date','$time','$userId')");
         if($insert){
             return true ;
         }else{
-    return false ;
-}
+            return false ;
+        }
     }
     public function sendNoti($userId,$shortMsg,$msg=""){
         $userId = $this->conn->real($userId);
@@ -44,7 +44,7 @@ class noti
         $id = $this->conn->generate_id();
         $insert = mysqli_query($this->conn->conn(),"INSERT INTO  noti
 (notiId, notiView, notiShortText, notiLongText, notiRegDate, notiRegTime, notiUserId)
-        VALUES ('$id','0','$shortMsg','$msg','$time','$date','$userId')");
+        VALUES ('$id','0','$shortMsg','$msg','$date','$time','$userId')");
         if($insert){
             return true ;
         }else{

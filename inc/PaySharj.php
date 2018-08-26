@@ -15,7 +15,7 @@ class PaySharj
     private $percentUserInv;
     private $conn;
     private $operator;
-
+    private $noti;
     public function __construct($operator,$model)
     {
         //model == 1 ? mostaghim && baste
@@ -73,7 +73,9 @@ class PaySharj
 
 
         require_once "db.php";
+        require_once "noti.php";
         $this->conn = new db();
+        $this->noti = new noti();
     }
     public function SharjAndBaste($price,$userId){
         $userId = $this->conn->real($userId);
@@ -85,10 +87,13 @@ class PaySharj
         $userAgent = $row["UserOwner"];
         $money = $row["userMoney"];
         if($level==1){
+
             $this->userOwner($userAgent, $price);
             $percent = ( (int)($price/100) * (int) $this->percentUser);
             $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
             $lastMoney = (int) $money + (int) $lastPercent;
+            $msg = "مبلغ".$lastPercent."تومان بابت خرید از پنل به اعتبار شما اضافه شد";
+            $this->noti->sendNoti($userId,$msg);
             $this->update($userId,$money);
         }
         //user Level 1
@@ -99,30 +104,71 @@ class PaySharj
             $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
             $lastMoney = (int) $money + (int) $lastPercent;
             $this->update($userId,$money);
+            $msg = "مبلغ".$lastPercent."تومان بابت خرید از پنل به اعتبار شما اضافه شد";
+            $this->noti->sendNoti($userId,$msg);
+
+            $id = $this->conn->generate_id();
+            $trans = $id;
+            $date = $this->conn->date();
+            $time = $this->conn->time();
+            $product = 'درآمد از خرید';
+            $model = '6';
+            $insert = mysqli_query($this->conn->conn(), "
+                      INSERT INTO pay 
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+                       VALUES
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price')");
+
+
         }
     }
     private function userOwner($userId,$price){
         if($userId!="") {
-            $select = mysqli_query($this->conn->conn(), "SELECT * FROM user where userId=$userId");
-            $rowUser = mysqli_num_rows($select);
+            $select = mysqli_query($this->conn->conn(), "SELECT * FROM user where userId='$userId'");
+            $rowUser = mysqli_fetch_assoc($select);
             $level = $rowUser["userLevel"];
             $money = $rowUser["userMoney"];
-                if($level==1){
+            $msg = "مبلغ".$price."تومان بابت خرید کاربر به اعتبار شما اضافه شد";
+            $this->noti->sendNoti($userId,$msg);
+
+            if($level==1){
                     $percent = ( (int)($price/100) * (int) $this->percentUserInv);
                     $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
                     $lastMoney = (int) $money + (int) $lastPercent;
                     $this->update($userId,$money);
+                    $id = $this->conn->generate_id();
+                    $trans = $id;
+                    $date = $this->conn->date();
+                    $time = $this->conn->time();
+                    $product = 'درآمد از کاربر';
+                    $model = '5';
+                    $insert = mysqli_query($this->conn->conn(), "
+                      INSERT INTO pay 
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+                       VALUES
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price')");
                 }
                 if($level==2){
                     $percent = ( (int)($price/100) * (int) $this->percentAgentInv);
                     $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
                     $lastMoney = (int) $money + (int) $lastPercent;
                     $this->update($userId,$money);
+                    $id = $this->conn->generate_id();
+                    $trans = $id;
+                    $date = $this->conn->date();
+                    $time = $this->conn->time();
+                    $product = 'درآمد از کاربر';
+                    $model = '5';
+                    $insert = mysqli_query($this->conn->conn(), "
+                      INSERT INTO pay 
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+                       VALUES
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price')");
                 }
         }
     }
     private function update($userId,$Money){
-        $update = mysqli_query($this->conn->conn(),"UPDATE user SET userMoney='$Money' where userId=$userId");
+        $update = mysqli_query($this->conn->conn(),"UPDATE user SET userMoney='$Money' where userId='$userId'");
         if($update){
             return true;
         }else{

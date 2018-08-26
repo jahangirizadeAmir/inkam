@@ -6,27 +6,38 @@
  * Time: 10:01 PM
  */
 if($_SERVER['REQUEST_METHOD']=="POST"){
+    session_start();
     if(
-        isset($_POST['number']) && $_POST['number']!='' &&
-        isset($_POST['name']) && $_POST['name']!=''
+        isset($_POST['serach']) && $_POST['serach']!=''&&
+        isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true
+
     ){
         include "../inc/db.php";
         $conn = new db();
 
-        $name = $conn->real($_POST['number']);
-        $number = $conn->real($_POST['name']);
+        $search = $conn->real($_POST['serach']);
+        $userId = $conn->real($_SESSION['userId']);
 
-        $id = $conn->generate_id();
-        $date = $conn->date();
-        $time = $conn->time();
-        $num = rand(1,999);
-        $Insert = mysqli_query($conn->conn(),"INSERT INTO contact 
-(contactId, contactName, contactNumber, contactRegDate, contactRegTime, contactNum)
- VALUES ('$id','$name','$number','$date','$time','$num')");
-        if($Insert){
-            $call = array("Error"=>false);
-            echo json_encode($call);
-            return;
+        $selectContact = mysqli_query($conn->conn(),"SELECT * FROM contact 
+        where contactUserId='$userId' and (contact.contactName  like '%$search%' 
+        OR contact.contactNum like '%$search%')");
+        if(mysqli_num_rows($selectContact)==0){
+            $html = ' <tr>
+                                <td>0</td>
+                                <td>کاربری موجود نیست</td>
+                                <td>***********</td>
+                            </tr>';
+        }else{
+            $html = '';
+            $cot = "'";
+            while ($row= mysqli_fetch_assoc($selectContact)){
+                $html = '<tr onclick="SelectNumberContact('.$cot.$row['contactNumber'].$cot.')"><td>'.$row['contactNum'].'</td><td>'.$row['contactName'].'</td> <td>'.$row['contactNumber'].'</td></tr>';
+            }
         }
+        $call = array("Error"=>false,"html"=>$html);
+        echo json_encode($call);
+        return;
+    }else{
+        echo '1';
     }
 }

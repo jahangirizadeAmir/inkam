@@ -3,9 +3,9 @@
 class MellatBank {
 
 
-    private $terminal = 1535231;
-    private $username = 'pgpisp95';
-    private $password = '72711237';
+    private $terminal = 3635866;
+    private $username = 'in979';
+    private $password = '87161984';
     private $nameSpace = "http://interfaces.core.sw.bps.com/";
     private $callBackUrl = "http://inkam.ir/vrf.php";
 
