@@ -125,7 +125,7 @@ ul.menuList {
 ul.menuList li {
     margin-top: 10px;
     cursor: pointer;
-    width: 80px;
+    width: 100%;
     border-bottom: 1px solid #ffffff;
 
 }
@@ -746,4 +746,28 @@ button.close {
 }
 .modal-body {
     overflow: hidden;
+}
+.iconMenuLeft{
+    text-align: center;
+    padding-top: 8px;
+    /* padding: 12px; */
+    width: 35px;
+    font-size: 18px;
+    border-radius: 100%;
+    color: #fff;
+    height: 35px;
+
+}
+.iconMenuLeft.red{
+    margin-left: 10px;
+    background: red;
+
+}
+.iconMenuLeft.blue{
+    margin-left: 10px;
+    background: blue;
+}
+.iconMenuLeft.yellow{
+    margin-left: 10px;
+    background: yellow;
 }

@@ -35,31 +35,67 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     <link href="css/vesam.css" rel="stylesheet">
 
     <style>
-
         .modal-header, h4, .close {
             background-color: #5cb85c;
             color: white !important;
             text-align: center;
             font-size: 30px;
         }
-
         .modal-footer {
             background-color: #f9f9f9;
         }
-
     </style>
-
 </head>
 <body>
 <div class="pull-right col-md-2 col-sm-6 col-xs-12 menuDiv" id="menuDiv">
     <ul class="menuList">
-        <li>تست اول</li>
-        <li>تست اول</li>
-        <li>تست اول</li>
-        <li>تست اول</li>
-        <li>تست اول</li>
-        <li>تست دوم</li>
-        <li>تست سوم</li>
+        <li style="
+    padding: 3px;
+">
+            <i class="fa fa-home iconMenuLeft red"
+               style="    position: relative;
+    top: 10px;"></i>
+            پیشخوان
+            <br>
+        <span style="color: #e4e4e4;
+    margin-right: 48px;">اطلاعات کاربری</span>
+        </li>
+
+
+        <li style="padding: 3px;">
+            <i class="fa fa-user-alt iconMenuLeft blue"
+               style="    position: relative;
+    top: 10px;"></i>
+            ویرایش پروفایل  <br>
+        <span style="color: #e4e4e4;
+    margin-right: 48px;">ویرایش اطلاعات کاربری</span>
+        </li>
+
+
+        <li style="padding: 3px;">
+            <i class="fa fa-users iconMenuLeft yellow"
+               style="position: relative;
+    top: 10px;"></i>  مدیریت کاربران<br>
+        <span style="color: #e4e4e4;
+    margin-right: 48px;">مدیریت زیرمجموعه</span>
+        </li>
+
+        <li style="padding: 3px;">
+            <i class="fa fa-credit-card iconMenuLeft red"
+               style="position: relative;top: 10px;"></i>
+            گزارشات            <br>
+        <span style="color: #e4e4e4;
+    margin-right: 48px;">گزارشات مالی</span>
+        </li>
+
+        <li style="padding: 3px;">
+            <i class="fa fa-address-book iconMenuLeft red"
+               style="position: relative;top: 10px;"></i>
+            دفترچه تلفن            <br>
+        <span style="color: #e4e4e4;
+    margin-right: 48px;">لیست شماره تلفن</span>
+
+        </li>
     </ul>
 </div>
 <div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 888;margin-bottom: 15px">
@@ -102,7 +138,6 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                                 لینک دانلود اپ : www.inkam.ir/app
                                 <br>
                                 توجه : در زمان ثبت نام کد معرف را <?php echo $invCode ?> وارد کنید
-
                             </p>
                         </div>
                     </li>
@@ -461,7 +496,68 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
          class="pull-right menu">
 </div>
 </div>
-<div class="col-md-12 col-sm-12 col-xs-12 " style="padding:0;position: relative;overflow: visible;height: 100%">
+<div class="col-md-12 col-sm-12 col-xs-12" style="margin: auto;float: none;background: ;padding: 15px 25px;
+    width: 100%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;">
+    <div class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;float: none" >
+        <h3>ویرایش اطلاعات کاربری</h3>
+            <div class="col-xs-12">
+                <div class="form-group input-group has-feedback">
+                    <input type="text" id="editName"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                           dir="rtl"
+                           style="height: 50px;padding-right: 7px;
+    padding-left: 42.5px;"
+                           value="<?php echo $_SESSION['userName'] ?>"
+                    >
+                    <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                    <div class="input-group-addon">نام و نام خانوادگی / نام شرکت</div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group input-group has-feedback">
+                    <input type="text" id="editPassword"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                           dir="ltr"
+                           style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                    >
+                    <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                    <div class="input-group-addon">رمز عبور</div>
+                </div>
+            </div>
+        <?php
+
+        ?>
+
+            <div class="col-xs-12">
+                <div class="form-group input-group has-feedback">
+                    <input type="text" id="editPassword"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                           dir="ltr"
+                           style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                    >
+                    <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                    <div class="input-group-addon">کدمعرف</div>
+                </div>
+            </div>
+            <span type="button" class="btn btn-info2">ویرایش اطلاعات</span>
+
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 "
+     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: none;">
     <div class="col-md-12 col-sm-12 col-xs-12" id="icons">
         <div id="part1">
             <div class="col-md-2 hidden-xs hidden-sm animated bounceInRight">
@@ -1443,6 +1539,22 @@ direction: rtl  ">
     });
 </script>
 <!--login submit recover-->
+<script>
+    $('#myModal').keypress(function(e) {
+        // language=JQuery-CSS
+        var a  = $('#code').val();
+        if(a===""){
+            if(e.which === 13) {
+                firstLogin();
+            }
+        }else{
+            if(e.which === 13) {
+                submitCode();
+            }
+        }
+
+    });
+</script>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -1517,6 +1629,24 @@ direction: rtl  ">
         </div>
     </div>
 </div>
+
+<script>
+    $('#myModal').keypress(function(e) {
+        // language=JQuery-CSS
+        var a  = $('#code').val();
+        if(a===""){
+            if(e.which === 13) {
+                firstLogin();
+            }
+        }else{
+            if(e.which === 13) {
+                submitCode();
+            }
+        }
+
+    });
+</script>
+
 <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -1629,7 +1759,7 @@ direction: rtl  ">
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal12" role="dialog">
+<div class="modal fade" id="myModal12" onkeypress="" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -1653,11 +1783,10 @@ direction: rtl  ">
                             <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                            <div class="input-group-addon">کد دریافی</div>
+                            <div class="input-group-addon">کد دریافتی</div>
                         </div>
                     </div>
                     <div class="col-xs-12" id="newPassword" style="display: none">
-
                         <div class="form-group input-group has-feedback">
                             <input type="text" id="passrecover"
                                    class="form-control input-lg ng-pristine ng-valid ng-touched"
@@ -1682,41 +1811,14 @@ direction: rtl  ">
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger btn-default pull-left"
-                        onclick="$('#myModal3').modal('toggle');$('#myModal12').modal();"><span
+                        onclick="$('#myModal12').modal('toggle');$('#myModal3').modal();"><span
                             class="fa fa-arrow-left"></span>صفحه قبل
                 </button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal14" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header" style="padding:35px 50px;">
-                <button type="button" class="close" onclick="$('#myModal12').modal('toggle')">&times;</button>
-                <h4><span class="glyphicon glyphicon-paste"></span> بازیابی کلمه عبور </h4>
-            </div>
-            <div class="modal-body" style="padding:40px 50px;">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="name" style="color:black">شماره موبایل</label>
-                        <input type="text" class="form-control" id="test22" placeholder="۰۹*********">
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block"><span
-                                class="glyphicon glyphicon-off"></span>بازیابی با پیام کوتاه
-                    </button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger btn-default pull-left"
-                        onclick="$('#myModal12').modal('toggle')"><span
-                            class="glyphicon glyphicon-remove"></span> انصراف
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="modal fade" id="modalMsgAlert" role="dialog">
     <div class="modal-dialog">
