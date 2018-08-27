@@ -1,5 +1,4 @@
 <?php
-echo "helloWorld!";
 session_start();
 include "inc/db.php";
 include "inc/sharj.php";
