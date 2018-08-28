@@ -71,9 +71,10 @@ function checkThis() {
         $('#model').show();
     } else {
         changeSrcImg("Error");
-        $("#hamrah").css("background-color", "#ddd");
-        $("#irancell").css("background-color", "#ddd");
-        $("#rightell").css("background-color", "#ddd");
+        $("#hamrah img").addClass("gray");
+        $("#rightell img").addClass("gray");
+        $("#irancell img").addClass("gray");
+
         $("#model2").hide();
         $('#checkThisIdDiv').hide();
         $('#model').hide();
@@ -81,7 +82,7 @@ function checkThis() {
     }
     if (number.substring(0, 3) === '091' || number.substring(0, 3) === '099' || number.substring(0, 3) === '91' || number.substring(0, 3) === '99') {
         reload();
-        $("#hamrah").css("background-color", "#53c4cd");
+        $("#hamrah img").removeClass("gray");
         $("#rightellDiv").show();
         $("#irancellDiv").show();
         $("#hamrahDiv").hide();
@@ -96,8 +97,7 @@ function checkThis() {
         $('#btnModel1').click();
 
         $('#btnModel4').click();
-
-        $('#irancell').css("background-color", "#fee64d");
+        $("#irancell img").removeClass("gray");
         $("#rightellDiv").show();
         $("#irancellDiv").hide();
         $("#hamrahDiv").show();
@@ -108,7 +108,7 @@ function checkThis() {
         $('#btnModel1').click();
         $('#btnModel4').click();
         reload();
-        $('#rightell').css("background-color", "#992b6c");
+        $("#rightell img").removeClass("gray");
         $("#rightellDiv").hide();
         $("#irancellDiv").show();
         $("#hamrahDiv").show();
@@ -117,9 +117,11 @@ function checkThis() {
     }
 }
 function reload() {
-    $("#hamrah").css("background-color", "#dddddd");
-    $('#irancell').css("background-color", "#dddddd");
-    $('#rightell').css("background-color", "#dddddd");
+
+
+    $("#hamrah img").addClass("gray");
+    $("#rightell img").addClass("gray");
+    $("#irancell img").addClass("gray");
 
 }
 function checkBoxOne() {
@@ -154,8 +156,10 @@ function checkBoxOne() {
         $('#Baste').fadeOut();
         $('#modelSim').hide();
         $('#basteLong').hide();
+        $('#basteLongTitle').hide();
         $('#basteSelect').hide();
         $('#basteLast').hide();
+        $('#basteLastTitle').hide();
         $('#basteLastSelect').hide();
         if ($('#Onerightell').is(":checked")) {
             $('#Onerightell').prop('checked', false);
@@ -172,8 +176,10 @@ function checkBoxOne() {
         $('#Baste').fadeOut();
         $('#modelSim').hide();
         $('#basteLong').hide();
+        $('#basteLongTitle').hide();
         $('#basteSelect').hide();
         $('#basteLast').hide();
+        $('#basteLastTitle').hide();
         $('#basteLastSelect').hide();
         // $('#operatorList').hide();
         $('#price').hide();
@@ -229,7 +235,9 @@ function checkBoxTwo(e) {
     $("#model2").hide();
     if (e === '1') {
         reload();
-        $("#hamrah").css("background-color", "#53c4cd");
+
+        $("#hamrah img").removeClass("gray");
+
         $('#trabord').hide();
         cheangeModel('3');
         model = 3;
@@ -237,7 +245,8 @@ function checkBoxTwo(e) {
     }
     if (e === '2') {
         reload();
-        $('#rightell').css("background-color", "#992b6c");
+        $("#rightell img").removeClass("gray");
+
         $('#trabord').hide();
         cheangeModel('1');
         model = 1;
@@ -246,7 +255,7 @@ function checkBoxTwo(e) {
     }
     if (e === '3') {
         reload();
-        $('#irancell').css("background-color", "#fee64d");
+        $("#irancell img").removeClass("gray");
         $('#trabord').hide();
         cheangeModel('2');
         model = 2;
@@ -332,6 +341,7 @@ function ActiveThis(e) {
         $('#basteLast').text("حجم مورد نظر را وارد کنید");
         if( e === "btnModel23" || e === "btnModel24" || e === "btnModel25"|| e === "btnModel26"){
             $('#basteLong').show();
+            $('#basteLongTitle').show();
             if(e==="btnModel23"){
                 simModel="2";
             }
@@ -351,8 +361,10 @@ function ActiveThis(e) {
         $('#Baste').hide();
         $('#modelSim').hide();
         $('#basteLong').hide();
+        $('#basteLongTitle').hide();
         $('#basteSelect').hide();
         $('#basteLast').hide();
+        $('#basteLastTitle').hide();
         $('#basteLastSelect').hide();
     }
     if (e === "btnModel4" || e === "btnModel5" || e === "btnModel6") {
@@ -577,6 +589,7 @@ function fillBaste(e,f) {
                 }
             }
             $('#basteLast').delay("slow").fadeIn();
+            $('#basteLastTitle').delay("slow").fadeIn();
             $('#basteLastSelect').html(last);
         }
     });
@@ -621,6 +634,7 @@ function fillGetSim(e) {
     $('#modelSimText').text(e);
     $('#modelSim').fadeOut();
     $('#basteLong').delay("slow").fadeIn();
+    $('#basteLongTitle').delay("slow").fadeIn();
 }
 function changeSrcImg(id) {
     $("#imgbtnModel1").attr("src", "img/radio.png");
@@ -759,7 +773,6 @@ function SerachContact() {
         });
     }
 }
-
 function firstRecover() {
     $("#SendSmsReCover").html('<i class="fas fa-spinner fa-spin"></i>');
 
@@ -828,4 +841,9 @@ function showFactor() {
         $('#payemtError').hide();
         $('#myModalFaktor').modal();
     }
+}
+function removeBlur(){
+    $('#itemLeft').removeClass('blur');
+    $('#icons').removeClass('blur');
+    $('#footer').removeClass('blur');
 }

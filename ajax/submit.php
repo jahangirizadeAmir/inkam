@@ -33,10 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 $row = mysqli_fetch_assoc($selectInviteCode);
                 $userOwnerId = $row['inviteCodeUserId'];
+                $inVid=$row['inviteCodeId'];
                 require_once "../inc/noti.php";
                 $noti = new noti();
                 $noti->sendNoti($userOwnerId,"تبریک ! ".$_SESSION['mobile']." به کاربران شما اضافه شد. ");
             }
+        }else{
+            $inVid = '';
         }
         $pwd = passwordHash($pwd1);
         $id = $db->generate_id();
@@ -44,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $code = $db->real($_SESSION['code']);
         $date = _date();
         $time = _time();
+        $idInviteCode = $db->generate_id();
 
         //user Level 1
         //agent Level 2
@@ -54,14 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             (
              userId, userFullname, userMobile,
              userRegDate, userRegTime, UserOwner,
-             userLevel, userCodeSms, userPassword
+             userLevel, userCodeSms, userPassword,userInvCode
              ) 
         VALUES
              ('$id','$name','$mobile',
              '$date','$time','$userOwnerId',
-             '1','$code','$pwd')
+             '1','$code','$pwd','$inVid')
              ");
-        $idInviteCode = $db->generate_id();
         $InsertInviteCode = mysqli_query($conn, "INSERT INTO inviteCode
         (inviteCodeId, inviteCodeText, inviteCodeUserId,status)
          VALUES 

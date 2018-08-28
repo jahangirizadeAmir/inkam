@@ -31,6 +31,7 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     <script src="js/persian-date.js"></script>
     <script src="js/persian-datepicker.js"></script>
     <script src="js/inputMask.js"></script>
+    <script src="js/profile.js"></script>
 
     <link href="css/vesam.css" rel="stylesheet">
 
@@ -51,7 +52,8 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     <ul class="menuList">
         <li style="
     padding: 3px;
-">
+" onclick="$('#userOption').hide();
+    $('#userProfile').hide();$('#homeDashbord').show();hideMenu()">
             <i class="fa fa-home iconMenuLeft red"
                style="    position: relative;
     top: 10px;"></i>
@@ -62,7 +64,14 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
         </li>
 
 
-        <li style="padding: 3px;">
+        <li style="padding: 3px;" onclick="
+        $('#homeDashbord').hide();
+        $('#MyUser').hide();
+        $('#userOption').show();
+        $('#userProfile').show();
+        removeBlur();
+
+">
             <i class="fa fa-user-alt iconMenuLeft blue"
                style="    position: relative;
     top: 10px;"></i>
@@ -72,7 +81,16 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
         </li>
 
 
-        <li style="padding: 3px;">
+        <li style="padding: 3px;"
+            onclick="
+        $('#homeDashbord').hide();
+        $('#MyUser').show();
+        $('#userOption').show();
+        $('#userProfile').hide();
+        removeBlur();
+
+"
+        >
             <i class="fa fa-users iconMenuLeft yellow"
                style="position: relative;
     top: 10px;"></i>  مدیریت کاربران<br>
@@ -496,50 +514,79 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
          class="pull-right menu">
 </div>
 </div>
+<?php
+
+if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
+
+?>
+
 <div class="col-md-12 col-sm-12 col-xs-12" style="margin: auto;float: none;background: ;padding: 15px 25px;
     width: 100%;
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
-    top: 50%;">
-    <div class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;float: none" >
+    top: 50%;" id="userOption">
+    <div id="userProfile" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none">
         <h3>ویرایش اطلاعات کاربری</h3>
-            <div class="col-xs-12">
-                <div class="form-group input-group has-feedback">
-                    <input type="text" id="editName"
-                           class="form-control input-lg ng-pristine ng-valid ng-touched"
-                           dir="rtl"
-                           style="height: 50px;padding-right: 7px;
+        <div class="alert alert-success" id="EditSuc" style="display: none;">
+            ویرایش اطلاعات با موفقیت انجام شد
+        </div>
+        <div class="alert alert-danger" id="EditError" style="display: none;">
+
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group input-group has-feedback">
+                <input type="text" id="editName"
+                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                       dir="rtl"
+                       style="height: 50px;padding-right: 7px;
     padding-left: 42.5px;"
-                           value="<?php echo $_SESSION['userName'] ?>"
-                    >
-                    <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
+                       value="<?php echo $_SESSION['userName'] ?>"
+                >
+                <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                    <div class="input-group-addon">نام و نام خانوادگی / نام شرکت</div>
-                </div>
+                <div class="input-group-addon">نام و نام خانوادگی / نام شرکت</div>
             </div>
-            <div class="col-xs-12">
-                <div class="form-group input-group has-feedback">
-                    <input type="text" id="editPassword"
-                           class="form-control input-lg ng-pristine ng-valid ng-touched"
-                           dir="ltr"
-                           style="height: 50px;padding-right: 0;
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group input-group has-feedback">
+                <input type="text" id="OldeditPassword"
+                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                       dir="ltr"
+                       style="height: 50px;padding-right: 0;
     padding-left: 42.5px;"
-                    >
-                    <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
+                >
+                <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                    <div class="input-group-addon">رمز عبور</div>
-                </div>
+                <div class="input-group-addon"> رمز عبور قدیم</div>
             </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group input-group has-feedback">
+                <input type="text" id="editPassword"
+                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                       dir="ltr"
+                       style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                >
+                <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                <div class="input-group-addon">رمز عبور جدید</div>
+            </div>
+        </div>
+
         <?php
-
-        ?>
-
+        $selectUserProfile = mysqli_query($conn->conn(),"SELECT * FROM user where user.userId='$userId'");
+        $rowUser = mysqli_fetch_assoc($selectUserProfile);
+        $userOwner = $rowUser['UserOwner'];
+        if($userOwner==''){
+            ?>
             <div class="col-xs-12">
                 <div class="form-group input-group has-feedback">
-                    <input type="text" id="editPassword"
+                    <input type="text" id="editCode"
                            class="form-control input-lg ng-pristine ng-valid ng-touched"
                            dir="ltr"
                            style="height: 50px;padding-right: 0;
@@ -551,13 +598,109 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                     <div class="input-group-addon">کدمعرف</div>
                 </div>
             </div>
-            <span type="button" class="btn btn-info2">ویرایش اطلاعات</span>
 
+        <?php
+        }
+        else{
+    $selectOwner = mysqli_query($conn->conn(),"SELECT * FROM user where user.userId='$userOwner'");
+    $rowOwner = mysqli_fetch_assoc($selectOwner);
+    $userOwnerName = $rowOwner['userFullname'];
+         ?>
+            <div class="col-xs-12">
+                <div class="form-group input-group has-feedback">
+                    <input type="text" id="editCode"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                           dir="rtl"
+                           style="height: 50px;padding-right: 5px;
+    padding-left: 42.5px;"
+                           value="<?php echo $userOwnerName ?>"
+                    >
+                    <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                    <div class="input-group-addon">نام معرف</div>
+                </div>
+            </div>
+
+        <?php
+        }
+        ?>
+        <span type="button" class="btn btn-info2" onClick="EditPrifile()">ویرایش اطلاعات</span>
+    </div>
+    <div id="MyUser" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none">
+        <h3>مدیریت کاربران</h3>
+
+        <div class="row state-overview">
+            <div class="col-lg-4 col-sm-6">
+                <section class="panel">
+                    <div class="symbol terques">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="value">
+                        <h1 class="count">495</h1>
+                        <p>تعداد کل کاربران</p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <section class="panel">
+                    <div class="symbol red">
+                        <i class="fa fa-tags"></i>
+                    </div>
+                    <div class="value">
+                        <h1 class=" count2">947</h1>
+                        <p>کل خرید کاربران</p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <section class="panel">
+                    <div class="symbol yellow">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="value">
+                        <h1 class=" count3">328</h1>
+                        <p>سود شما از خرید کاربران</p>
+                    </div>
+                </section>
+            </div>
         </div>
+
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td>Mary</td>
+                <td>Moe</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td>July</td>
+                <td>Dooley</td>
+                <td>july@example.com</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <?php
+    }
+    ?>
     </div>
 </div>
 <div class="col-md-12 col-sm-12 col-xs-12 "
-     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: none;">
+     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: block;">
     <div class="col-md-12 col-sm-12 col-xs-12" id="icons">
         <div id="part1">
             <div class="col-md-2 hidden-xs hidden-sm animated bounceInRight">
@@ -595,70 +738,92 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
             </div>
         </div>
     </div>
-    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="
-    background: rgba(66, 66, 66, 0.1);">
-        <div class="col-md-6" style="margin: auto;float: none;">
+    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="">
+        <div class="col-md-7" style="margin: auto;
+    float: none;
+    border: 2px solid #fff;
+    background: #32487b69;
+    padding: 20px;
+    border-radius: 30px 0 30px 0;">
 
             <div class="alert alert-danger" id="payemtError" style="direction: rtl;display: none">
                 مبلغ یا نوع بسته خود را انتخاب کنید.
             </div>
+            <div class="col-xs-12" style="padding: 0;">
 
-            <div class="form-group" style="margin-bottom: 20px;overflow: hidden">
-                <label for="number1">شماره برای خرید مستقیم شارژ یا دریافت کد </label>
-                <input type="text" id="number1"
-                       onkeydown="checkThis()"
-                       onkeyup="checkThis()"
-                       onkeypress="checkThis()"
-                       style="" class="form-control"
-                       placeholder="09*********">
+                <div class="form-group input-group has-feedback">
+                    <input type="text" id="number1"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched"
+                           dir="ltr"
+                           style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                           onkeydown="checkThis()"
+                           onkeyup="checkThis()"
+                           onkeypress="checkThis()"
+                           placeholder="09*********">
+                    <i class="fa fa-phone fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                    <div class="input-group-addon" style="direction: rtl">شماره تلفن همراه یا TD-LTE</div>
+
+                </div>
             </div>
             <?php
             if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
                 $selectContact = mysqli_query($conn->conn(), "SELECT * FROM contact where contact.contactUserId='$userId'");
-
                 ?>
-                <div class="form-group" style="margin-bottom: -7px;position: relative" id="ContactList">
-                    <input type="text" class="form-control"
-                           style="direction: rtl"
-                           onfocus="$('.tableSearch').show()"
-                           onkeypress="SerachContact()"
-                           onkeydown="SerachContact()"
-                           id="inputContact"
-                           placeholder="نام ، شماره تلفن ،‌ شماره اختصاص یافته به کاربر">
-                    <table style="position: absolute" class="tableSearch">
-                        <thead>
-                        <tr>
-                            <th>شماره اختصاص یافته به کاربر</th>
-                            <th>نام</th>
-                            <th>شماره تلفن همراه</th>
-                        </tr>
-                        </thead>
-                        <tbody id="listContact">
-                        <?php
-                        if (mysqli_num_rows($selectContact) == 0) {
-                            ?>
+                <div class="col-xs-12" style="padding: 0;">
+
+                    <div class="form-group input-group has-feedback" id="ContactList" >
+                        <input type="text" id="inputContact"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;
+    border-bottom-left-radius: 0;"
+                               autocomplete="off"
+                               onfocus="$('.tableSearch').show()"
+                               onkeypress="SerachContact()"
+                               onkeydown="SerachContact()"
+                               onblur="$('.tableSearch').hide()"
+                               placeholder="دفترچه تلفن">
+                        <i class="fa fa-address-book fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="padding: 6px 15px;border-bottom-right-radius: 0;"> نام و نام خانودگی یا کد کاربر </div>
+                    </div>
+                        <table style="position: absolute;top: 50px;" class="tableSearch col-md-12">
+                            <thead>
                             <tr>
-                                <td>0</td>
-                                <td>کاربری موجود نیست</td>
-                                <td>***********</td>
+                                <th>کد کاربر</th>
+                                <th>نام و نام خانوادگی</th>
+                                <th>شماره تلفن همراه</th>
                             </tr>
+                            </thead>
+                            <tbody id="listContact">
                             <?php
-                        } else {
-                            while ($rowContact = mysqli_fetch_assoc($selectContact)) {
+                            if (mysqli_num_rows($selectContact) == 0) {
                                 ?>
-                                <tr onclick="SelectNumberContact('<?php echo $rowContact['contactNumber'] ?>')">
-                                    <td><?php echo $rowContact['contactNum'] ?></td>
-                                    <td><?php echo $rowContact['contactName'] ?></td>
-                                    <td><?php echo $rowContact['contactNumber'] ?></td>
+                                <tr>
+                                    <td>0</td>
+                                    <td>کاربری موجود نیست</td>
+                                    <td>***********</td>
                                 </tr>
                                 <?php
+                            } else {
+                                while ($rowContact = mysqli_fetch_assoc($selectContact)) {
+                                    ?>
+                                    <tr onclick="SelectNumberContact('<?php echo $rowContact['contactNumber'] ?>')">
+                                        <td><?php echo $rowContact['contactNum'] ?></td>
+                                        <td><?php echo $rowContact['contactName'] ?></td>
+                                        <td><?php echo $rowContact['contactNumber'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
                             }
-                        }
-                        ?>
-
-
-                        </tbody>
-                    </table>
+                            ?>
+                            </tbody>
+                        </table>
                 </div>
                 <?php
             }
@@ -666,29 +831,29 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
             <br>
             <div class="row" id="operatorList">
                 <div class="col-md-2 col-xs-2 col-sm-2
-                    col-lg-offset-3 col-md-offset-3
-                    col-xs-offset-3 col-sm-offset-3"
-                     style="background-color: #dddddd;padding: 10px;text-align: center" id="hamrah">
-                    <img src="img/hamrahAval.png" style="width: 70%">
+                    col-lg-offset-2 col-md-offset-2
+                    col-xs-offset-2 col-sm-offset-2"
+                     style="padding: 0px;text-align: center" id="hamrah">
+                    <img src="img/hamrah_logo.png" class="gray" style="width: 100%">
                 </div>
                 <div class="col-md-2 col-xs-2 col-sm-2 "
-                     style="background-color: #dddddd;;margin-left: 20px;margin-right: 20px;padding: 10px;text-align: center"
+                     style="margin-left: 40px;margin-right: 40px;padding: 0px;text-align: center"
                      id="irancell">
-                    <img src="img/hamrahAval.png" style="width: 70%">
+                    <img src="img/irancell_logo.png" class="gray" style="width: 100%">
                 </div>
                 <div class="col-md-2 col-xs-2 col-sm-2 "
-                     style="background-color: #dddddd;padding: 10px;text-align: center"
+                     style="padding: 0px;text-align: center"
                      id="rightell">
-                    <img src="img/hamrahAval.png" style="width: 70%">
+                    <img src="img/rightell_logo.png" class="gray" style="width: 100%">
                 </div>
             </div>
             <div class="row" style="direction: rtl;margin-top: 10px;display: none" id="checkThisIdDiv">
-                <div class="col-md-4 col-xs-12 col-sm-6" style="padding: 0;float: right">
-                    <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;">سیمکارت ترابرد شده</span>
+                <div class="col-md-5 col-xs-12 col-sm-6" style="padding: 0;float: right;padding-right: 21px;">
+                    <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;">سیم کارت ترابرد شده</span>
                     <input type="checkbox" id="go">
                     <label for="go" onclick="checkBoxOne()"></label>
                 </div>
-                <div class="col-md-8 col-xs-12 col-sm-6" style="padding: 0;display: none" id="trabord">
+                <div class="col-md-7 col-xs-12 col-sm-6" style="padding: 0;display: none" id="trabord">
                     <div class="col-md-4 col-xs-12 col-sm-4" style="padding: 0;float: right" id="hamrahDiv">
                         <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;">همراه اول</span>
                         <input type="radio" name="trabord" id="OneHamrah">
@@ -706,14 +871,18 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="margin-top: 10px;display: none" id="model">
+            <div class="col-md-12" style="margin-top: 10px;display: none;padding: 0;" id="model">
                 <div class="col-md-4 col-xs-4 col-sm-4  "
                      style="text-align: center;"
                      id="">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel1')" id="btnModel1">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         شارژ مستقیم
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                        <img src="img/radio.png" style="    width: 22px;
+    margin-left: 10px;
+    position: absolute;
+    top: 8px;
+    right: 10px;"
                              id="imgbtnModel1">
                     </div>
                 </div>
@@ -723,7 +892,11 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel2')" id="btnModel2">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         کد شارژ
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                        <img src="img/radio.png" style="    width: 22px;
+    margin-left: 10px;
+    position: absolute;
+    top: 8px;
+    right: 10px;"
                              id="imgbtnModel2">
                     </div>
                 </div>
@@ -733,20 +906,28 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                     <div class="bgHamrahMode" onclick="ActiveThis('btnModel3')" id="btnModel3">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         بسته اینترنتی
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                        <img src="img/radio.png" style="    width: 22px;
+    margin-left: 10px;
+    position: absolute;
+    top: 8px;
+    right: 10px;"
                              id="imgbtnModel3">
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="margin-top: 10px;display: none" id="model2">
-                <p style="color:#fff">نوع شارژ خود را انتخاب کنید</p>
+            <div class="col-md-12" style="margin-top: 12px;display: none;padding: 0" id="model2">
+                <p style="color:#fff">نوع شارژ : </p>
                 <div class="col-md-4 col-xs-4 col-sm-4"
                      style="text-align: center;"
                      id="chargeModelLog">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel4')" id="btnModel4">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         شارژ معمولی
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                        <img src="img/radio.png" style="    width: 22px;
+    margin-left: 10px;
+    position: absolute;
+    top: 8px;
+    right: 10px;"
                              id="imgbtnModel4">
                     </div>
                 </div>
@@ -756,7 +937,11 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel5')" id="btnModel5">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
                         شارژ شگفت انگیز
-                        <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;"
+                        <img src="img/radio.png" style="    width: 22px;
+    margin-left: 10px;
+    position: absolute;
+    top: 8px;
+    right: 10px;"
                              id="imgbtnModel5">
                     </div>
                 </div>
@@ -767,36 +952,58 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
 
                         سیمکارت دایمی
-                        <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                        <img src="img/radio.png" style="    width: 22px;
+    margin-left: 10px;
+    position: absolute;
+    top: 8px;
+    right: 10px;"
                              id="imgbtnModel6">
                     </div>
                 </div>
             </div>
             <div>
-                <div class="form-group" style="margin-top: 20px;display: none" id="price"
-                     onclick="showPriceSelect(document.getElementById('lastPrice').value)">
-                    <label>مبلغ شارژ را وارد کنید</label>
-                    <input class="form-control"
-                           onfocus="showPriceSelect(this.value)"
-                           onkeydown="CheckPrice(this.value)"
-                           onkeyup="CheckPrice(this.value)"
-                           type="text" placeholder="مبلغ به تومان" id="lastPrice">
-                    <ul style="" class="priceSelect" id="priceSelect">
-                        <li>می توانید یکی از مبالغ زیر را انتخاب کنید</li>
-                        <li id="li1" onclick="fillPrice('li1')" value="1000">1,000</li>
-                        <li id="li2" onclick="fillPrice('li2')" value="2000">2,000</li>
-                        <li id="li3" onclick="fillPrice('li3')" value="5000">5,000</li>
-                        <li id="li4" onclick="fillPrice('li4')" value="10000">10,0000</li>
-                        <li id="li5" onclick="fillPrice('li5')" value="20000">20,0000</li>
+
+                <div class="col-xs-12"
+                     onclick="showPriceSelect(document.getElementById('lastPrice').value)"
+                     style="padding: 0;margin-top: 10px;display: none" id="price">
+
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="price">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               style="height: 50px;padding-right: 0;
+    padding-left: 42.5px;"
+                               onfocus="showPriceSelect(this.value)"
+                               onkeydown="CheckPrice(this.value)"
+                               onkeyup="CheckPrice(this.value)"
+                               placeholder="مبلغ را به تومان وارد کنید"
+                               id="lastPrice"
+                        >
+                        <i class=" form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;">تومان</i>
+                        <div class="input-group-addon" style="direction: rtl">مبلغ شارژ را وارد کنید</div>
+                    </div>
+
+                    <ul style="bottom:15px" class="priceSelect" id="priceSelect">
+                        <li id="li1" onclick="fillPrice('li1')" value="1000">1000 تومان</li>
+                        <li id="li2" onclick="fillPrice('li2')" value="2000">2000 تومان</li>
+                        <li id="li3" onclick="fillPrice('li3')" value="5000">5000 تومان</li>
+                        <li id="li4" onclick="fillPrice('li4')" value="10000">10,000 تومان</li>
+                        <li id="li5" onclick="fillPrice('li5')" value="20000">20,000 تومان</li>
                     </ul>
                 </div>
 
-                <div class="form-group" style="margin-top: 50px;display: none" id="Baste">
-                    <div style="width: 100%" id="modelSim">
+
+                <div class="col-xs-12" style="margin-top: 10px;display: none;padding: 0" id="Baste">
+                    <div style="padding: 0" class="col-xs-12" id="modelSim">
                         <p style="padding: 0px;color:#fff;">
-                            نوع سیمکارت را انتخاب کنید
+                            نوع سیم کارت :
                         </p>
-                        <div class="row">
+                        <div class="col-xs-12">
                             <div class="col-md-4 col-xs-4 col-sm-4"
                                  style="text-align: center;float: right"
                                  id="Sli4">
@@ -805,7 +1012,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                                          class="logoSmall">
 
                                     دیتا
-                                    <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
                                          id="imgbtnModel23">
                                 </div>
                             </div>
@@ -813,11 +1020,11 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                                  style="text-align: center;float: right"
                                  id="Sli2">
                                 <div class="bgIrancellMode" onclick="ActiveThis('btnModel24')" id="btnModel24">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
                                          class="logoSmall">
 
                                     دایمی
-                                    <img src="img/radio.png" style="width: 20px;margin-left: 5px;position: absolute;"
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
                                          id="imgbtnModel24">
                                 </div>
                             </div>
@@ -825,11 +1032,11 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                                  style="text-align: center;float: right"
                                  id="Sli3">
                                 <div class="bgHamrahMode" onclick="ActiveThis('btnModel25')" id="btnModel25">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
                                          class="logoSmall">
 
                                     اعتباری
-                                    <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
                                          id="imgbtnModel25">
                                 </div>
                             </div>
@@ -840,21 +1047,25 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                                     <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
                                          class="logoSmall">
                                     TD-LTE
-                                    <img src="img/radio.png" style="width: 20px;margin-left: 10px;position: absolute;"
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
                                          id="imgbtnModel26">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="col-xs-12" style="padding: 0">
 
-
+                        <p id="basteLongTitle" style="padding: 0px;display: none;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 5px;">
+                            مدت زمان بسته  :
+                        </p>
                         <span class="form-control"
                               onclick="showBaste()"
-                              id="basteLong" style="display: none;margin-top: 20px">
-                        مدت زمان بسته را انتخاب کنید
+                              id="basteLong" style="display: none;margin-top: 0px">
                     </span>
-                        <ul style="" class="priceSelect" id="basteSelect">
+                        <ul style="bottom: 3px;" class="priceSelect" id="basteSelect">
                             <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
                             <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Hourly">ساعتی</li>
                             <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Daily">روزانه</li>
@@ -877,18 +1088,33 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
                         </ul>
                     </div>
                     <br>
-                    <span class="form-control" style="display: none"
-                          onclick="showLastBaste()"
-                          id="basteLast">
-                        حجم مورد نظر را وارد کنید
-                    </span>
-                    <ul style="" class="priceSelect" id="basteLastSelect">
-                        <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
-                    </ul>
+                    <div class="col-xs-12" style="padding: 0">
+                        <p id="basteLastTitle" style="padding: 0px;display: none;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 5px;">
+                            حجم بسته :
+                        </p>
+                        <span class="form-control" style="display: none"
+                              onclick="showLastBaste()"
+                              id="basteLast">
+                            حجم مورد نظر را وارد کنید
+                        </span>
+                        <ul style="" class="priceSelect" id="basteLastSelect">
+                            <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
+                        </ul>
+                    </div>
                 </div>
                 <div style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
-                    <span class="btn btn-success btn-lg" style="float: none;margin: auto"
-                          onclick="showFactor()">تایید</span>
+                    <span class="
+                    btn
+                    btn-info3
+                    btn-lg
+                    " style="position: relative;
+    float: none;
+    margin: auto;
+    top: 10px;"
+                          onclick="showFactor()">نمایش پیش فاکتور</span>
                 </div>
 
                 <div class="modal fade" id="myModalFaktor" role="dialog">
@@ -1530,8 +1756,7 @@ direction: rtl  ">
             </span>
     </div>
 </div>
-<div style="" id="showMenu" onclick="hideMenu()">
-</div>
+
 
 <script>
     $(document).ready(function () {
