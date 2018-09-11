@@ -5,6 +5,8 @@
  * Date: 7/25/18
  * Time: 5:54 PM
  */
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (
         isset($_POST['simModel']) &&
@@ -32,11 +34,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $model=1;
             }
         }
+        $select = mysqli_query($db->conn(),"SELECT * FROM baste");
+        while ($rsArray = mysqli_fetch_assoc($select)){
+            if($rsArray["basteOperator"]!=$model)continue;
+            if($rsArray["bastePeriod"]!=$date)continue;
+            if($simModel!=$rsArray["basteType"])continue;
+            $code = $rsArray['basteCode'];
+            $name = $rsArray['basteName'];
+            $price = $rsArray['bastePrice'];
+            $optionSelect[]=array("name"=>$name,"code"=>$code,"price"=>toMoney($price));
+        }
+        echo json_encode($optionSelect);
+        return;
 
-        include "../inc/sharj.php";
-        $sharj = new sharj();
-        $call = $sharj->packges($date,$model,$simModel);
-        echo json_encode($call);
-
+    }else{
+        echo '1';
     }
+}else{
+    echo '2';
 }

@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             isset($_POST['id']) &&
             !empty($_POST['id'])
         ){
+
             include "../inc/db.php";
             $conn = new db();
             $id = $conn->real($_POST['id']);
@@ -19,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = mysqli_fetch_assoc($select);
             $call = array("Error"=>false,"shabaNumber"=>$row['shabaNumber'],"shabaBank"=>$row['shabaBank']);
             echo json_encode($call);
+
         }
     }
 }

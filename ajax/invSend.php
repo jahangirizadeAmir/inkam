@@ -15,10 +15,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
             $mobile = $conn->real($_POST['mobile']);
             $userId = $conn->real($_SESSION['userId']);
             $select = mysqli_query($conn->conn(), "SELECT * FROM user where userId = '$userId'");
+
             if(mysqli_num_rows($select)==1){
+                $checkUser = mysqli_query($conn->conn(),"SELECT * FROM user where user.userMobile='$mobile'");
+                if(mysqli_num_rows($checkUser)!=0){
+                    $call = array("Error"=>true);
+                    echo json_encode($call);
+                    return;
+                }
                 $selectRow = mysqli_fetch_assoc($select);
                 $userName = $selectRow["userFullname"];
-                $userMobile = $selectRow["userMobile"];
+                $selectInv = mysqli_query($conn->conn(),"SELECT * FROM inviteCode where inviteCodeUserId='$userId' AND status='1'");
+                $invRow = mysqli_fetch_assoc($selectInv);
+                $userMobile = $invRow['inviteCodeText'];
                 $text = "مشترک $mobile شما از طرف $userName به اپلیکیشن اینکام دعوت شده اید 
                 
 با اینکام خرید شارژ ، بسته اینترنتی ، قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کنید

@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $pwd = passwordHash($pwd1);
         $id = $db->generate_id();
         $mobile = $db->real($_SESSION['mobile']);
+        $mobile=$db->converNumberToEn($mobile);
         $code = $db->real($_SESSION['code']);
         $date = _date();
         $time = _time();
@@ -77,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             require_once "../inc/my_frame.php";
             @smsForati($mobile," با سلام 
 $name عزیز 
-به اینگام خوش آمدید
+به اینکام خوش آمدید
 
 اطلاعات کاربری جهت ورود :
 موبایل : $mobile

@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         include "../inc/my_frame.php";
         $pwd = $db->real($_POST['password']);
         $name = $db->real($_SESSION['mobile']);
+        $pwd=$db->converNumberToEn($pwd);
         $pwd  = passwordHash($pwd);
 
         $update = mysqli_query($db->conn(),"UPDATE user SET user.userPassword='$pwd' where user.userMobile='$name'");

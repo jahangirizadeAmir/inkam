@@ -51,6 +51,7 @@ function firstLogin() {
                 }
             }else{
                 $('#loginSubmitError').show();
+                $("#btnSms").html('بعدی');
             }
         }
     });
@@ -144,3 +145,4 @@ $(document).mouseup(function(e)
         container.hide();
     }
 });
+

@@ -20,7 +20,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             $_SESSION['code']='';
         }else{
             $a = rand(1000,9999);
-            $Sms = @smsForati("$mobile","$a");
+            $smsText = "کد فعال سازی اینکام شما :".$a;
+            $Sms = @smsForati("$mobile","$smsText");
             if($Sms==0){
                 $call = array("Error"=>false,"Sms"=>true);
                 $_SESSION['mobile']=$mobile;

@@ -15,8 +15,10 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         include "../inc/db.php";
         $conn = new db();
 
-        $name = $conn->real($_POST['number']);
-        $number = $conn->real($_POST['name']);
+
+        //Name And Number Change Becuase Error in html
+        $name = "0".$conn->real($_POST['number']);
+        $number =$conn->real($_POST['name']);
 
         $userId = $conn->real($_SESSION['userId']);
         $id = $conn->generate_id();

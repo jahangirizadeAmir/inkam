@@ -5,7 +5,6 @@
  * Date: 8/18/18
  * Time: 12:13 PM
  */
-
 class db
 {
     private $db_name="inkam";
@@ -55,5 +54,13 @@ class db
         include_once ('jdf.php');
         $jalalidate = gregorian_to_jalali($year1,$month1,$day1,'/');
         return $jalalidate;
+    }
+    function converNumberToEn($string){
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+        return $englishNumbersOnly;
     }
 }

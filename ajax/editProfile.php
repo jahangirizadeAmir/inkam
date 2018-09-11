@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         !empty($_POST['name']) &&
 
         isset($_POST['old']) &&
-        !empty($_POST['old']) &&
         isset($_POST['pwd'])
     ) {
         include "../inc/db.php";
@@ -25,44 +24,47 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $db = new db();
         $conn = $db->conn();
         $userId = $db->real($_SESSION['userId']);
-        $old = $db->real($_POST['old']);
-        $old = passwordHash($old);
-        $selectUser = mysqli_query($conn,"
+        if(!empty($_POST['old'])) {
+            $old = $db->real($_POST['old']);
+            $old = passwordHash($old);
+            $selectUser = mysqli_query($conn, "
 
               SELECT * FROM user
               where userId='$userId' AND
               userPassword='$old'
               
                ");
-        if(mysqli_num_rows($selectUser)==0){
-            $call = array("Error" => true, "MSG" => "رمز عبور اشتباه است ");
-            echo json_encode($call);
-            return;
+            if (mysqli_num_rows($selectUser) == 0) {
+                $call = array("Error" => true, "MSG" => "رمز عبور اشتباه است ");
+                echo json_encode($call);
+                return;
+            }
+            if(
+                $_POST['pwd']!=''
+            ) {
+                if (strlen($_POST['pwd']) >= 6) {
+                    $pwd = $db->real($_POST['pwd']);
+                    $pwd = passwordHash($pwd);
+                    $up .= "UPDATE user SET user.userPassword = '$pwd' where userId = '$userId'; ";
+                } else {
+                    $call = array("Error" => true, "MSG" => "رمز عبور می بایست حداقل ۶ کاراکتر باشد ");
+                    echo json_encode($call);
+                    return;
+                }
+            }
         }
-        $rowSelectuser = mysqli_fetch_assoc($selectUser);
+        $selectUserGet = mysqli_query($conn,"SELECT * FROM user where user.userId='$userId'");
+        $rowSelectuser = mysqli_fetch_assoc($selectUserGet);
         $OwnerId = $rowSelectuser['UserOwner'];
         if($_POST['name']!=''){
             $name = $db->real($_POST['name']);
             $up ="UPDATE user Set user.userFullname = '$name' where user.userId='$userId'; ";
             $_SESSION['userName']=$name;
         }
-        if(
-            $_POST['pwd']!=''
-        ) {
-            if (strlen($_POST['pwd']) >= 6) {
-                $pwd = $db->real($_POST['pwd']);
-                $pwd = passwordHash($pwd);
-                $up .= "UPDATE user SET user.userPassword = '$pwd' where userId = '$userId'; ";
-            } else {
-                $call = array("Error" => true, "MSG" => "رمز عبور می بایست حداقل ۶ کاراکتر باشد ");
-                echo json_encode($call);
-                return;
-            }
-        }
+
         if($_POST['code']!=''){
             $code = $db->real($_POST['code']);
             if($OwnerId=''){
-
                 $selectInviteCode = mysqli_query($conn, "
               SELECT * FROM inviteCode where inviteCodeText ='$code'");
                 if (mysqli_num_rows($selectInviteCode) == 0) {
@@ -83,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if(isset($up)){
             $upadate = mysqli_multi_query($conn,$up);
             if($upadate) {
-                $call = array("Error" => false,"MSG"=>$up);
+                $call = array("Error" => false,"MSG"=>"ویرایش با موفقیت انجام شد.");
                 echo json_encode($call);
                 return;
             }else{

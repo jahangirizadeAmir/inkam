@@ -16,10 +16,14 @@ if(isset($_POST)) {
     $sharj = new sharj();
     $conn = new db();
     $pin = '21';
+    $mobile='12141241212412412';
+    $oldUser = '0';
     $serial = '22';
     //model==1 walet afzayesh Etebar
     $model = 0;
     $product = '';
+    $sellerName='اینکام';
+
 
     if (isset($_POST['etebar']) && $_POST['etebar'] == true) {
         if(isset($_SESSION['mobile']) && $_SESSION['mobile']!='') {
@@ -29,9 +33,18 @@ if(isset($_POST)) {
                 $id = $conn->real($_SESSION['userId']);
                 $selectUser = mysqli_query($conn->conn(),"SELECT * FROM user where userId='$id'");
                 $rowuser = mysqli_fetch_assoc($selectUser);
-                $userName = $rowuser['userName'];
+                $userName = $rowuser['userFullName'];
                 $userMobile = $rowuser['userMobile'];
-                $text = "مشترک $mobile شما از طرف $userName به اپلیکیشن اینکام دعوت شده اید 
+                $userLevel = $rowuser['userLevel'];
+                if($userLevel=="2"){
+                    $sellerName=$userName;
+                }
+                $checKuser = mysqli_query($conn->conn(),"SELECT * FROM user where user.userMobile like '%$mobile%'");
+                if(mysqli_num_rows($checKuser)!=0){
+                    $oldUser='1';
+
+                }else {
+                    $text = "مشترک $mobile شما از طرف $userName به اپلیکیشن اینکام دعوت شده اید 
                 
 با اینکام خرید شارژ ، بسته اینترنتی ، قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کنید
 
@@ -39,8 +52,11 @@ if(isset($_POST)) {
 
 توجه : در زمان ثبت نام کد معرف را $userMobile وارد کنید
 ";
-                @smsForati($mobile, $text);
+                    @smsForati($mobile, $text);
+                }
             }
+        }else{
+            $sellerName='اینکام';
         }
         $operator = $conn->real($_SESSION['operator']);
         if ($operator == 1) {
@@ -71,11 +87,12 @@ if(isset($_POST)) {
             $model = "2";
             if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
                 $paySharj = new PaySharj($op, 1);
+
             }
             $simModel = $conn->real($_SESSION['simModel']);
             $code = $conn->real($_SESSION['code']);
             $mobile = $conn->real($_SESSION['mobile']);
-            $sharj->topup($price, $mobile, $operator, "false", $code);
+            $sharj->topup($price, $mobile, $operator, "false", $code,$sellerName);
 
         }
         if ($_SESSION['model'] == "sharj") {
@@ -87,7 +104,7 @@ if(isset($_POST)) {
                 $mobile = $conn->real($_SESSION['mobile']);
                 $real = $price * 10;
                 //(mci|hamrah),(ir,irancell),(rtl,rightel)
-                $a = $sharj->topup($real, $mobile, $operator, $_SESSION['amz']);
+                $a = $sharj->topup($real, $mobile, $operator, $_SESSION['amz'],'',$sellerName);
 
             }
             if ($_SESSION['modelSharj'] == 2) {
@@ -149,22 +166,35 @@ if(isset($_POST)) {
 				form.submit();
 				document.getElementById("melatBank").removeChild(form);
 			}
-			postRefId();
+						postRefId();
+
 			</script>';
         }
-
-
-        } else {
+    }else{
         if(isset($_SESSION['mobile']) && $_SESSION['mobile']!='') {
-            require_once "inc/my_frame.php";
-            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                $mobile = $conn->real($_SESSION['mobile']);
-                $id = $conn->real($_SESSION['userId']);
-                $selectUser = mysqli_query($conn->conn(),"SELECT * FROM user where userId='$id'");
-                $rowuser = mysqli_fetch_assoc($selectUser);
-                $userName = $rowuser['userName'];
-                $userMobile = $rowuser['userMobile'];
-                $text = "مشترک $mobile شما از طرف $userName به اپلیکیشن اینکام دعوت شده اید 
+            if ($_SESSION['model'] != 'walet') {
+                require_once "inc/my_frame.php";
+                if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                    $mobile = $conn->real($_SESSION['mobile']);
+                    $id = $conn->real($_SESSION['userId']);
+                    $selectUser = mysqli_query($conn->conn(), "SELECT * FROM user where userId='$id'");
+                    $rowuser = mysqli_fetch_assoc($selectUser);
+                    $userName = $rowuser['userFullname'];
+                    $userMobile = $rowuser['userMobile'];
+                    $userLevel = $rowuser['userLevel'];
+                    if ($userLevel == "2") {
+
+
+                        $sellerName = $userName;
+
+
+                    }
+                    $checKuser = mysqli_query($conn->conn(),"SELECT * FROM user where  user.userMobile  like '%$mobile%'");
+                    if(mysqli_num_rows($checKuser)!=0){
+                        $oldUser='1';
+
+                    }else {
+                        $text = "مشترک $mobile شما از طرف $userName به اپلیکیشن اینکام دعوت شده اید 
                 
 با اینکام خرید شارژ ، بسته اینترنتی ، قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کنید
 
@@ -172,28 +202,30 @@ if(isset($_POST)) {
 
 توجه : در زمان ثبت نام کد معرف را $userMobile وارد کنید
 ";
-                @smsForati($mobile, $text);
+                        @smsForati($mobile, $text);
+                    }
+                }
             }
         }
             $mellat = new MellatBank();
             $results = $mellat->checkPayment($_POST);
-
 //    print_r($results);
 //    print_r($_SESSION);
             if ($results["status"] == "success") {
-
                 $trans = $results["trans"];
-                if (isset($_SESSION['model'])) {
-                    $operator = $conn->real($_SESSION['operator']);
-                    if ($operator == 1) {
-                        $operator = "rtl";
-                        $op = 3;
-                    } else if ($operator == 3) {
-                        $operator = "mci";
-                        $op = 1;
-                    } else if ($operator == 2) {
-                        $operator = "ir";
-                        $op = 2;
+                if (isset($_SESSION['model']) ) {
+                    if($_SESSION['model'] != 'walet') {
+                        $operator = $conn->real($_SESSION['operator']);
+                        if ($operator == 1) {
+                            $operator = "rtl";
+                            $op = 3;
+                        } else if ($operator == 3) {
+                            $operator = "mci";
+                            $op = 1;
+                        } else if ($operator == 2) {
+                            $operator = "ir";
+                            $op = 2;
+                        }
                     }
                     if (isset($_SESSION['userId'])) {
                         $userId = $conn->real($_SESSION['userId']);
@@ -205,12 +237,14 @@ if(isset($_POST)) {
                     $date = $conn->date();
                     $time = $conn->time();
                     if ($_SESSION['model'] == 'walet') {
+                        $_SESSION['modelSharj'] = '123123123';
+
                         $model = '1';
                         $select = mysqli_query($conn->conn(), "SELECT * FROM user where userId='$userId'");
                         $row = mysqli_fetch_assoc($select);
                         $money = $row['userMoney'];
                         $lastMoney = (int)$money + (int)$price;
-                        $update = mysqli_query($conn->conn(), "UPDATE user set user.userMoney='$lastMoney' where $userId='$userId'");
+                        $update = mysqli_query($conn->conn(), "UPDATE user set user.userMoney='$lastMoney' where userId='$userId'");
                     }
                     if ($_SESSION['model'] == 'baste') {
                         $model = "2";
@@ -220,7 +254,7 @@ if(isset($_POST)) {
                         $simModel = $conn->real($_SESSION['simModel']);
                         $code = $conn->real($_SESSION['code']);
                         $mobile = $conn->real($_SESSION['mobile']);
-                        $sharj->topup($price, $mobile, $operator, "false", $code);
+                        $sharj->topup($price, $mobile, $operator, "false", $code,$sellerName);
 
                     }
                     if ($_SESSION['model'] == "sharj") {
@@ -232,7 +266,7 @@ if(isset($_POST)) {
                             $mobile = $conn->real($_SESSION['mobile']);
                             $real = $price * 10;
                             //(mci|hamrah),(ir,irancell),(rtl,rightel)
-                            $a = $sharj->topup($real, $mobile, $operator, $_SESSION['amz']);
+                            $a = $sharj->topup($real, $mobile, $operator, $_SESSION['amz'],'',$sellerName);
 
                         }
                         if ($_SESSION['modelSharj'] == 2) {
@@ -283,6 +317,9 @@ if(isset($_POST)) {
 				var hiddenField7 = document.createElement("input");              
 				hiddenField7.setAttribute("name", "pin");
 				hiddenField7.setAttribute("value", ' . $pin . ');
+				var hiddenField8 = document.createElement("input");              
+				hiddenField8.setAttribute("name", "oldUser");
+				hiddenField8.setAttribute("value", '.$oldUser.');
 				form.appendChild(hiddenField);
 				form.appendChild(hiddenField2);
 				form.appendChild(hiddenField3);
@@ -290,6 +327,7 @@ if(isset($_POST)) {
 				form.appendChild(hiddenField5);
 				form.appendChild(hiddenField6);
 				form.appendChild(hiddenField7);
+				form.appendChild(hiddenField8);
 				document.getElementById("melatBank").appendChild(form);         
 				form.submit();
 				document.getElementById("melatBank").removeChild(form);
@@ -300,6 +338,8 @@ if(isset($_POST)) {
                         echo mysqli_error($conn->conn());
                     }
                 }
+            }else{
+                echo '<script> window.location.replace("index.php") </script>';
             }
 
         }

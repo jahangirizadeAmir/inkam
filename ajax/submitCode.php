@@ -18,6 +18,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $db = new db();
         $conn = $db->conn();
         $code = $db->real($_POST['code']);
+        $code = $db->converNumberToEn($code);
         if($code == $_SESSION['code']){
             $call = array("Error"=>false);
         }else{

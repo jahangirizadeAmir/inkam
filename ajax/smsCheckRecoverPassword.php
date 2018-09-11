@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mobile = $conn->real($_SESSION['mobile']);
         $codeSms = $conn->real($_SESSION['code']);
         $code = $conn->real($_POST['code']);
+        $code=$conn->converNumberToEn($code);
         $codeSms===$code?$error=false:$error=true;
         $call = array("Error"=>$error);
         echo json_encode($call);

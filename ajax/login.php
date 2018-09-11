@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $conn = $db->conn();
         $name = $db->real($_SESSION['mobile']);
         $pwd  = $db->real($_POST['pwd']);
+        $pwd = $db->converNumberToEn($pwd);
         $pwd  = passwordHash($pwd);
         $selectUser = mysqli_query($conn,"
            SELECT * FROM user where 

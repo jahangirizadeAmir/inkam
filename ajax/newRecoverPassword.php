@@ -15,7 +15,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $a = rand(1000,9999);
         include "../inc/my_frame.php";
         $_SESSION['code']=$a;
-        @smsForati($_SESSION['mobile'],$a);
+        $smsText = "کد فراموشی رمز عبور اینکام شما: ".$a;
+        @smsForati($_SESSION['mobile'],$smsText);
         $call = array("Error"=>false);
         echo json_encode($call);
         mysqli_close($conn->conn());

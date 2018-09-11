@@ -88,7 +88,7 @@ class PaySharj
         $money = $row["userMoney"];
         if($level==1){
 
-            $this->userOwner($userAgent, $price);
+            $this->userOwner($userAgent, $price,$userId);
             $percent = ( (int)($price/100) * (int) $this->percentUser);
             $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
             $lastMoney = (int) $money + (int) $lastPercent;
@@ -122,7 +122,7 @@ class PaySharj
 
         }
     }
-    private function userOwner($userId,$price){
+    private function userOwner($userId,$price,$userPay){
         if($userId!="") {
             $select = mysqli_query($this->conn->conn(), "SELECT * FROM user where userId='$userId'");
             $rowUser = mysqli_fetch_assoc($select);
@@ -144,9 +144,10 @@ class PaySharj
                     $model = '5';
                     $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
-                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,userPay)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price')");
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$userPay')
+                     ");
                 }
                 if($level==2){
                     $percent = ( (int)($price/100) * (int) $this->percentAgentInv);

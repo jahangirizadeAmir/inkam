@@ -11,11 +11,12 @@ body, html {
     height: 100%;
     margin: 0;
     padding: 0;
-    background: #48337e; /* Old browsers */
-    background: -moz-linear-gradient(45deg, #48337e 1%, #4893bb 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(45deg, #48337e 1%, #4893bb 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right top, #2d2c72, #4ceeb5); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#48337e', endColorstr='#4893bb', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3b3b65+0,3c6656+33,48a179+65,6ceeb5+99 */
+    background: #3b3b65; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #3b3b65 0%, #3c6656 33%, #48a179 65%, #6ceeb5 99%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #3b3b65 0%,#3c6656 33%,#48a179 65%,#6ceeb5 99%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #3b3b65 0%,#3c6656 33%,#48a179 65%,#6ceeb5 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b3b65', endColorstr='#6ceeb5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 ul.menuLeft li {
@@ -143,7 +144,7 @@ div.footer {
     position: absolute;
     margin: auto;
     float: none;
-    bottom: 10px;
+    bottom: 0px;
 }
 
 div.footer span {
@@ -236,7 +237,7 @@ label {
     display: none;
     float: none;
     margin: auto;
-    overflow: hidden;
+    overflow: visible;
     top: 80px;
     position: relative;
 }
@@ -247,7 +248,6 @@ label {
     margin: auto;
     overflow: hidden;
     padding: 50px;
-    background: #c2c2c212;
     position: relative;
 }
 #bilit{
@@ -256,7 +256,6 @@ label {
     margin: auto;
     overflow: hidden;
     padding: 50px;
-    background: #c2c2c212;
     position: relative;
 }
 
@@ -290,7 +289,6 @@ span.back {
 #bilit2 {
     position: relative;
     padding: 50px;
-    background: #c2c2c212;
     display: none;
     float: none;
     margin: auto;
@@ -500,6 +498,23 @@ ul.dropdown-menu.extended.logout {
     left: auto;
     display: block;
 }
+ul.dropdown-menu.extended.logout#miniDashbord {
+    overflow: hidden;
+    min-width: 46% !important;
+    width: 235px !important;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;
+    border: none !important;
+    border-radius: 10px;
+     top: 0;
+     right: 0;
+    /* float: right; */
+    left: auto;
+    display: block;
+    position: relative;
+    margin: auto;
+    float: none;
+}
 .dropdown-menu.extended.logout > li {
     float: right;
     text-align: center;
@@ -564,7 +579,7 @@ ul.dropdown-menu.extended.logout {
 .bgRightellModel{
     cursor: pointer;
     color: #ffffff;
-    padding: 10px 0px 10px 0px;background: #ddd;
+    padding: 4px 0px 4px 0px;background: #ddd;
     background: -moz-linear-gradient(left,#ddd 45%,#ddd 45%,#992b6b 100%);
     background: -webkit-linear-gradient(left,#ddd 45%,#ddd 45%,#992b6b 100%);
     background: linear-gradient(to right,#ddd 45%,#ddd 45%,#992b6b 100%);
@@ -579,7 +594,7 @@ ul.dropdown-menu.extended.logout {
 .bgIrancellMode{
     cursor: pointer;
     color: #ffffff;
-    padding: 10px 0px 10px 0px;
+    padding: 4px 0px 4px 0px;
     background: #ddd;
     background: -moz-linear-gradient(left,#ddd 45%,#ddd 45%,#ffbe00 100%);
     background: -webkit-linear-gradient(left,#ddd 45%,#ddd 45%,#ffbe00 100%);
@@ -594,7 +609,7 @@ ul.dropdown-menu.extended.logout {
 .bgHamrahMode{
     cursor: pointer;
     color: #ffffff;
-    padding: 10px 0px 10px 0px;
+    padding: 4px 0 4px 0;
     background: #ddd;
     background: -moz-linear-gradient(left,#ddd 45%,#ddd 45%,#59c5d2 100%);
     background: -webkit-linear-gradient(left,#ddd 45%,#ddd 45%,#59c5d2 100%);
@@ -613,6 +628,7 @@ ul.dropdown-menu.extended.logout {
 }
 .bgRightellModel.active{
     background: #992b6b; /* Old browsers */
+    color: #FFFFFF!important;
 }
 .paddingZero{
     padding: 0!important;
@@ -620,7 +636,7 @@ ul.dropdown-menu.extended.logout {
 }
 .priceSelect{
     display: none;
-    position: relative;
+    position: absolute;
     list-style-type: none;
     text-align: right;
     background: #ffffff;
@@ -856,6 +872,7 @@ button.close {
     color: #000;
 }
 #modelSim div{
+
     padding-right: 3px;
     padding-left: 3px;
     color: #000;
@@ -864,7 +881,11 @@ button.close {
 /* webkit solution */
 .pRtl::-webkit-input-placeholder { text-align:right; }
 /* mozilla solution */
-input.pRtl:-moz-placeholder { text-align:right; }
+input[type="text"].pRtl::-moz-placeholder{
+    text-align:right
+}input[type="text"].pRtl:-moz-placeholder{
+    text-align:right
+}
 .pRtl{
     padding-right: 5px!important;
 }
@@ -873,3 +894,199 @@ input.pRtl:-moz-placeholder { text-align:right; }
 }
 
 
+#G1,#G2,#G3,#G4,#G5,#G6{
+    cursor: pointer;
+}
+#footerIcon div{
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+    height: 90px;
+
+}
+#footerIcon div img{
+    width: 80px;
+    height: 80px;
+}
+#footerIcon div img:hover{
+    width: 85px;
+    height: 85px;
+}
+.plane{
+    color: #c2c2c2;
+}
+.plane.active{
+    color:#FFFFFF;
+}
+
+
+
+.selectCol {
+    position: relative;
+    background: #fff;
+}
+.selectCol .form-control {
+    padding: 0px 13px 0px 0;
+    height: 31px;
+
+    margin: 10px;
+    border: 0 solid #fff;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    z-index: 99;
+    position: relative;
+    direction: rtl;
+}
+.selectCol i.ico {
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    font-style: normal;
+}
+
+.tooltip1 .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(135, 135, 136, 0.5);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 107%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.tooltip1 .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(135, 135, 136, 0.5) transparent transparent transparent;
+}
+
+.tooltip1:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+.tooltip1:hover .tooltiptext img{
+width: 75%;
+}
+.inv.active{
+    color: #f8d349;
+}
+
+.table-advance tr td {
+    vertical-align: middle !important;
+}
+
+.no-border {
+    border-bottom: none;
+}
+
+.dataTables_length , .dataTables_filter{
+    padding:15px;
+
+}
+.dataTables_info{
+    padding:0 15px;
+}
+
+.dataTables_filter {
+    float: left;
+    width: 60%;
+}
+
+.dataTables_length select {
+    width: 65px;
+    padding:5px 8px;
+}
+
+.dataTables_length label, .dataTables_filter label {
+    font-weight: 300;
+}
+
+.dataTables_filter label {
+    width: 100%;
+}
+
+.dataTables_filter label input {
+    width: 78%;
+}
+
+.border-top {
+    border-top: 1px solid #ddd;
+}
+
+.dataTables_paginate.paging_simple_numbers span {
+    float: right;
+    margin: 0 1px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.dataTables_paginate.paging_simple_numbers span.disabled a{
+    color: #c7c7c7;
+}
+.dataTables_paginate.paging_simple_numbers span a{
+    color: #797979;
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+.dataTables_paginate.paging_simple_numbers span:hover a,
+.dataTables_paginate.paging_bootstrap.pagination span.active a{
+    color: #797979;
+    background: #eee;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+    float: right;
+    margin-left: 15px;
+    margin-top: -5px;
+    margin-bottom: 15px;
+
+}
+
+.dataTable tr:last-child {
+    border-bottom: 1px solid #ddd;
+}
+div#example_length {
+    float: left;
+}
+.dataTables_wrapper label{
+    color:#000000;
+}
+.dataTables_filter{
+    direction: rtl;
+    float: right;
+}
+.dataTables_info{
+    display: none;
+}
+.dataTables_paginate.paging_simple_numbers a{
+    display: none;
+}
+
+.form-group-lg .form-control + .form-control-feedback, .input-group-lg + .form-control-feedback, .input-lg + .form-control-feedback{
+    line-height: 30px!important;
+}

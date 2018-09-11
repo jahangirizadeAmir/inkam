@@ -27,28 +27,57 @@ function hideMenu() {
     document.getElementById("menuShow").setAttribute("onclick", "menuShow()");
 }
 function show(e) {
-    $('#part1').hide();
-    $('#' + e).show();
+    $('#part1').addClass("animated lightSpeedOut")
+    setTimeout(function() {
+
+            $('#ghabzStep2').hide();
+            $('#chargePart2Baste').hide();
+            $('#bilit').hide();
+            $('#footerIcon').show();
+            $('#footerIcon').addClass("animated lightSpeedIn");
+            $('#'+e).addClass("animated bounceInLeft")
+            $('#' + e).show();
+        }
+,700);
+
 }
 function back(e) {
     $('#part1').show();
     $('#' + e).hide();
 }
-function step2Charge(e, g, f) {
-    $('#part1Ghabz').hide();
-    $('#part2Ghabz').hide();
-    $('#part3Ghabz').hide();
-    $('#part4Ghabz').hide();
-    $('#' + e).hide();
-    $('#' + g).show();
-    f = typeof f !== 'undefined' ? f : '';
-    if (f !== '') {
-        $('#' + f).show();
+function gabzStep(e) {
+    $('#G1').css("width","50%");
+    $('#G2').css("width","50%");
+    $('#G3').css("width","50%");
+    $('#G4').css("width","50%");
+    $('#G5').css("width","50%");
+    $('#G6').css("width","50%");
+    $('#B1').css("width","50%");
+    $('#B2').css("width","50%");
+    $('#B3').css("width","50%");
+    $('#'+e).css("width","55%");
+    $('#G1').addClass("gray");
+    $('#G2').addClass("gray");
+    $('#G3').addClass("gray");
+    $('#G4').addClass("gray");
+    $('#G5').addClass("gray");
+    $('#G6').addClass("gray");
+    $('#B1').addClass("gray");
+    $('#B2').addClass("gray");
+    $('#B3').addClass("gray");
+    $('#'+e).removeClass("gray");
+
+    if(e=="B1"){
+        $('#airplan').show();
+        $('#bus').hide();
+    }if(e=="B2"){
+        $('#airplan').show();
+        $('#bus').hide();
     }
-    var number = $('#number1').val();
-    $('#number').val(number);
-    $('#number2').val(number);
-    $('#number3').val(number);
+    if(e=="B3"){
+        $('#airplan').hide();
+        $('#bus').show();
+    }
 }
 function add(e) {
     $('#' + e).addClass('animated').addClass('shake').addClass('infinite').removeClass('bounceInRight').removeClass('bounceInRight1').removeClass('bounceInRight2').removeClass('bounceInRight3');
@@ -180,7 +209,7 @@ function checkBoxOne() {
         $('#basteSelect').hide();
         $('#basteLast').hide();
         $('#basteLastTitle').hide();
-        $('#basteLastSelect').hide();
+        $('#Select').hide();
         // $('#operatorList').hide();
         $('#price').hide();
         $('#lastPrice').val("");
@@ -268,6 +297,9 @@ function profileShow(e1, e2, e3,e4) {
     $('#ThreePr').removeClass("active");
     $('#OnePr').removeClass("active");
     $('#TwoPr').removeClass("active");
+    $('#ThreePr2').removeClass("active");
+    $('#OnePr2').removeClass("active");
+    $('#TwoPr2').removeClass("active");
     $('#'+e4).addClass("active");
     $('#' + e1).show();
     $('#' + e2).hide();
@@ -327,11 +359,11 @@ function ActiveThis(e) {
     btnModel26 = $('#btnModel26');
     if (e === "btnModel2") {
         $('#price').show();
-        $("#lastPrice").attr('disabled','disabled').val("");
+        $("#lastPrice").attr('readonly', true).val("");
 
     } else {
         $('#price').hide();
-        $("#lastPrice").removeAttr('disabled');
+        $("#lastPrice").removeAttr('readonly').val("");
     }
     if (e === "btnModel3" || e === "btnModel23" || e === "btnModel24" || e === "btnModel25"|| e === "btnModel26") {
         $('#Baste').fadeIn();
@@ -385,7 +417,6 @@ function ActiveThis(e) {
         if (e === "btnModel1") {
             $("#model2").show();
             btnModel6.css("visibility", "visible");
-            $("#chargeModelLog").removeClass("col-lg-offset-2 col-md-offset-2 col-xs-offset-2 col-md-offset-2");
         } else if (e === "btnModel2" || e === "btnModel3") {
             $("#model2").hide();
         }
@@ -394,7 +425,6 @@ function ActiveThis(e) {
         if (e === "btnModel1") {
             $("#model2").show();
             btnModel6.css("visibility", "hidden");
-            $("#chargeModelLog").addClass("col-lg-offset-2 col-md-offset-2 col-xs-offset-2 col-md-offset-2");
         } else if (e === "btnModel2" || e === "btnModel3") {
             $("#model2").hide();
         }
@@ -548,8 +578,12 @@ function CheckPrice(e) {
     }
 }
 function showPriceSelect(e) {
-    if (e.length < 3) {
+    if(modelSharj=='2'){
         $('#priceSelect').show();
+    }else {
+        if (e.length < 3) {
+            $('#priceSelect').show();
+        }
     }
 }
 function showShaba(e) {
@@ -558,6 +592,15 @@ function showShaba(e) {
     }else{
         if(e.length>0 && e.length>3){
             $('#selectShaba').hide();
+        }
+    }
+}
+function showShaba2(e) {
+    if (e.length < 3) {
+        $('#selectShaba2').show();
+    }else{
+        if(e.length>0 && e.length>3){
+            $('#selectShaba2').hide();
         }
     }
 }
@@ -588,8 +631,8 @@ function fillBaste(e,f) {
                     last+='<li onclick="fillBasteLast(this.innerText,this.getAttribute('+cot+'value'+cot+'),this.getAttribute('+cot+'data-code'+cot+'))" value="'+data[i]['price']+'" data-code="'+data[i]['code']+'">'+data[i]['name']+'</li>';
                 }
             }
-            $('#basteLast').delay("slow").fadeIn();
-            $('#basteLastTitle').delay("slow").fadeIn();
+            $('#basteLast').fadeIn();
+            $('#basteLastTitle').fadeIn();
             $('#basteLastSelect').html(last);
         }
     });
@@ -656,6 +699,8 @@ function changeSrcImg(id) {
     $("#img" + id).attr("src", "img/radio_ok.png");
 }
 function inv() {
+    $("#ErrorInv").hide();
+    $("#okInv").hide();
     var mobile = $('#input3').val();
     $.ajax({
         url:'ajax/invSend.php',
@@ -666,7 +711,10 @@ function inv() {
         type: 'POST',
         success: function (data) {
             if(data["Error"]===false){
-                $("#okInv").text("پیام شما با موفقیت به شماره "+mobile+' ارسال شد .').show();
+                $("#okInv").text("پیام دعوت با موفقیت به شماره "+mobile+' ارسال شد .').show();
+                $("#menuLeft2").click();
+            }else{
+                $("#ErrorInv").text("شماره "+mobile+" قبلا در اینکام عضو شده است .").show();
                 $("#menuLeft2").click();
             }
         }
@@ -674,6 +722,9 @@ function inv() {
 }
 function fillPricePay(e) {
     $('#getManeyText').val(e);
+}
+function fillPricePay2(e) {
+    $('#getManeyText3').val(e);
 }
 function fillShaba(e) {
     $.ajax({
@@ -686,9 +737,9 @@ function fillShaba(e) {
         success: function (data) {
             if(data["Error"]===false){
 
-                $("#shaba").val(data['shabaNumber']);
-                $("#BankShaba").val(data['shabaBank']);
-                $("#selectShaba").hide();
+                $("#shaba2").val(data['shabaNumber']);
+                $("#BankShaba2").val(data['shabaBank']);
+                $("#selectShaba2").hide();
             }
         }
     });
@@ -715,6 +766,35 @@ function SendRequestGetMoney() {
             }else{
                 $("#getMoneyError").show().text(data["MSG"]).css("background","rgba(2, 131, 42, 0.5)");
                 $("#spanMoney").text("اعتبار فعلی شما "+data['money']+" تومان ");
+                $("#spanMoney2").text("اعتبار فعلی شما "+data['money']+" تومان ");
+
+            }
+        }
+    });
+}
+function SendRequestGetMoney2() {
+    let price, shaba, bankName;
+    price = $("#getManeyText23").val();
+
+    shaba=$("#shaba2").val();
+    bankName = $("#BankShaba2").val();
+    $.ajax({
+        url:'ajax/addGetMoney.php',
+        data:{
+            price: price.replace(/,/g,''),
+            shaba: shaba,
+            bankName: bankName
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===true){
+
+                $("#getMoneyError2").show().text(data["MSG"]).css("background","rgba(255, 0, 0, 0.5)");
+            }else{
+                $("#getMoneyError2").show().text(data["MSG"]).css("background","rgba(2, 131, 42, 0.5)");
+                $("#spanMoney").text("اعتبار فعلی شما "+data['money']+" تومان ");
+                $("#spanMoney2").text("اعتبار فعلی شما "+data['money']+" تومان ");
 
             }
         }
@@ -722,6 +802,11 @@ function SendRequestGetMoney() {
 }
 function payMoney(e) {
     let price = $("#getManeyText").val().replace(/,/g, '');
+    let mobile = $("#number1").val();
+    window.location.href="ajax/goToBank.php?price="+price+"&model="+e+"&code="+codeBaste+"&mobile="+mobile+'&operator='+model+'&sim='+simModel+'&azm='+amazing+'&modelSharj='+modelSharj;
+}
+function payMoney2(e) {
+    let price = $("#getManeyText2").val().replace(/,/g, '');
     let mobile = $("#number1").val();
     window.location.href="ajax/goToBank.php?price="+price+"&model="+e+"&code="+codeBaste+"&mobile="+mobile+'&operator='+model+'&sim='+simModel+'&azm='+amazing+'&modelSharj='+modelSharj;
 }
@@ -751,6 +836,7 @@ function beforPay(price,model1) {
 }
 function SelectNumberContact(e) {
     $('#ContactList').hide();
+    $('.tableSearch').hide();
     $('#number1').val(e);
     checkThis();
 }
@@ -834,8 +920,7 @@ function recoverLast() {
 }
 function showFactor() {
     let priceInside = $('#lastPrice').val();
-    if((price!="" || price!='0' || price==0 || price=="nudefine" || price<100) &&  priceInside=='' ){
-
+    if( codeBaste =='' &&  priceInside=='' ){
         $('#payemtError').show();
     }else{
         $('#payemtError').hide();
@@ -847,3 +932,67 @@ function removeBlur(){
     $('#icons').removeClass('blur');
     $('#footer').removeClass('blur');
 }
+
+//travell
+function changeTeravell(e) {
+e=='two'?$('#t2').addClass("active"):$('#t2').removeClass("active");
+if(e=='two'){
+    $('#goDate2').prop("disabled", false);
+
+}else{
+    $('#goDate2').prop("disabled", true);
+}
+}
+function SendSmsInv() {
+    let mobile = $('#smsInv').val();
+    $.ajax({
+        url:'ajax/invSend.php',
+        data:{
+            mobile: mobile
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $("#profileInvUserSu").text("پیام شما با موفقیت به شماره "+mobile+' ارسال شد .').show();
+            }
+        }
+    });
+}
+function addStar(e) {
+    $('.inv').removeClass('active');
+    $.ajax({
+        url:'ajax/starInv.php',
+        data:{
+            id: e
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $('#StarInv'+e).addClass('active');
+            }
+        }
+    });
+}
+function submitInvCode() {
+    let invCode = $('#invCodeSubmit').val();
+    $.ajax({
+        url:'ajax/submitInvCode.php',
+        data:{
+            invCode: invCode
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                let cot = "'";
+                let child = '<tr><td>'+invCode+'</td><td>0</td><td><i class="fa fa-star inv" id="StarInv'+data['id']+'" onclick="addStar('+cot+data['id']+cot+')"></i></td></tr>'
+                $('#TableInvCode').append(child);
+            }
+        }
+    });
+}
+$(document).ready(function() {
+    $('#example').DataTable();
+} );

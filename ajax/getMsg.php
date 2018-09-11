@@ -21,13 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if($model==="msg"){
                 $select = mysqli_query($conn->conn(),"SELECT * FROM msg where msgId='$id'");
                 $rowMsg = mysqli_fetch_assoc($select);
-                $MSG = $rowMsg["msgLongText"];
+                $MSG = $rowMsg["msgShortText"];
                 if($rowMsg['msgView']==0) $result=true;else $result=false;
                 $update = mysqli_query($conn->conn(),"UPDATE msg SET msg.msgView='1' where msgId='$id'");
             }else if($model==="noti"){
                 $select = mysqli_query($conn->conn(),"SELECT * FROM noti where notiId='$id'");
                 $rowMsg = mysqli_fetch_assoc($select);
-                $MSG = $rowMsg["notiLongText"];
+                $MSG = $rowMsg["notiShortText"];
                 if($rowMsg['notiView']==0) $result=true;else $result=false;
                 $update = mysqli_query($conn->conn(),"UPDATE noti SET noti.notiView='1' where notiId='$id'");
             }

@@ -18,14 +18,23 @@ class sharj
          $this->last =  base64_encode($this->userName.':'.$this->password);
     }
 
-    public function topup($amount,$mobile,$operator,$amazing="false",$code=null){
+    public function topup(
+        $amount,$mobile,
+                          $operator,
+                          $amazing="false",
+                          $code=null,
+                          $seller_name='اینکام')
+    {
         $this->url.="topup";
         if($code!=null){
-            $extra = array("internet"=>$code);
-        }else{
+            $extra = array("internet"=>$code,'seller_name'=>$seller_name);
+        }else
             if($amazing!="false") {
-                $extra = array("amazing" => $amazing);
+                $extra = array("amazing" => $amazing,'seller_name'=>$seller_name);
             }
+        else{
+            $extra = array('seller_name'=>$seller_name);
+
         }
         $arrayTopup = array("amount"=>$amount,"mobile"=>$mobile,"operator"=>$operator,"extra"=>$extra);
         $result = $this->sendRequest($arrayTopup);
@@ -45,7 +54,31 @@ class sharj
             return false;
         }
     }
-    public function packges($date,$operator,$typeSim){
+    public function packgesDb($date,$operator,$typeSim){
+        //Hourly |Daily | Weekly | Monthly | Two Month | Three Month| Four Month| Six Month| Yearly
+        //typeSim
+        //1 اعتباری
+        //2 دیتا
+        //3 دایمی
+        //4 TD-LTE
+        //1 hamrah
+        //2 irancell
+        //3 rightell
+        require_once "db.php";
+        $db = new db();
+        $select = mysqli_query($db->conn(),"SELECT * FROM baste");
+        while ($rsArray = mysqli_fetch_assoc($select)){
+                if($rsArray["basteOperator"]!=$operator)continue;
+                if($rsArray["bastePeriod"]!=$date)continue;
+                if($typeSim!=$rsArray["basteType"])continue;
+                $code = $rsArray['basteCode'];
+                $name = $rsArray['basteName'];
+                $price = $rsArray['bastePrice'];
+                $optionSelect[]=array("name"=>$name,"code"=>$code,"price"=>$this->ToCur($price));
+        }
+        return $optionSelect;
+    }
+    public function packges(){
         //Hourly |Daily | Weekly | Monthly | Two Month | Three Month| Four Month| Six Month| Yearly
         //typeSim
         //1 اعتباری
@@ -59,16 +92,24 @@ class sharj
         $data_Json=null;
         $result = $this->sendRequest($data_Json);
         $optionSelect = array();
+
+        require_once "db.php";
+        $db = new db();
+        $delete = mysqli_query($db->conn(),"DELETE FROM baste");
         foreach ($result as $rsArray){
-                if($rsArray["operator_id"]!=$operator)continue;
-                if($rsArray["period_id"]!=$date)continue;
-                if($typeSim!=$rsArray["type_id"])continue;
+
                 $code = $rsArray['code'];
                 $name = $rsArray['name'];
                 $price = $rsArray['credit'];
-                $optionSelect[]=array("name"=>$name,"code"=>$code,"price"=>$this->ToCur($price));
+                $typpe = $rsArray['type_id'];
+                $priod = $rsArray["period_id"];
+                $operator = $rsArray["operator_id"];
+
+                $select = mysqli_query($db->conn(),"INSERT INTO baste
+                 (basteCode, basteName, bastePrice,basteType,bastePeriod,basteOperator) 
+                 VALUE ('$code','$name','$price','$typpe','$priod','$operator')");
+
         }
-        return $optionSelect;
     }
 
     private function sendRequest($data_Json){

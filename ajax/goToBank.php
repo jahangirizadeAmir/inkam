@@ -45,7 +45,7 @@ if(
          $_SESSION['mobile']=$_GET['mobile'];
          $_SESSION['operator']=$_GET['operator'];
          $_SESSION['simModel']=$_GET['sim'];
-         $_SESSION['amz']=$_GET['amz'];
+         $_SESSION['amz']=$_GET['azm'];
          if(isset($_GET['etebar']) && $_GET['etebar']==true) {
             echo '<div id="melatBank"></div>
                     <script language="javascript" type="text/javascript"> 

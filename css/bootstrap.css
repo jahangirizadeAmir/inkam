@@ -2801,7 +2801,7 @@ select[multiple].input-lg {
 .form-group-lg .form-control + .form-control-feedback {
   width: 46px;
   height: 46px;
-  line-height: 46px;
+  line-height: 30px;
 }
 .input-sm + .form-control-feedback,
 .input-group-sm + .form-control-feedback,

@@ -7,7 +7,7 @@ $sharj = new sharj();
 $conn = new db();
 if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     $userId = $conn->real($_SESSION['userId']);
-    $selectUser = mysqli_query($conn->conn(),"SELECT * FROM inviteCode where inviteCodeUserId='$userId' and status='1'");
+    $selectUser = mysqli_query($conn->conn(), "SELECT * FROM inviteCode where inviteCodeUserId='$userId' and status='1'");
     $rowInviteCode = mysqli_fetch_assoc($selectUser);
     $invCode = $rowInviteCode['inviteCodeText'];
 }
@@ -16,7 +16,7 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Inkome</title>
+    <title>اینکام | سیستم جامع خرید محصولات و خدمات مجازی</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -32,35 +32,55 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     <script src="js/persian-datepicker.js"></script>
     <script src="js/inputMask.js"></script>
     <script src="js/profile.js"></script>
-
+    <script src="app/assets/js/warm-canvas.js"></script>
+    <link rel="icon" type="image/ico" href="favicon.ico">
     <link href="css/vesam.css" rel="stylesheet">
-
     <style>
         .modal-header, h4, .close {
-            background-color: #5cb85c;
-            color: white !important;
-            text-align: center;
-            font-size: 30px;
+            background-color: #5cb85c;color: white !important;text-align: center;font-size: 30px;
         }
         .modal-footer {
             background-color: #f9f9f9;
         }
     </style>
 </head>
-<body>
+<body class="slider-area warm-canvas">
+<canvas class="worms sketch" height="531" width="1440" style="position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;"></canvas>
 <div class="pull-right col-md-2 col-sm-6 col-xs-12 menuDiv" id="menuDiv">
     <ul class="menuList">
         <li style="
     padding: 3px;
-" onclick="$('#userOption').hide();
-    $('#userProfile').hide();$('#homeDashbord').show();hideMenu()">
+" onclick="
+              $('#userOption').hide();
+              $('#miniDashbord').hide();
+             $('#userProfile').hide();
+             $('#homeDashbord').show();
+             hideMenu()">
             <i class="fa fa-home iconMenuLeft red"
                style="    position: relative;
     top: 10px;"></i>
-            پیشخوان
+            صفحه اصلی
             <br>
-        <span style="color: #e4e4e4;
-    margin-right: 48px;">اطلاعات کاربری</span>
+            <span style="color: #e4e4e4;
+    margin-right: 48px;">خرید محصولات</span>
+        </li>
+
+        <li style="
+    padding: 3px;
+" onclick="
+$('#homeDashbord').hide();
+        $('#MyUser').hide();
+        $('#userOption').show();
+        $('#miniDashbord').show();
+        $('#userProfile').hide();
+        removeBlur();">
+            <i class="fa fa-home iconMenuLeft red"
+               style="    position: relative;
+    top: 10px;"></i>
+پیشخوان
+            <br>
+            <span style="color: #e4e4e4;
+    margin-right: 48px;">اطلاعات کاربردی</span>
         </li>
 
 
@@ -68,6 +88,7 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
         $('#homeDashbord').hide();
         $('#MyUser').hide();
         $('#userOption').show();
+        $('#miniDashbord').hide();
         $('#userProfile').show();
         removeBlur();
 
@@ -75,8 +96,8 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
             <i class="fa fa-user-alt iconMenuLeft blue"
                style="    position: relative;
     top: 10px;"></i>
-            ویرایش پروفایل  <br>
-        <span style="color: #e4e4e4;
+            ویرایش پروفایل <br>
+            <span style="color: #e4e4e4;
     margin-right: 48px;">ویرایش اطلاعات کاربری</span>
         </li>
 
@@ -85,38 +106,35 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
             onclick="
         $('#homeDashbord').hide();
         $('#MyUser').show();
+        $('#miniDashbord').hide();
         $('#userOption').show();
         $('#userProfile').hide();
         removeBlur();
-
 "
         >
             <i class="fa fa-users iconMenuLeft yellow"
                style="position: relative;
-    top: 10px;"></i>  مدیریت کاربران<br>
-        <span style="color: #e4e4e4;
+    top: 10px;"></i> مدیریت کاربران<br>
+            <span style="color: #e4e4e4;
     margin-right: 48px;">مدیریت زیرمجموعه</span>
         </li>
-
         <li style="padding: 3px;">
             <i class="fa fa-credit-card iconMenuLeft red"
                style="position: relative;top: 10px;"></i>
-            گزارشات            <br>
-        <span style="color: #e4e4e4;
+            گزارشات <br>
+            <span style="color: #e4e4e4;
     margin-right: 48px;">گزارشات مالی</span>
         </li>
-
         <li style="padding: 3px;">
             <i class="fa fa-address-book iconMenuLeft red"
                style="position: relative;top: 10px;"></i>
-            دفترچه تلفن            <br>
-        <span style="color: #e4e4e4;
+            دفترچه تلفن <br>
+            <span style="color: #e4e4e4;
     margin-right: 48px;">لیست شماره تلفن</span>
-
         </li>
     </ul>
 </div>
-<div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 888;margin-bottom: 15px">
+<div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 999;margin-bottom: 15px">
     <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6"
         style="position: relative;z-index: 888;width: 100%">
         <li class=""><a href="index.php"><img src="img/logoType.png" class="logo"></a></li>
@@ -133,9 +151,11 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                     <li style="width: 100%">
                         <p class="green">دوستان خود را به اینکام دعوت کنید</p>
                     </li>
-
                     <li>
                         <div class="alert alert-success" id="okInv"
+                             style="direction: rtl;text-align: right;display: none">
+                        </div>
+                        <div class="alert alert-danger" id="ErrorInv"
                              style="direction: rtl;text-align: right;display: none">
                         </div>
                     </li>
@@ -151,7 +171,9 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                             <p style="direction: rtl;height: auto" id="msgInv" class="form-control" disabled>مشترک <span
                                         id="InvTellShow" style="color: #000000;margin: 0;
     width: auto;
-    padding: 0!important;">شماره تلفن</span>  شما از طرف <?php echo $_SESSION['userName'] ?> به اپلیکیشن اینکام دعوت شده اید با اینکام خرید شارژ ، بسته اینترنتی ، قبوض و بلیط مسافرتی را با تخفیف انجام دهید و با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کنید
+    padding: 0!important;">شماره تلفن</span> شما از طرف <?php echo $_SESSION['userName'] ?> به اپلیکیشن اینکام دعوت شده
+                                اید با اینکام خرید شارژ ، بسته اینترنتی ، قبوض و بلیط مسافرتی را با تخفیف انجام دهید و
+                                با معرفی اپلیکیشن اینکام مادام العمر کسب درآمد کنید
                                 <br>
                                 لینک دانلود اپ : www.inkam.ir/app
                                 <br>
@@ -173,20 +195,19 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
                 $i = 0;
                 $htmlMsg = "";
                 $cot = "'";
-
                 $selectMSg = mysqli_query($conn->conn(), "
 SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
 ");
                 while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                     if ($rowMsg['notiView'] == 0) {
                         $i++;
-                        $htmlMsg .= '<li style="" class="noti active" id="'.$rowMsg["notiId"].'" onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
-                            <div class="notiBag" id="bag'.$rowMsg["notiId"].'" style=""></div>
+                        $htmlMsg .= '<li style="" class="noti active" id="' . $rowMsg["notiId"] . '" onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
+                            <div class="notiBag" id="bag' . $rowMsg["notiId"] . '" style=""></div>
                             <p>' . $rowMsg['notiShortText'] . '</p>
                             <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '</p>
                         </li>';
                     } else {
-                        $htmlMsg .= '<li style="" id="'.$rowMsg["notiId"].'" class="noti " onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
+                        $htmlMsg .= '<li style="" id="' . $rowMsg["notiId"] . '" class="noti " onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
                             <p>' . $rowMsg['notiShortText'] . '</p>
                             <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '</p>
                         </li>';
@@ -194,7 +215,8 @@ SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
                 }
                 ?>
                 <img src="img/not.png" class="not img-responsive" id="menuLeft1" data-toggle="dropdown">
-                <span class="badge bg-danger" id="showMsgNoti" style="left: 37px;top: 5px;background-color: red"><?php echo $i ?></span>
+                <span class="badge bg-danger" id="showMsgNoti"
+                      style="left: 37px;top: 5px;background-color: red"><?php echo $i ?></span>
                 <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
                     aria-labelledby="menuLeft1" style="width: 257px!important;">
                     <div class="notify-arrow-left notify-arrow-green"></div>
@@ -219,16 +241,18 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                 while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                     if ($rowMsg['msgView'] == 0) {
                         $i++;
-                        $htmlMsg .= '<li style="" id="'.$rowMsg["msgId"].'" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti active">
-                            <div class="notiBag" id="bag'.$rowMsg["msgId"].'" style=""></div>
-                            <h5 style="text-align: right;margin: 0 0 10px 0px;">' . $rowMsg['msgShortText'] . '</h5>
-                            <p>' . $rowMsg['msgLongText'] . '</p>
+                        $htmlMsg .= '<li style="" id="' . $rowMsg["msgId"] . '" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti active">
+                            <div class="notiBag" id="bag' . $rowMsg["msgId"] . '" style=""></div>
+                            <h5 style="text-align: right;margin: 0 0 10px 0px;font-weight: 900;
+    font-size: 14px;">' . $rowMsg['msgLongText'] . '</h5>
+                            <p>' . $rowMsg['msgShortText'] . '</p>
                             <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['msgRegDate']) . '</p>
                         </li>';
                     } else {
-                        $htmlMsg .= ' <li style="" id="'.$rowMsg["msgId"].'" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti">
-                            <h6 style="    text-align: right;margin: 0 0 10px 0px;">' . $rowMsg['msgShortText'] . '</h6>
-                            <p>' . $rowMsg['msgLongText'] . '</p>
+                        $htmlMsg .= ' <li style="" id="' . $rowMsg["msgId"] . '" onclick="showModalMsg(' . $cot . $rowMsg["msgId"] . $cot . ',' . $cot . 'msg' . $cot . ')" class="noti">
+                            <h6 style="    text-align: right;margin: 0 0 10px 0px;font-weight: 900;
+    font-size: 14px;">' . $rowMsg['msgLongText'] . '</h6>
+                            <p>' . $rowMsg['msgShortText'] . '</p>
                             <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['msgRegDate']) . '</p>
                         </li>';
                     }
@@ -284,7 +308,7 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
     background: #3b8390;
     border-radius: 10px;
     color: #fff;
-" id="spanMoney"> اعتبار فعلی شما : <?php echo toMoney($money) ?> تومان </span>
+" id="spanMoney"> موجودی کیف پول  : <?php echo toMoney($money) ?> تومان </span>
                 </p>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
                     <span>تعداد کاربران شما</span>
@@ -306,27 +330,6 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                     </button>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                    <span>درآمد از خرید پنل</span>
-                    <div class="twoCircle">
-                       <span style="    direction: rtl;
-    font-size: 16px;
-    top: 39px;
-    left: 0px;
-    position: absolute;">
-                           <?php
-                           $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
-                           $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
-                           if($rowPriceOwne['sum']=='')
-                               echo '0 تومان';
-                           echo $rowPriceOwne['sum'];
-                           ?>
-                        </span>
-                    </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
-                        جزییات بیشتر
-                    </button>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
                     <span>درآمد از خرید  کاربر</span>
 
                     <div class="threeCircle">
@@ -338,7 +341,7 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
 <?php
 $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
 $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
-if($rowPriceOwne['sum']=='')
+if ($rowPriceOwne['sum'] == '')
     echo '0 تومان';
 echo $rowPriceOwne['sum'];
 ?>
@@ -348,6 +351,28 @@ echo $rowPriceOwne['sum'];
                         جزییات بیشتر
                     </button>
                 </div>
+                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                    <span>درآمد از خرید پنل</span>
+                    <div class="twoCircle">
+                       <span style="    direction: rtl;
+    font-size: 16px;
+    top: 39px;
+    left: 0px;
+    position: absolute;">
+                           <?php
+                           $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+                           $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+                           if ($rowPriceOwne['sum'] == '')
+                               echo '0 تومان';
+                           echo $rowPriceOwne['sum'];
+                           ?>
+                        </span>
+                    </div>
+                    <button class="btn btn-info2" style="margin-top: 10px;">
+                        جزییات بیشتر
+                    </button>
+                </div>
+
 
                 <p style="
     text-align: center;
@@ -380,10 +405,10 @@ echo $rowPriceOwne['sum'];
                 <div class="form-group">
                     <label for="getManeyText" style="color: black">مبلغ را به تومان وارد کنید</label>
                     <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control"
-                           id="getManeyText2">
+                           id="getManeyText1">
                 </div>
                 <script>
-                    $("#getManeyText2").maskMoney();
+                    $("#getManeyText1").maskMoney();
                 </script>
                 <div class="form-group" style="position: relative;">
                     <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
@@ -467,7 +492,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
     color: #fff;" value="پرداخت" class="btn">
                 </div>
                 <script>
-                    $("#getManeyText").maskMoney();
+                    $("#getManeyText2").maskMoney();
                 </script>
             </li>
 
@@ -516,7 +541,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
 </div>
 <?php
 
-if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
+if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
 
 ?>
 
@@ -525,8 +550,213 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
+    z-index: 999;
     top: 50%;" id="userOption">
-    <div id="userProfile" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none">
+        <ul class="dropdown-menu extended logout col-md-6" id="miniDashbord" style="display: none">
+            <li class="col-md-9 col-sm-6 col-xs-12" id="dashbord2" style="   padding: 0px;
+    margin-top: 10px;">
+                <p style="
+    text-align: center;
+    /* padding: 10px; */
+">
+                    <?php
+                    $selectUser = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userId'");
+                    $rowSelectUser = mysqli_fetch_assoc($selectUser);
+                    $money = $rowSelectUser['userMoney'];
+
+                    ?>
+                    <span style="
+    width: auto;
+    text-align: center;
+    padding: 10px;
+    background: #3b8390;
+    border-radius: 10px;
+    color: #fff;
+" id="spanMoney2"> موجودی کیف پول : <?php echo toMoney($money) ?> تومان </span>
+                </p>
+                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                    <span>تعداد کاربران شما</span>
+                    <div class="oneCircle">
+                        <span style="    direction: rtl;
+    font-size: 16px;
+    top: 39px;
+    left: 0px;
+    position: absolute;">
+                            <?php
+                            $selectUserCount = mysqli_query($conn->conn(), "SELECT * FROM user where UserOwner='$userId'");
+                            $Count = mysqli_num_rows($selectUserCount);
+                            echo $Count;
+                            ?>
+                        </span>
+                    </div>
+                    <button class="btn btn-info2" style="margin-top: 10px;">
+                        جزییات بیشتر
+                    </button>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                    <span>درآمد از خرید  کاربر</span>
+
+                    <div class="threeCircle">
+                          <span style="    direction: rtl;
+    font-size: 16px;
+    top: 39px;
+    left: 0px;
+    position: absolute;">
+<?php
+$selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+$rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+if ($rowPriceOwne['sum'] == '')
+    echo '0 تومان';
+echo $rowPriceOwne['sum'];
+?>
+                          </span>
+                    </div>
+                    <button class="btn btn-info2" style="margin-top: 10px;">
+                        جزییات بیشتر
+                    </button>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                    <span>درآمد از خرید پنل</span>
+                    <div class="twoCircle">
+                       <span style="    direction: rtl;
+    font-size: 16px;
+    top: 39px;
+    left: 0px;
+    position: absolute;">
+                           <?php
+                           $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+                           $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+                           if ($rowPriceOwne['sum'] == '')
+                               echo '0 تومان';
+                           echo $rowPriceOwne['sum'];
+                           ?>
+                        </span>
+                    </div>
+                    <button class="btn btn-info2" style="margin-top: 10px;">
+                        جزییات بیشتر
+                    </button>
+                </div>
+
+
+
+
+            </li>
+
+            <li class="col-md-9 col-sm-6 col-xs-12" style="padding :15px 70px 6px;display: none" id="getManey2">
+                <p style="padding: 5px;
+    background: rgba(255, 0, 0, 0.5);
+    color: white;display: none" id="getMoneyError2">مبلغ به درستی وارد نشده است</p>
+                <div class="form-group">
+                    <label for="getManeyText" style="color: black">مبلغ را به تومان وارد کنید</label>
+                    <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control"
+                           id="getManeyText23">
+                </div>
+                <script>
+                    $("#getManeyText23").maskMoney();
+                </script>
+                <div class="form-group" style="position: relative;">
+                    <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
+                    <input class="form-control"
+                           onfocus="showShaba2(this.value)"
+                           onkeypress="showShaba2(this.value)"
+                           type="text" id="shaba2">
+                    <?php
+                    $selectShaba = mysqli_query($conn->conn(), "SELECT * FROM shaba where shabaUserId = '$userId'");
+                    if (mysqli_num_rows($selectShaba) > 0) {
+                        ?>
+                        <ul style="
+    position: absolute;
+    width: 100%;
+    border: 1px solid #e4e4e4;
+z-index: 9999999999" class="priceSelect" id="selectShaba2">
+                            <li>می توانید یکی از شماره های شبا ذخیره شده را انتخاب نمایید.</li>
+                            <?php
+                            while ($rowSelectShaba = mysqli_fetch_assoc($selectShaba)) {
+                                ?>
+                                <li onclick="fillShaba2('<?php echo $rowSelectShaba['shabaId'] ?>')">
+                                    <?php echo $rowSelectShaba['shabaNumber'] ?>
+                                    - <?php echo $rowSelectShaba['shabaBank']; ?>
+                                </li>
+
+                                <?php
+                            }
+                            ?>
+                        </ul>
+
+                        <?php
+                    }
+                    ?>
+
+                </div>
+                <div class="form-group">
+                    <label for="getManeyText" style="color: black">نام بانک را وارد کنید</label>
+                    <input class="form-control"
+                           type="text" id="BankShaba2">
+                </div>
+                <div class="form-group">
+                    <span style="float: right;color: #000000;width: auto;position: relative;top: 6px;margin-left: 5px;">ذخیره سازی شبا</span>
+                    <input type="checkbox" id="shabaSave2" checked>
+                    <label for="go"></label>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="ثبت" style="    background: #4fb2a0;
+    color: #fff;" onClick="SendRequestGetMoney2()"
+                           class="btn btn-group-sm btn-info">
+                </div>
+            </li>
+            <li class="col-md-9 col-sm-6 col-xs-12" style="    height: 100%;
+    padding: 70px;
+    padding-bottom: 10px;
+    padding-top: 51px;display: none" id="payMoney2">
+                <div class="form-group" style="direction: rtl;">
+                    <div class="row">
+                        <input type="button" onclick="fillPricePay2('20,000')" value="۲۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay2('50,000')" value="۵۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay2('100,000')" value="۱۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <input type="button" onclick="fillPricePay2('300,000')" value="۳۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay2('500,000')" value="۵۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                        <input type="button" onclick="fillPricePay2('1,000,000')" value="۱,۰۰۰,۰۰۰ تومان"
+                               class="btn btn-info2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="getManeyText" style="color: black">می توانید مبلغ دلخواه خود را وارد کنید</label>
+                    <input data-allowzero="true" data-precision="0" data-decimal=" " type="text" style="direction: rtl"
+                           class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText3">
+                </div>
+                <div class="form-group">
+                    <input type="button" onclick="payMoney('walet')" style="    background: #4fb2a0;
+    color: #fff;" value="پرداخت" class="btn">
+                </div>
+                <script>
+                    $("#getManeyText").maskMoney();
+                </script>
+            </li>
+
+            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
+                <div class="sul_verticallSplitter"></div>
+                <a href="#" id="OnePr2" class="active"
+                   onclick="profileShow('dashbord2','getManey2','payMoney2','OnePr2')">داشبورد</a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
+                <a href="#" id="TwoPr2"
+                   onclick="profileShow('payMoney2','getManey2','dashbord2','TwoPr2')">افزایش اعتبار</a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
+                <a href="#" id="ThreePr2"
+                   onclick="profileShow('getManey2','payMoney2','dashbord2','ThreePr2')"> درخواست واریز اعتبار</a>
+            </li>
+
+        </ul>
+    <div id="userProfile" class="col-md-6"
+         style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none">
         <h3>ویرایش اطلاعات کاربری</h3>
         <div class="alert alert-success" id="EditSuc" style="display: none;">
             ویرایش اطلاعات با موفقیت انجام شد
@@ -539,7 +769,7 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 <input type="text" id="editName"
                        class="form-control input-lg ng-pristine ng-valid ng-touched"
                        dir="rtl"
-                       style="height: 50px;padding-right: 7px;
+                       style="height: 30px;padding-right: 7px;
     padding-left: 42.5px;"
                        value="<?php echo $_SESSION['userName'] ?>"
                 >
@@ -554,7 +784,7 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 <input type="text" id="OldeditPassword"
                        class="form-control input-lg ng-pristine ng-valid ng-touched"
                        dir="ltr"
-                       style="height: 50px;padding-right: 0;
+                       style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                 >
                 <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
@@ -568,7 +798,7 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 <input type="text" id="editPassword"
                        class="form-control input-lg ng-pristine ng-valid ng-touched"
                        dir="ltr"
-                       style="height: 50px;padding-right: 0;
+                       style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                 >
                 <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
@@ -579,17 +809,17 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
         </div>
 
         <?php
-        $selectUserProfile = mysqli_query($conn->conn(),"SELECT * FROM user where user.userId='$userId'");
+        $selectUserProfile = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userId'");
         $rowUser = mysqli_fetch_assoc($selectUserProfile);
         $userOwner = $rowUser['UserOwner'];
-        if($userOwner==''){
+        if ($userOwner == '') {
             ?>
             <div class="col-xs-12">
                 <div class="form-group input-group has-feedback">
                     <input type="text" id="editCode"
                            class="form-control input-lg ng-pristine ng-valid ng-touched"
                            dir="ltr"
-                           style="height: 50px;padding-right: 0;
+                           style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                     >
                     <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
@@ -599,19 +829,18 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 </div>
             </div>
 
-        <?php
-        }
-        else{
-    $selectOwner = mysqli_query($conn->conn(),"SELECT * FROM user where user.userId='$userOwner'");
-    $rowOwner = mysqli_fetch_assoc($selectOwner);
-    $userOwnerName = $rowOwner['userFullname'];
-         ?>
+            <?php
+        } else {
+            $selectOwner = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userOwner'");
+            $rowOwner = mysqli_fetch_assoc($selectOwner);
+            $userOwnerName = $rowOwner['userFullname'];
+            ?>
             <div class="col-xs-12">
                 <div class="form-group input-group has-feedback">
                     <input type="text" id="editCode"
                            class="form-control input-lg ng-pristine ng-valid ng-touched"
                            dir="rtl"
-                           style="height: 50px;padding-right: 5px;
+                           style="height: 30px;padding-right: 5px;
     padding-left: 42.5px;"
                            value="<?php echo $userOwnerName ?>"
                     >
@@ -622,12 +851,14 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 </div>
             </div>
 
-        <?php
+            <?php
         }
         ?>
         <span type="button" class="btn btn-info2" onClick="EditPrifile()">ویرایش اطلاعات</span>
     </div>
-    <div id="MyUser" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none">
+    <div id="MyUser" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;
+    float: none;display: none;overflow: auto;    height: auto;
+    max-height: 600px;">
         <h3>مدیریت کاربران</h3>
 
         <div class="row state-overview">
@@ -636,8 +867,9 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                     <div class="symbol terques">
                         <i class="fa fa-user"></i>
                     </div>
+
                     <div class="value">
-                        <h1 class="count">495</h1>
+                        <h1 class="count"><?php echo $Count;?></h1>
                         <p>تعداد کل کاربران</p>
                     </div>
                 </section>
@@ -648,7 +880,12 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <i class="fa fa-tags"></i>
                     </div>
                     <div class="value">
-                        <h1 class=" count2">947</h1>
+                        <?php
+                        $selectUserPayment = mysqli_query($conn->conn(),"SELECT SUM(pay.payPrice) as sumPrice from pay,user where pay.payUserId=user.userId and user.UserOwner='$userId' and pay.payModel!='1'");
+                        $rowPayPrice = mysqli_fetch_assoc($selectUserPayment);
+
+                        ?>
+                        <h1 class=" count2"><?php  $rowPayPrice['sumPrice']==null?$a="0":$a=$rowPayPrice['sumPrice'];echo $a; ?></h1>
                         <p>کل خرید کاربران</p>
                     </div>
                 </section>
@@ -659,48 +896,158 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <i class="fa fa-shopping-cart"></i>
                     </div>
                     <div class="value">
-                        <h1 class=" count3">328</h1>
+                        <h1 class=" count3"><?php
+                            if ($rowPriceOwne['sum'] == '')
+                                echo '0';
+                            echo $rowPriceOwne['sum'];
+                        ?></h1>
                         <p>سود شما از خرید کاربران</p>
                     </div>
                 </section>
             </div>
         </div>
-
-
-        <table class="table table-hover">
+        <div class="form-group" style="overflow: hidden;">
+        <h5>روش های دعوت کاربران</h5>
+            <div class="alert alert-success" id="profileInvUserSu" style="display: none;direction: rtl">
+            </div>
+            <div class="col-md-9" style="padding: 0;
+    float: right;">
+        <input class="form-control pRtl" id="smsInv" type="text" placeholder="شماره تماس">
+            </div>
+            <div class="col-md-3">
+                <input type="button" onclick="SendSmsInv()" class="btn btn-info2" value="ارسال پیام کوتاه">
+            </div>
+        </div>
+        
+        <h5>شناسه های شما</h5>
+        <table class="table table-hover" style="direction: rtl">
             <thead>
             <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
+                <th>شناسه</th>
+                <th>تعداد کاربران</th>
+                <th>وضعیت</th>
+            </tr>
+            </thead>
+            <tbody id="TableInvCode">
+            <?php
+                $selectInv = mysqli_query($conn->conn(),"SELECT * FROM inviteCode where inviteCodeUserId='$userId'");
+                while ($rowInv = mysqli_fetch_assoc($selectInv)){
+                    $invId = $rowInv['inviteCodeId'];
+                    $invCode = $rowInv['inviteCodeText'];
+                    $selectInvUser = mysqli_query($conn->conn(),"SELECT * FROM user where user.UserOwner='$userId' AND user.userInvCode='$invId'");
+                    $CountInvUser = mysqli_num_rows($selectInvUser);?>
+
+                    <tr>
+                        <td><?php echo $invCode; ?></td>
+                        <td><?php echo $CountInvUser; ?></td>
+                        <td>
+                            <?php
+                            if($rowInv['status']=='1'){
+                            ?>
+
+                                <i class="fa fa-star active inv" id="StarInv<?php echo $invId ?>" onclick="addStar('<?php echo $invId ?>')" style="cursor: pointer"></i>
+
+                                <?php
+                            }else{
+                                ?>
+
+                                <i class="fa fa-star inv" id="StarInv<?php echo $invId ?>" onclick="addStar('<?php echo $invId ?>')" style="cursor: pointer"></i>
+
+
+                                <?php
+                            }
+                            ?>
+                        </td>
+                    </tr>
+
+
+            <?php
+                }
+            ?>
+
+            </tbody>
+        </table>
+        <h5>اضافه کردن شناسه جدید</h5>
+        <div class="col-xs-12"
+             style="padding: 0;margin-top: 10px;text-align: center" >
+            <div class="form-group input-group has-feedback"
+                 style=""
+                >
+                <input type="text"
+                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                       dir="ltr"
+                       autocomplete="off"
+                       style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                       placeholder="شناسه جدید را وارد کنید"
+                       id="invCodeSubmit"
+                >
+                <i class="fa fa-barcode form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                <div class="input-group-addon" style="direction: rtl">شناسه جدید</div>
+            </div>
+            <input class="btn btn-info2" onclick="submitInvCode()" value="ثبت">
+        </div>
+        <h5>لیست کاربران</h5>
+
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+            <tr>
+                <th>نام کاربری و شماره موبایل</th>
+                <th>دعوت از طریق</th>
+                <th>درآمد برای شما</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-            </tr>
-            <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
-            </tr>
+
+            <?php
+            $selectUserInv = mysqli_query($conn->conn(),"SELECT * FROM user where user.UserOwner='$userId'");
+            if(mysqli_num_rows($selectUserInv)==0){
+                echo ' <tr>
+                        <td>کاربری یافت نشد</td>
+                        <td>نامشخص</td>
+                        <td>0</td>
+                    </tr>';
+
+            }else {
+
+                while ($rowUserInv = mysqli_fetch_assoc($selectInvUser)) {
+                    $userInvId = $rowUserInv['userId'];
+                    $userInvCode = $rowUserInv['userInvCode'];
+                    $selectInvCode = mysqli_query($conn->conn(), "SELECT * FROM inviteCode where inviteCode.inviteCodeId='$invCode'");
+                    $rowInvCode = mysqli_fetch_assoc($selectInvCode);
+                    $invCodeer = $rowInvCode['inviteCodeText'];
+
+                    $selectPaymentThisUser = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sumPayUserForMe
+                  FROM pay where pay.userPay='$userInvId' AND pay.payModel='5'");
+                    $rowPaymetForMe = mysqli_fetch_assoc($selectPaymentThisUser);
+                    $rowPaymetForMe['sumPayUserForMe'] == null ? $lastPay = 0 : $lastPay = $rowPaymetForMe['sumPayUserForMe'];
+                    ?>
+
+                    <tr>
+                        <td><?php echo $rowUserInv['userFullname'] ?> / <?php echo $rowUserInv['userMobile'] ?></td>
+                        <td><?php echo $invCodeer ?></td>
+                        <td><?php echo $lastPay ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
             </tbody>
+
         </table>
     </div>
     <?php
     }
     ?>
-    </div>
+</div>
 </div>
 <div class="col-md-12 col-sm-12 col-xs-12 "
-     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: block;">
+     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: block;z-index: 888">
     <div class="col-md-12 col-sm-12 col-xs-12" id="icons">
         <div id="part1">
             <div class="col-md-2 hidden-xs hidden-sm animated bounceInRight">
@@ -738,12 +1085,13 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
             </div>
         </div>
     </div>
-    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="">
+    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="z-index: 3">
         <div class="col-md-7" style="margin: auto;
     float: none;
     border: 2px solid #fff;
-    background: #32487b69;
-    padding: 20px;
+    background: #71717136;
+        box-shadow: -5px 5px 10px rgba(0,0,0,.25);
+    padding: 12px;
     border-radius: 30px 0 30px 0;">
 
             <div class="alert alert-danger" id="payemtError" style="direction: rtl;display: none">
@@ -755,7 +1103,7 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                     <input type="text" id="number1"
                            class="form-control input-lg ng-pristine ng-valid ng-touched"
                            dir="ltr"
-                           style="height: 50px;padding-right: 0;
+                           style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                            onkeydown="checkThis()"
                            onkeyup="checkThis()"
@@ -765,7 +1113,6 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
     position: absolute;
     left: 2px;"></i>
                     <div class="input-group-addon" style="direction: rtl">شماره تلفن همراه یا TD-LTE</div>
-
                 </div>
             </div>
             <?php
@@ -774,56 +1121,57 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 ?>
                 <div class="col-xs-12" style="padding: 0;">
 
-                    <div class="form-group input-group has-feedback" id="ContactList" >
+                    <div class="form-group input-group has-feedback" id="ContactList">
                         <input type="text" id="inputContact"
                                class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
                                dir="ltr"
-                               style="height: 50px;padding-right: 0;
+                               style="height: 30px;padding-right: 0;
     padding-left: 42.5px;
     border-bottom-left-radius: 0;"
                                autocomplete="off"
-                               onfocus="$('.tableSearch').show()"
+                               onclick="$('.tableSearch').show()"
                                onkeypress="SerachContact()"
                                onkeydown="SerachContact()"
-                               onblur="$('.tableSearch').hide()"
                                placeholder="دفترچه تلفن">
                         <i class="fa fa-address-book fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="padding: 6px 15px;border-bottom-right-radius: 0;"> نام و نام خانودگی یا کد کاربر </div>
+                        <div class="input-group-addon" style="padding: 6px 15px;border-bottom-right-radius: 0;"> نام و
+                            نام خانودگی یا کد کاربر
+                        </div>
                     </div>
-                        <table style="position: absolute;top: 50px;" class="tableSearch col-md-12">
-                            <thead>
+                    <table style="position: absolute;top: 30px;" class="tableSearch col-md-12">
+                        <thead>
+                        <tr>
+                            <th>کد کاربر</th>
+                            <th>نام و نام خانوادگی</th>
+                            <th>شماره تلفن همراه</th>
+                        </tr>
+                        </thead>
+                        <tbody id="listContact">
+                        <?php
+                        if (mysqli_num_rows($selectContact) == 0) {
+                            ?>
                             <tr>
-                                <th>کد کاربر</th>
-                                <th>نام و نام خانوادگی</th>
-                                <th>شماره تلفن همراه</th>
+                                <td>0</td>
+                                <td>کاربری موجود نیست</td>
+                                <td>***********</td>
                             </tr>
-                            </thead>
-                            <tbody id="listContact">
                             <?php
-                            if (mysqli_num_rows($selectContact) == 0) {
+                        } else {
+                            while ($rowContact = mysqli_fetch_assoc($selectContact)) {
                                 ?>
-                                <tr>
-                                    <td>0</td>
-                                    <td>کاربری موجود نیست</td>
-                                    <td>***********</td>
+                                <tr onclick="SelectNumberContact('<?php echo $rowContact['contactName'] ?>')">
+                                    <td><?php echo $rowContact['contactNum'] ?></td>
+                                    <td><?php echo $rowContact['contactNumber'] ?></td>
+                                    <td><?php echo $rowContact['contactName'] ?></td>
                                 </tr>
                                 <?php
-                            } else {
-                                while ($rowContact = mysqli_fetch_assoc($selectContact)) {
-                                    ?>
-                                    <tr onclick="SelectNumberContact('<?php echo $rowContact['contactNumber'] ?>')">
-                                        <td><?php echo $rowContact['contactNum'] ?></td>
-                                        <td><?php echo $rowContact['contactName'] ?></td>
-                                        <td><?php echo $rowContact['contactNumber'] ?></td>
-                                    </tr>
-                                    <?php
-                                }
                             }
-                            ?>
-                            </tbody>
-                        </table>
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                 </div>
                 <?php
             }
@@ -834,17 +1182,17 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                     col-lg-offset-2 col-md-offset-2
                     col-xs-offset-2 col-sm-offset-2"
                      style="padding: 0px;text-align: center" id="hamrah">
-                    <img src="img/hamrah_logo.png" class="gray" style="width: 100%">
+                    <img src="img/hamrah_logo.png" class="gray" style="width: 70%">
                 </div>
                 <div class="col-md-2 col-xs-2 col-sm-2 "
                      style="margin-left: 40px;margin-right: 40px;padding: 0px;text-align: center"
                      id="irancell">
-                    <img src="img/irancell_logo.png" class="gray" style="width: 100%">
+                    <img src="img/irancell_logo.png" class="gray" style="width: 70%">
                 </div>
                 <div class="col-md-2 col-xs-2 col-sm-2 "
                      style="padding: 0px;text-align: center"
                      id="rightell">
-                    <img src="img/rightell_logo.png" class="gray" style="width: 100%">
+                    <img src="img/rightell_logo.png" class="gray" style="width: 70%">
                 </div>
             </div>
             <div class="row" style="direction: rtl;margin-top: 10px;display: none" id="checkThisIdDiv">
@@ -872,18 +1220,18 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                 </div>
             </div>
             <div class="col-md-12" style="margin-top: 10px;display: none;padding: 0;" id="model">
-                <div class="col-md-4 col-xs-4 col-sm-4  "
+                <div class="col-md-4 col-xs-4 col-sm-4 "
                      style="text-align: center;"
                      id="">
-                    <div class="bgRightellModel" onclick="ActiveThis('btnModel1')" id="btnModel1">
+                    <div class="bgHamrahMode" onclick="ActiveThis('btnModel3')" id="btnModel3">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
-                        شارژ مستقیم
+                        بسته اینترنتی
                         <img src="img/radio.png" style="    width: 22px;
     margin-left: 10px;
     position: absolute;
-    top: 8px;
+    top: 3px;
     right: 10px;"
-                             id="imgbtnModel1">
+                             id="imgbtnModel3">
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4 "
@@ -895,29 +1243,29 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <img src="img/radio.png" style="    width: 22px;
     margin-left: 10px;
     position: absolute;
-    top: 8px;
+    top: 3px;
     right: 10px;"
                              id="imgbtnModel2">
                     </div>
                 </div>
-                <div class="col-md-4 col-xs-4 col-sm-4 "
+                <div class="col-md-4 col-xs-4 col-sm-4  "
                      style="text-align: center;"
                      id="">
-                    <div class="bgHamrahMode" onclick="ActiveThis('btnModel3')" id="btnModel3">
+                    <div class="bgRightellModel" onclick="ActiveThis('btnModel1')" id="btnModel1">
                         <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
-                        بسته اینترنتی
+                        شارژ مستقیم
                         <img src="img/radio.png" style="    width: 22px;
     margin-left: 10px;
     position: absolute;
-    top: 8px;
+    top: 3px;
     right: 10px;"
-                             id="imgbtnModel3">
+                             id="imgbtnModel1">
                     </div>
                 </div>
             </div>
             <div class="col-md-12" style="margin-top: 12px;display: none;padding: 0" id="model2">
                 <p style="color:#fff">نوع شارژ : </p>
-                <div class="col-md-4 col-xs-4 col-sm-4"
+                <div class="col-md-4 col-xs-4 col-sm-4 pull-right"
                      style="text-align: center;"
                      id="chargeModelLog">
                     <div class="bgRightellModel" onclick="ActiveThis('btnModel4')" id="btnModel4">
@@ -926,12 +1274,12 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <img src="img/radio.png" style="    width: 22px;
     margin-left: 10px;
     position: absolute;
-    top: 8px;
+    top: 3px;
     right: 10px;"
                              id="imgbtnModel4">
                     </div>
                 </div>
-                <div class="col-md-4 col-xs-4 col-sm-4  "
+                <div class="col-md-4 col-xs-4 col-sm-4  pull-right"
                      style="text-align: center;"
                      id="">
                     <div class="bgIrancellMode" onclick="ActiveThis('btnModel5')" id="btnModel5">
@@ -940,26 +1288,26 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <img src="img/radio.png" style="    width: 22px;
     margin-left: 10px;
     position: absolute;
-    top: 8px;
+    top: 3px;
     right: 10px;"
                              id="imgbtnModel5">
                     </div>
                 </div>
-                <div class="col-md-4 col-xs-4 col-sm-4  "
-                     style="text-align: center;"
-                     id="">
-                    <div class="bgHamrahMode" onclick="ActiveThis('btnModel6')" id="btnModel6">
-                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">
-
-                        سیمکارت دایمی
-                        <img src="img/radio.png" style="    width: 22px;
-    margin-left: 10px;
-    position: absolute;
-    top: 8px;
-    right: 10px;"
-                             id="imgbtnModel6">
-                    </div>
-                </div>
+                <!--                <div class="col-md-4 col-xs-4 col-sm-4  "-->
+                <!--                     style="text-align: center;"-->
+                <!--                     id="">-->
+                <!--                    <div class="bgHamrahMode" onclick="ActiveThis('btnModel6')" id="btnModel6">-->
+                <!--                        <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;" class="logoSmall">-->
+                <!---->
+                <!--                        سیمکارت دائمی-->
+                <!--                        <img src="img/radio.png" style="    width: 22px;-->
+                <!--    margin-left: 10px;-->
+                <!--    position: absolute;-->
+                <!--    top: 8px;-->
+                <!--    right: 10px;"-->
+                <!--                             id="imgbtnModel6">-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
             <div>
 
@@ -973,8 +1321,9 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <input type="text"
                                class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
                                dir="ltr"
-                               style="height: 50px;padding-right: 0;
-    padding-left: 42.5px;"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
                                onfocus="showPriceSelect(this.value)"
                                onkeydown="CheckPrice(this.value)"
                                onkeyup="CheckPrice(this.value)"
@@ -988,7 +1337,9 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         <div class="input-group-addon" style="direction: rtl">مبلغ شارژ را وارد کنید</div>
                     </div>
 
-                    <ul style="bottom:15px" class="priceSelect" id="priceSelect">
+                    <ul style="    top: 30px;
+    display: none;
+    z-index: 99999999999999999;    width: 100%;" class="priceSelect" id="priceSelect">
                         <li id="li1" onclick="fillPrice('li1')" value="1000">1000 تومان</li>
                         <li id="li2" onclick="fillPrice('li2')" value="2000">2000 تومان</li>
                         <li id="li3" onclick="fillPrice('li3')" value="5000">5000 تومان</li>
@@ -1004,30 +1355,6 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                             نوع سیم کارت :
                         </p>
                         <div class="col-xs-12">
-                            <div class="col-md-4 col-xs-4 col-sm-4"
-                                 style="text-align: center;float: right"
-                                 id="Sli4">
-                                <div class="bgRightellModel" onclick="ActiveThis('btnModel23')" id="btnModel23">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
-                                         class="logoSmall">
-
-                                    دیتا
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
-                                         id="imgbtnModel23">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-xs-4 col-sm-4  "
-                                 style="text-align: center;float: right"
-                                 id="Sli2">
-                                <div class="bgIrancellMode" onclick="ActiveThis('btnModel24')" id="btnModel24">
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
-                                         class="logoSmall">
-
-                                    دایمی
-                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
-                                         id="imgbtnModel24">
-                                </div>
-                            </div>
                             <div class="col-md-4 col-xs-4 col-sm-4  "
                                  style="text-align: center;float: right"
                                  id="Sli3">
@@ -1042,6 +1369,32 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                             </div>
                             <div class="col-md-4 col-xs-4 col-sm-4  "
                                  style="text-align: center;float: right"
+                                 id="Sli2">
+                                <div class="bgIrancellMode" onclick="ActiveThis('btnModel24')" id="btnModel24">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
+                                         class="logoSmall">
+
+                                    دائمی
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
+                                         id="imgbtnModel24">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4"
+                                 style="text-align: center;float: right"
+                                 id="Sli4">
+                                <div class="bgRightellModel" onclick="ActiveThis('btnModel23')" id="btnModel23">
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
+                                         class="logoSmall">
+
+                                    دیتا
+                                    <img src="img/radio.png" style="width: 20px;position: absolute;right: 15px;"
+                                         id="imgbtnModel23">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 col-xs-4 col-sm-4  "
+                                 style="text-align: center;float: right"
                                  id="Sli1">
                                 <div class="bgHamrahMode" onclick="ActiveThis('btnModel26')" id="btnModel26">
                                     <img src="img/radio.png" style="width: 20px;position: absolute;left: 15px;"
@@ -1053,20 +1406,21 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12" style="padding: 0">
+                    <div class="col-xs-6 pull-right" style="padding: 0 0 0 5px">
 
                         <p id="basteLongTitle" style="padding: 0px;display: none;
     color: #fff;
     margin-top: 10px;
     margin-bottom: 5px;">
-                            مدت زمان بسته  :
+                            مدت زمان بسته :
                         </p>
                         <span class="form-control"
                               onclick="showBaste()"
                               id="basteLong" style="display: none;margin-top: 0px">
                     </span>
-                        <ul style="bottom: 3px;" class="priceSelect" id="basteSelect">
-                            <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
+                        <ul style="   top: 38px;
+    display: none;
+    z-index: 99999999999999999;    width: 100%;" class="priceSelect" id="basteSelect">
                             <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Hourly">ساعتی</li>
                             <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Daily">روزانه</li>
                             <li onclick="fillBaste(this.innerText,this.getAttribute('value'))" value="Weekly">هفتگی</li>
@@ -1088,24 +1442,26 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                         </ul>
                     </div>
                     <br>
-                    <div class="col-xs-12" style="padding: 0">
+                    <div class="col-xs-6 pull-right" style="padding: 0 0 0 5px">
                         <p id="basteLastTitle" style="padding: 0px;display: none;
     color: #fff;
     margin-top: 10px;
     margin-bottom: 5px;">
                             حجم بسته :
                         </p>
-                        <span class="form-control" style="display: none"
+                        <span class="form-control" style="display: none;font-size: 10px"
                               onclick="showLastBaste()"
                               id="basteLast">
                             حجم مورد نظر را وارد کنید
                         </span>
-                        <ul style="" class="priceSelect" id="basteLastSelect">
+                        <ul style="   top: 38px;
+    display: none;
+    z-index: 99999999999999999;    width: 100%;" class="priceSelect" id="basteLastSelect">
                             <li>می توانید یکی از بازه های زیر را انتخاب کنید</li>
                         </ul>
                     </div>
                 </div>
-                <div style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
+                <div  style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
                     <span class="
                     btn
                     btn-info3
@@ -1113,673 +1469,635 @@ if(isset($_SESSION['userLogin']) && $_SESSION['userLogin']==true){
                     " style="position: relative;
     float: none;
     margin: auto;
-    top: 10px;"
+    top: 5px;"
                           onclick="showFactor()">نمایش پیش فاکتور</span>
                 </div>
 
-                <div class="modal fade" id="myModalFaktor" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header" style="padding:35px 50px;">
-                                <button type="button" class="close" onclick="$('#myModalFaktor').modal('toggle')">
-                                    &times;
-                                </button>
-                                <h4>پیش فاکتور</h4>
-                            </div>
-                            <div class="modal-body" style="padding:40px 50px;">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="name" style="color:black" id="NameFacktor"> </label>
-                                        <br>
-                                        <br>
-                                        <label for="name" style="color:black" id="NumberFacktor">شماره سرویس</label>
-                                        <br>
-                                        <br>
-                                        <label for="name" style="color:black" id="priceFacktor">مبلغ</label>
-                                        <br>
-                                        <br>
-                                        <?php
-                                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
-                                            ?>
-                                            <label for="name" style="color:black" id="offerFacktor">تخفیف شما روی این
-                                                محصول</label>
-                                            <?php
-                                        }
-                                        ?>
-                                    </div>
-                                    <div class="form-group" style="    overflow: hidden;
-    width: 100%;
+
+            </div>
+        </div>
+    </div>`
+    <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 9px;display: none">
+        <div class="col-md-12" id="airPlane" >
+            <div class="col-md-2 col-xs-3 col-sm-2  col-md-offset-3" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/bus.png"  id="B3"
+                     onclick="gabzStep(this.getAttribute('id'))"
+                     class="" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">بلیط اتوبوس</p>
+
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2 " style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/train.png"  id="B2"
+                     onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">بلیط قطار</p>
+
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2 " style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/ariplane.png" id="B1"
+                     onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">بلیط هواپیما</p>
+
+            </div>
+            <div class="col-md-12" style="margin: auto;
+    border: 2px solid #fff;
     position: relative;
-    margin-top: 10px;
-    top: 25px;
-direction: rtl  ">
-                                    <span type="submit" class="btn btn-success" onclick="payMoney('baste')"
-                                          style="float: right;"><span
-                                                class="fas fa-credit-card" style="    margin-left: 15px;
+    background: #71717136;
+            box-shadow: -5px 5px 10px rgba(0,0,0,.25);
+top:0px;
+    padding: 12px;
+    border-radius: 30px 0 30px 0;">
+
+
+                <div id="airplan" style="">
+                <div class="col-md-5 col-xs-12 col-sm-6" style="padding: 0;float: right;padding-right: 21px;">
+                    <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;">فقط رفت</span>
+                    <input type="radio" id="raft" name="safar" checked >
+                    <label for="raft" onclick="changeTeravell('one')"></label>
+                    <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;margin-right: 20px">رفت و برگشت</span>
+                    <input type="radio" id="raftobargash" name="safar" >
+                    <label for="raftobargash" onclick="changeTeravell('two')" ></label>
+                </div>
+                <div class="col-xs-12" style="text-align: center;">
+
+                <div class="col-xs-5 pull-left"
+                     style="padding: 0;margin-top: 10px;">
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+                               placeholder="نام شهر یا فرودگاه"
+                        >
+                        <i class="fa fa-plane-arrival form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">مقصد</div>
+                    </div>
+                </div>
+
+
+                    <div class="col-xs-2">
+                        <div class="col-xs-6" style="margin: auto;float: none;">
+                        <i class="fa fa-long-arrow-alt-left col-xs-12 plane active"  style="    font-size: 40px;
     position: relative;
-    top: 1px;"></span>پرداخت آنلاین
-                                    </span>
-                                        <?php
-                                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
-                                            ?>
-                                            <button type="submit" class="btn btn-info "
-                                                    onclick="payMoneyEtebar('baste')" style="float: left;"><span
-                                                        style="    margin-left: 15px;
+    top: 0px;"></i>
+                        <i class="fa fa-long-arrow-alt-right col-xs-12 plane" id="t2" style="font-size: 40px;
     position: relative;
-    top: 1px;"
-                                                        class="fas fa-wallet"></span>پرداخت از اعتبار
-                                            </button>
-                                            <?php
-                                        }
-                                        ?>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger btn-default pull-left"
-                                        onclick="$('#myModalFaktor').modal('toggle')"><span
-                                            class="glyphicon glyphicon-remove"></span> انصراف
-                                </button>
-                            </div>
+    bottom: 21px;"></i>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 120px;display: none">
-        <span class="back" onclick="back('bilit')">×</span>
-        <div class="col-md-12">
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/bus.png" onclick="step2Charge('bilit','bilit2','part1Bilit')"
-                     class="pull-right" style="width: 70%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ghatar.png" onclick="step2Charge('bilit','bilit2','part2Bilit')"
-                     class="pull-right" style="width: 70%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/airplan.png" onclick="step2Charge('bilit','bilit2','part3Bilit')"
-                     class="pull-right" style="width: 70%;">
-            </div>
-        </div>
-    </div>
-    <div id="bilit2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
-        <span class="back" onclick="back('bilit2')">×</span>
-        <div class="col-md-12">
-            <div class="col-md-12" id="part1Bilit" style="display:none">
-                <div class="page-help-wrapper">
-                    <p>
-                        به اینکام خوش آمدید! در این قسمت امکان خرید بلیط اتوبوس در سرتاسر کشور وجود دارد.
-                    </p>
-                    <p>
-                        <b>مراحل خرید بلیط اتوبوس :</b>
-                    </p>
-                    <ol class="page-step-list" style="direction: rtl">
-                        <li>انتخاب مبدأ، مقصد، تاریخ و جستجوی سرویس</li>
-                        <li>انتخاب سرویس دلخواه</li>
-                        <li>انتخاب صندلی و وارد کردن نام</li>
-                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
-                        <li>تکمیل پرداخت و دریافت بلیط</li>
-                    </ol>
-                    <p>
-                        <b>توجه : در حال حاضر امکان استرداد بلیط تنها از ساعت 8 صبح الی 17 عصر امکان پذیر است.</b>
-                    </p>
-                </div>
-                <div class="page-form-wrapper">
+                <div class="col-xs-5 pull-right"
+                     style="padding: 0;margin-top: 10px;" >
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
 
-                    <div id="searchForm" class="search-form">
-                        <label>
-                            <b>مرحله 1 : </b>
-                            مبداء، مقصد و تاریخ خود را انتخاب کرده و روی جستجوی بلیط کلیک نمایید.
-                        </label>
-                        <hr>
-                        <br>
-                        <br>
-                        <div class="form-group">
-                            <label>انتخاب استان مبداء </label>
-                            <select id="" tabindex="-1" class="form-control" aria-hidden="true">
-                                <option value="" selected="" disabled="">انتخاب استان</option>
-                                <option value="36000000">استان خوزستان</option>
-                                <option value="41000000">استان فارس</option>
-                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
-                                <option value="67000000">استان زنجان</option>
-                                <option value="77000000">استان چهارمحال و بختیاری</option>
-                                <option value="81000000">استان لرستان</option>
-                                <option value="11000000">استان تهران</option>
-                                <option value="61000000">استان سیستان و بلوچستان</option>
-                                <option value="73000000">استان کردستان</option>
-                                <option value="21000000">استان اصفهان</option>
-                                <option value="18000000">استان البرز</option>
-                                <option value="26000000">استان آذربایجان شرقی</option>
-                                <option value="32000000">استان خراسان شمالی</option>
-                                <option value="45000000">استان کرمان</option>
-                                <option value="75000000">استان همدان</option>
-                                <option value="33000000">استان خراسان جنوبی</option>
-                                <option value="57000000">استان آذربایجان غربی</option>
-                                <option value="16000000">استان مازندران</option>
-                                <option value="97000000">استان گلستان</option>
-                                <option value="64000000">استان هرمزگان</option>
-                                <option value="93000000">استان یزد</option>
-                                <option value="87000000">استان سمنان</option>
-                                <option value="51000000">استان مرکزی</option>
-                                <option value="54000000">استان گیلان</option>
-                                <option value="83000000">استان ایلام</option>
-                                <option value="31000000">استان خراسان رضوی</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب پایانه مبداء </label>
-                            <select id="sourceTerminalCombo" tabindex="-1" class="form-control" aria-hidden="true">
-                                <option value="" selected="" disabled="">انتخاب پایانه</option>
-                                <option value="36310000">اهواز</option>
-                                <option value="36320000">آبادان</option>
-                                <option value="36330000">اندیمشک</option>
-                                <option value="36360001">بندرماهشهر</option>
-                                <option value="36370000">بهبهان</option>
-                                <option value="36380000">خرمشهر</option>
-                                <option value="36390000">دزفول</option>
-                                <option value="36420000">شوش</option>
-                                <option value="36450000">شوشتر</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب استان مقصد </label>
-                            <select id="destenationStateCombo" tabindex="-1" class="form-control" aria-hidden="true">
-                                <option value="" selected="" disabled="">انتخاب استان</option>
-                                <option value="11000000">استان تهران</option>
-                                <option value="14000000">استان قم</option>
-                                <option value="15000000">استان قزوین</option>
-                                <option value="16000000">استان مازندران</option>
-                                <option value="18000000">استان البرز</option>
-                                <option value="21000000">استان اصفهان</option>
-                                <option value="26000000">استان آذربایجان شرقی</option>
-                                <option value="36000000">استان خوزستان</option>
-                                <option value="41000000">استان فارس</option>
-                                <option value="45000000">استان کرمان</option>
-                                <option value="51000000">استان مرکزی</option>
-                                <option value="54000000">استان گیلان</option>
-                                <option value="57000000">استان آذربایجان غربی</option>
-                                <option value="64000000">استان هرمزگان</option>
-                                <option value="67000000">استان زنجان</option>
-                                <option value="71000000">استان کرمانشاه</option>
-                                <option value="73000000">استان کردستان</option>
-                                <option value="75000000">استان همدان</option>
-                                <option value="77000000">استان چهارمحال و بختیاری</option>
-                                <option value="81000000">استان لرستان</option>
-                                <option value="83000000">استان ایلام</option>
-                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
-                                <option value="93000000">استان یزد</option>
-                                <option value="95000000">استان بوشهر</option>
-                                <option value="97000000">استان گلستان</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب پایانه مقصد </label>
-                            <select id="destenationTerminalCombo" tabindex="-1" class="form-control" aria-hidden="true">
-                                <option value="" selected="" disabled="">انتخاب پایانه</option>
-                                <option value="11320000">تهران</option>
-                                <option value="11321006">پایانه جنوب(تهران)</option>
-                                <option value="11321007">پایانه بیهقی(تهران)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>تاریخ حرکت </label>
-                            <input id="goDate" readonly="" class="form-control" type="text">
-                        </div>
-                        <div class="form-group">
-                            <a href="#" class="btn btn--blue" title="جستجوی لیست سرویس ها" id="btn btn-primery">جستجوی
-                                بلیط</a>
-                        </div>
+                               placeholder="نام شهر یا فرودگاه"
+                        >
+                        <i class="fa fa-plane-departure form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">مبدا</div>
                     </div>
 
 
                 </div>
-
             </div>
-            <div class="col-md-12" id="part2Bilit" style="display:none">
-                <div class="page-help-wrapper">
-                    <p>
-                        به اینکام خوش آمدید! در این بخش می توانید بلیط قطار سرتاسر کشور را تهیه فرمایید.
-                    </p>
-                    <p>
-                        <b>مراحل خرید بلیط قطار :</b>
-                    </p>
-                    <ol class="page-step-list" style="direction: rtl">
-                        <li>انتخاب مسیر، نوع بلیط، نوع کوپه، تاریخ و تعداد بلیط و جستجوی بلیط</li>
-                        <li>انتخاب سرویس دلخواه</li>
-                        <li>وارد کردن اطلاعات مسافران</li>
-                        <li>بررسی صحت اطلاعات مسافران</li>
-                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
-                        <li>تکمیل پرداخت و دریافت بلیط</li>
-                    </ol>
-                </div>
-                <div class="page-form-wrapper">
-
-
-                    <div id="searchForm">
-                        <label>
-                            <b>مرحله 1 : </b>
-                            برای شروع مبداء، مقصد، تاریخ حرکت و تعداد بلیط را انتخاب کرده و روی کلید جستجوی بلیط کلیک
-                            نمایید.
-
-                        </label>
-                        <hr>
-                        <div id="pathTypeWrapper">
-                            <a id="singleWay" title="مسیر یک طرفه" class="switch-btn active" href="#">یک طرفه</a>
-                            <a id="twoWay" title="مسیر دو طرفه (رفت و برگشت)" class="switch-btn" href="#">رفت و
-                                برگشت</a>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب مبدا </label>
-                            <select id="sourceStation" tabindex="-1" class="form-control"
-                                    aria-hidden="true">
-                                <option value="36000000">استان خوزستان</option>
-                                <option value="41000000">استان فارس</option>
-                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
-                                <option value="67000000">استان زنجان</option>
-                                <option value="77000000">استان چهارمحال و بختیاری</option>
-                                <option value="81000000">استان لرستان</option>
-                                <option value="11000000">استان تهران</option>
-                                <option value="61000000">استان سیستان و بلوچستان</option>
-                                <option value="73000000">استان کردستان</option>
-                                <option value="21000000">استان اصفهان</option>
-                                <option value="18000000">استان البرز</option>
-                                <option value="26000000">استان آذربایجان شرقی</option>
-                                <option value="32000000">استان خراسان شمالی</option>
-                                <option value="45000000">استان کرمان</option>
-                                <option value="75000000">استان همدان</option>
-                                <option value="33000000">استان خراسان جنوبی</option>
-                                <option value="57000000">استان آذربایجان غربی</option>
-                                <option value="16000000">استان مازندران</option>
-                                <option value="97000000">استان گلستان</option>
-                                <option value="64000000">استان هرمزگان</option>
-                                <option value="93000000">استان یزد</option>
-                                <option value="87000000">استان سمنان</option>
-                                <option value="51000000">استان مرکزی</option>
-                                <option value="54000000">استان گیلان</option>
-                                <option value="83000000">استان ایلام</option>
-                                <option value="31000000">استان خراسان رضوی</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب مقصد </label>
-                            <select id="destenationStation" tabindex="-1" class="form-control"
-                                    aria-hidden="true">
-                                <option value="36000000">استان خوزستان</option>
-                                <option value="41000000">استان فارس</option>
-                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
-                                <option value="67000000">استان زنجان</option>
-                                <option value="77000000">استان چهارمحال و بختیاری</option>
-                                <option value="81000000">استان لرستان</option>
-                                <option value="11000000">استان تهران</option>
-                                <option value="61000000">استان سیستان و بلوچستان</option>
-                                <option value="73000000">استان کردستان</option>
-                                <option value="21000000">استان اصفهان</option>
-                                <option value="18000000">استان البرز</option>
-                                <option value="26000000">استان آذربایجان شرقی</option>
-                                <option value="32000000">استان خراسان شمالی</option>
-                                <option value="45000000">استان کرمان</option>
-                                <option value="75000000">استان همدان</option>
-                                <option value="33000000">استان خراسان جنوبی</option>
-                                <option value="57000000">استان آذربایجان غربی</option>
-                                <option value="16000000">استان مازندران</option>
-                                <option value="97000000">استان گلستان</option>
-                                <option value="64000000">استان هرمزگان</option>
-                                <option value="93000000">استان یزد</option>
-                                <option value="87000000">استان سمنان</option>
-                                <option value="51000000">استان مرکزی</option>
-                                <option value="54000000">استان گیلان</option>
-                                <option value="83000000">استان ایلام</option>
-                                <option value="31000000">استان خراسان رضوی</option>
-
-
-                            </select>
-
-                            <div class="form-group">
-                                <label>نوع بلیط</label>
-                                <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
-                                    <option value="1">مسافرین عادی</option>
-                                    <option value="2">ویژه برادران</option>
-                                    <option value="3">ویژه خواهران</option>
-                                    <option value="4">حمل خودرو</option>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="form-item-wrapper busy">
-                                <label>کوپه دربستی باشد ؟ </label>
-                                <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
-                                    <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
-                                    <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی"
-                                       href="#">بله</a>
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-xs-12" style="text-align: center">
+                <div class="col-xs-3 pull-right"
+                     style="padding: 0;margin-top: 10px;" >
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+                               placeholder="تاریخ"
+                               id="goDate"
+                        >
+                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">تاریخ رفت</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12" id="part3Bilit" style="display:none">
-                <div class="page-help-wrapper">
-                    <p>
-                        به اینکام خوش آمدید! در این بخش می توانید بلیط قطار سرتاسر کشور را تهیه فرمایید.
-                    </p>
-                    <p>
-                        <b>مراحل خرید بلیط قطار :</b>
-                    </p>
-                    <ol class="page-step-list" style="direction: rtl">
-                        <li>انتخاب مسیر، نوع بلیط، نوع کوپه، تاریخ و تعداد بلیط و جستجوی بلیط</li>
-                        <li>انتخاب سرویس دلخواه</li>
-                        <li>وارد کردن اطلاعات مسافران</li>
-                        <li>بررسی صحت اطلاعات مسافران</li>
-                        <li>شروع پرداخت و مشاهده پیش فاکتور</li>
-                        <li>تکمیل پرداخت و دریافت بلیط</li>
-                    </ol>
+                    <div class="col-xs-3 pull-right"
+                     style="padding: 0;margin-top: 10px; margin-left: 10px;margin-right: 10px" >
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+                               placeholder="تاریخ"
+                               id="goDate2"
+                               disabled
+                        >
+                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">تاریخ برگشت</div>
+                    </div>
                 </div>
-                <div class="page-form-wrapper">
-
-
-                    <div id="searchForm">
-                        <label>
-                            <b>مرحله 1 : </b>
-                            برای شروع مبداء، مقصد، تاریخ حرکت و تعداد بلیط را انتخاب کرده و روی کلید جستجوی بلیط کلیک
-                            نمایید.
-
-                        </label>
-                        <hr>
-                        <div id="pathTypeWrapper">
-                            <a id="singleWay" title="مسیر یک طرفه" class="switch-btn active" href="#">یک طرفه</a>
-                            <a id="twoWay" title="مسیر دو طرفه (رفت و برگشت)" class="switch-btn" href="#">رفت و
-                                برگشت</a>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب مبدا </label>
-                            <select id="sourceStation" tabindex="-1" class="form-control"
-                                    aria-hidden="true">
-                                <option value="36000000">استان خوزستان</option>
-                                <option value="41000000">استان فارس</option>
-                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
-                                <option value="67000000">استان زنجان</option>
-                                <option value="77000000">استان چهارمحال و بختیاری</option>
-                                <option value="81000000">استان لرستان</option>
-                                <option value="11000000">استان تهران</option>
-                                <option value="61000000">استان سیستان و بلوچستان</option>
-                                <option value="73000000">استان کردستان</option>
-                                <option value="21000000">استان اصفهان</option>
-                                <option value="18000000">استان البرز</option>
-                                <option value="26000000">استان آذربایجان شرقی</option>
-                                <option value="32000000">استان خراسان شمالی</option>
-                                <option value="45000000">استان کرمان</option>
-                                <option value="75000000">استان همدان</option>
-                                <option value="33000000">استان خراسان جنوبی</option>
-                                <option value="57000000">استان آذربایجان غربی</option>
-                                <option value="16000000">استان مازندران</option>
-                                <option value="97000000">استان گلستان</option>
-                                <option value="64000000">استان هرمزگان</option>
-                                <option value="93000000">استان یزد</option>
-                                <option value="87000000">استان سمنان</option>
-                                <option value="51000000">استان مرکزی</option>
-                                <option value="54000000">استان گیلان</option>
-                                <option value="83000000">استان ایلام</option>
-                                <option value="31000000">استان خراسان رضوی</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>انتخاب مقصد </label>
-                            <select id="destenationStation" tabindex="-1" class="form-control"
-                                    aria-hidden="true">
-                                <option value="36000000">استان خوزستان</option>
-                                <option value="41000000">استان فارس</option>
-                                <option value="85000000">استان کهگیلویه و بویر احمد</option>
-                                <option value="67000000">استان زنجان</option>
-                                <option value="77000000">استان چهارمحال و بختیاری</option>
-                                <option value="81000000">استان لرستان</option>
-                                <option value="11000000">استان تهران</option>
-                                <option value="61000000">استان سیستان و بلوچستان</option>
-                                <option value="73000000">استان کردستان</option>
-                                <option value="21000000">استان اصفهان</option>
-                                <option value="18000000">استان البرز</option>
-                                <option value="26000000">استان آذربایجان شرقی</option>
-                                <option value="32000000">استان خراسان شمالی</option>
-                                <option value="45000000">استان کرمان</option>
-                                <option value="75000000">استان همدان</option>
-                                <option value="33000000">استان خراسان جنوبی</option>
-                                <option value="57000000">استان آذربایجان غربی</option>
-                                <option value="16000000">استان مازندران</option>
-                                <option value="97000000">استان گلستان</option>
-                                <option value="64000000">استان هرمزگان</option>
-                                <option value="93000000">استان یزد</option>
-                                <option value="87000000">استان سمنان</option>
-                                <option value="51000000">استان مرکزی</option>
-                                <option value="54000000">استان گیلان</option>
-                                <option value="83000000">استان ایلام</option>
-                                <option value="31000000">استان خراسان رضوی</option>
-
-
-                            </select>
-
-                            <div class="form-group">
-                                <label>نوع بلیط</label>
-                                <select id="ticketType" tabindex="-1" class="form-control" aria-hidden="true">
-                                    <option value="1">مسافرین عادی</option>
-                                    <option value="2">ویژه برادران</option>
-                                    <option value="3">ویژه خواهران</option>
-                                    <option value="4">حمل خودرو</option>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="form-item-wrapper busy">
-                                <label>کوپه دربستی باشد ؟ </label>
-                                <div id="trainJustCompartmentWrapper" style="margin: 0 auto; text-align: right;  ">
-                                    <a id="noCompartment" class="switch-btn" title="کوپه اشتراکی" href="#">خیر</a>
-                                    <a id="yesCompartment" class="switch-btn active" title="کوپه دربستی"
-                                       href="#">بله</a>
-                                </div>
-                            </div>
+                    <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                        <div class="selectCol">
+                            <select name="quantity" id="flight_passenger_count_adult" class="value-input form-control color-black" onchange="$.check_Passenger_Bussiness();"> <option value="1">1  بزرگسال</option> <option value="2">2  بزرگسال</option> <option value="3">3  بزرگسال</option> <option value="4">4  بزرگسال</option> <option value="5">5  بزرگسال</option> <option value="6">6  بزرگسال</option> <option value="7">7  بزرگسال</option> <option value="8">8  بزرگسال</option> <option value="9">9  بزرگسال</option></select>
+                            <i class="ico fa fa-arrow-down"></i>
                         </div>
                     </div>
+                    <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                    <div class="selectCol">
+                        <select name="quantity" id="flight_passenger_count_child" class="value-input form-control color-black" onchange="$.check_Passenger_Bussiness();"> <option value="0">0  کودک </option> <option value="1">1  کودک </option> <option value="2">2  کودک </option> <option value="3">3  کودک </option> <option value="4">4  کودک </option> <option value="5">5  کودک </option> <option value="6">6  کودک </option> <option value="7">7  کودک </option> <option value="8">8  کودک </option></select>
+                        <i class="ico fa fa-arrow-down"></i>
+                    </div>
+                    </div>
+                    <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                        <div class="selectCol">
+                            <select name="quantity" id="flight_passenger_count_infant" class="value-input form-control color-black" onchange="$.check_Passenger_Bussiness();"><option value="0">0  نوزاد</option><option value="1">1  نوزاد</option><option value="2">2  نوزاد</option><option value="3">3  نوزاد</option><option value="4">4  نوزاد</option><option value="5">5  نوزاد</option><option value="6">6  نوزاد</option><option value="7">7  نوزاد</option><option value="8">8  نوزاد</option><option value="9">9  نوزاد</option></select>
+                            <i class="ico fa fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+
+                    <div class="selectCol">
+                        <select class="form-control" id="Flying_Class">
+                            <option selected="selected" value="3">اکونومی</option>
+                            <option value="1">BUSINESS</option>
+                            <option value="2">PROMO</option>
+                        </select>
+                        <i class="ico fa fa-arrow-down"></i>
+                    </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-12" style="text-align: center">
+                <span class="
+                    btn
+                    btn-info3
+                    btn-lg
+                    " style="position: relative;
+    float: none;
+    margin: auto;
+    top: 0px;" >جستجوی پرواز</span>
+                </div>
+                </div>
+                <div id="bus" style="display: none">
+
+                <div class="col-xs-12" style="text-align: center;">
+
+                <div class="col-xs-5 pull-left"
+                     style="padding: 0;margin-top: 10px;">
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+                               placeholder="نام استان مقصد"
+                        >
+                        <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">استان مقصد</div>
+                    </div>
+                </div>
+
+
+                    <div class="col-xs-2">
+                        <div class="col-xs-6" style="margin: auto;float: none;">
+                        <i class="fa fa-long-arrow-alt-left col-xs-12 plane active"  style="    font-size: 40px;
+    position: relative;
+    top: 70px;"></i>
+                        <i class="fa fa-long-arrow-alt-right col-xs-12 plane active" id="t2" style="font-size: 40px;
+    position: relative;
+    bottom: -8px;"></i>
+                        </div>
+                    </div>
+
+                <div class="col-xs-5 pull-right"
+                     style="padding: 0;margin-top: 10px;" >
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                               placeholder="نام استان مبدا"
+                        >
+                        <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">استان مبدا</div>
+                    </div>
+
+
+                </div>
+                    <div class="col-xs-5 pull-right"
+                     style="padding: 0;margin-top: 10px;" >
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                               placeholder="نام شهر مبدا"
+                        >
+                        <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">شهر مبدا</div>
+                    </div>
+                </div>
+
+                    <div class="col-xs-5 pull-left"
+                         style="padding: 0;margin-top: -14px;" >
+                        <div class="form-group input-group has-feedback"
+                             style=""
+                             id="">
+                            <input type="text"
+                                   class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                   dir="ltr"
+                                   autocomplete="off"
+                                   style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                                   placeholder="نام شهر مقصد"
+                            >
+                            <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                            <div class="input-group-addon" style="direction: rtl">شهر مقصد</div>
+                        </div>
+                    </div>
+            </div>
+                <div class="col-xs-12" style="text-align: center">
+                <div class="col-xs-5 pull-right"
+                     style="padding: 0;margin-top: 10px;" >
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+                               placeholder="تاریخ"
+                               id="goDate3"
+                        >
+                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">تاریخ رفت</div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12" style="text-align: center">
+                <span class="
+                    btn
+                    btn-info3
+                    btn-lg
+                    " style="position: relative;
+    float: none;
+    margin: auto;
+    top: 0px;" >جستجوی بلیط</span>
+                </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 120px;">
-        <span class="back" onclick="back('ghabzStep2')">×</span>
-        <div class="col-md-12">
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/gas.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part1Ghabz')"
-                     class="pull-right" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ranandegi.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part2Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/hamrahGhabz.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/irancellGhabz.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part3Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/gabztellphone.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part1Ghabz')"
-                     class="pull-left" style="width: 100%;">
-            </div>
-            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0">
-                <img src="img/ghazStep2.png" onclick="step2Charge('ghabzStep2','ghabzStep3','part4Ghabz')"
-                     class="pull-left"
-                     style="width: 100%;">
-            </div>
         </div>
+
+
+
+
     </div>
-    <div id="ghabzStep3" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top:120px">
-        <span class="back" onclick="back('ghabzStep3')">×</span>
+    <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 25px;">
         <div class="col-md-12">
-            <div class="col-md-12" id="part1Ghabz" style="display:none">
-                <p style="text-align: right;direction: rtl;    margin-top: 0;">
-                    به فروشگاه اینکام خوش آمدید! در این صفحه می توانید با وارد کردن شماره اشتراک 16 رقمی روی قبض
-                    استعلام دوره را گرفته و پرداخت کنید.
-                </p>
-                <label for="ghasEshterak">
-                    برای شروع شماره اشتراک خود را وارد کرده و کلید استعلام دوره را انتخاب نمایید
-                </label>
-                <div class="form-group">
-                    <input class="form-control" type="text" id="ghasEshterak" placeholder="****************">
-                </div>
-                <span class="btnPayment">پرداخت</span>
-                <br>
-                <h5>نکاتی که باید توجه داشت</h5>
-
-                <ul class="ulDes">
-                    <li>تسویه مبلغ پرداختی تا 72 ساعت طول می کشد.</li>
-                    <li>در صورت تمایل به پرداخت با شناسه قبض و شناسه پرداخت به صفحه پرداخت قبوض شهری مراجعه کنید.
-                    </li>
-                </ul>
-
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/gas.png" id="G1" onclick="gabzStep(this.getAttribute('id'))"
+                     class="" style="width: 55%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">قبض گاز</p>
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/ranandegi.png" id="G2" onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">جریمه رانندگی</p>
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/hamrahGhabz.png" id="G3" onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px"> قبض دائمی همراه اول</p>
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/irancellGhabz.png" id="G4" onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px"> قبض دائمی ایرانسل</p>
+            </div>
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/gabztellphone.png" id="G5" onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray" style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">قبض تلفن ثابت</p>
 
             </div>
-            <div class="col-md-12" id="part2Ghabz" style="display:none">
-                <p style="text-align: right;direction: rtl;    margin-top: 0;">
-                    به فروشگاه اینکام خوش آمدید! در این صفحه می توانید ریز جرائم وسیله نقلیه خود را استعلام گرفته و
-                    پرداخت کنید. </p>
-                <label for="khalafi">
-                    شماره 8 رقمی پشت کارت ماشین را وارد کرده و کلید استعلام را انتخاب نمایید
-                </label>
-                <div class="form-group">
-                    <input class="form-control" type="text" id="khalafi" placeholder="********">
-                </div>
-                <span class="btnPayment">پرداخت</span>
-                <br>
-                <h5>نکاتی که باید توجه داشت</h5>
-
-                <ul class="ulDes">
-                    <li>پس از استعلام می توانید هر تعداد از جرائم که تمایل دارید را پرداخت کنید و ملزم به پرداخت همه
-                        جریمه ها نیستید.
-                    </li>
-                    <li>در هر روز به میزان سقف تراکنش بانکیتان می توانید جریمه پرداخت کنید.</li>
-                    <li>جرائم پرداختی بلافاصله از سیستم پلیس+10 پاک می شود اما از سایت راهور تا یک هفته ممکن است طول
-                        بکشد.
-                    </li>
-                    <li>در صورت تمایل به پرداخت با شناسه قبض و شناسه پرداخت به صفحه پرداخت قبوض شهری مراجعه کنید.
-                    </li>
-                    <li>در هر روز به میزان سقف تراکنش بانکیتان می توانید جریمه پرداخت کنید.</li>
-                    <li>اگر جریمه ای را پرداخت کردید و در اینکام از ریز جرائم شما پاک نشد با پشتیبانی ما تماس
-                        بگیرید. (41576-021)
-                    </li>
-                </ul>
-
-
+            <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/ghabz.png" id="G6" onclick="gabzStep(this.getAttribute('id'))"
+                     class="gray"
+                     style="width: 50%;">
+                <p style="color: #fff;text-align: center;margin-top: 7px">قبوض شهری</p>
             </div>
-            <div class="col-md-12" id="part3Ghabz" style="display:none">
-                <p style="text-align: right;direction: rtl;    margin-top: 0;">
-                    به فروشگاه اینکام خوش آمدید! در این قسمت می توانید با وارد کردن شماره همراه استعلام میان دوره و
-                    پایان دوره قبض خود را بگیرید. <label for="hamrahavalGhabz">
-                    </label>
-                <div class="form-group">
-                    <input class="form-control" type="text" id="hamrahavalGhabz" placeholder="0912*******">
-                </div>
-                <span class="btnPayment">پرداخت</span>
-                <br>
-                <h5>نکاتی که باید توجه داشت</h5>
 
-                <ul class="ulDes">
-                    <li>حتما شماره را با صفر وارد کنید.
-                    </li>
-                    <li>شماره ای که وارد می کنید باید خط دائمی همراه اول باشد.
-                    </li>
-                    <li>صفر شدن مبلغ قبض پایان دوره شما تا پایان دوره طول می کشد. توجه کنید که دو بار پرداخت نکنید.
-                    </li>
-                    <li>صفر شدن مبلغ قبض میان دوره تا 72 ساعت پس از پرداخت انجام می شود اما مبلغ قبض پایان دوره تا
-                        پایانِ دوره صفر نخواهد شد (دو بار پرداخت نکنید)
-                    </li>
-                    <li>اگر با این شرایط آشنا نبودید و پس از دیدن صفر نشدن قبض پایان دوره دوباره قبض را پرداخت کردید
-                        نگران نباشید، مبلغ مازاد در بستانکاری شما نشسته و برای قبض های آینده مصرف می شود.
-                    </li>
-                    <li>به سفارش همراه اول بهتر است که یک روش برای پرداخت قبض خود انتخاب کنید (یا پایان دوره یا میان
-                        دوره)
-                    </li>
-                    <li>در صورت تمایل به پرداخت با شناسه قبض و شناسه پرداخت به صفحه پرداخت قبوض شهری مراجعه کنید.
-                    </li>
-                </ul>
+            <div class="col-md-12" style="margin: auto;
+    border: 2px solid #fff;
+    position: relative;
+    background: #71717136;
+            box-shadow: -5px 5px 10px rgba(0,0,0,.25);
+            top:-5px;
 
+    padding: 12px;
 
-            </div>
-            <div class="col-md-12" id="part4Ghabz" style="display:none">
-                <div class="page-help-wrapper">
-                    <p>
-                        به فروشگاه اینکام خوش آمدید! در این قسمت شما می توانید کلیه قبوضی که دارای شناسه قبض و شناسه
-                        پرداخت هستند را پرداخت کنید.
-                    </p>
-                    <p>
-                        لطفاً توجه داشته باشید که تسویه شدن قبوض پرداختی تا <span style="color:red;">72 ساعت</span> طول
-                        می کشد.
-                    </p>
+    border-radius: 30px 0 30px 0;">
+                <div class="page-help-wrapper" style="color: #fff;">
                     <p>
                         <b>مراحل کار :</b>
                     </p>
-                    <ol class="page-step-list" style="direction: rtl;">
+                    <ol class="page-step-list" style="direction: rtl;margin-bottom: 0">
                         <li>وارد کردن شناسه قبض و شناسه پرداخت</li>
                         <li>مشاهده وضعیت قبض</li>
                         <li>شروع پرداخت و مشاهده پیش فاکتور</li>
                         <li>تکمیل پرداخت</li>
                     </ol>
                 </div>
-                <div class="form-group">
-                    <label for="hamrahavalGhabz">شناسه قبض</label>
-                    <input class="form-control" type="text" id="hamrahavalGhabz1" placeholder="شناسه قبض">
-                    <br>
-                    <label for="hamrahavalGhabz">شناسه پرداخت</label>
-                    <input class="form-control" type="text" id="hamrahavalGhabz2" placeholder="شناسه پرداخت">
+                <div class="col-xs-6 pull-right"
+                     style="padding: 4px;margin-top: -2px" id="">
+
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                               placeholder="شناسه پرداخت"
+                               id=""
+                        >
+                        <i class="fa fa-barcode form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">شناسه پرداخت</div>
+                    </div>
                 </div>
-                <span class="btnPayment">پرداخت</span>
+                    <div class="col-xs-6 pull-right"
+                         style="padding: 4px;margin-top: -2px;" id="">
+
+                        <div class="form-group input-group has-feedback"
+                             style=""
+                             id="price">
+                            <input type="text"
+                                   class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                   dir="ltr"
+                                   autocomplete="off"
+                                   style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+                                   placeholder="شناسه قبض"
+                                   id=""
+                            >
+                            <i class="fa fa-barcode form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                            <div class="input-group-addon" style="direction: rtl">شناسه قبض</div>
+                        </div>
+                </div>
+                    <div style="text-align: center;margin-top: 20px;" id="">
+                    <span class="
+                    btn
+                    btn-info3
+                    btn-lg
+                    " style="position: relative;
+    float: none;
+    margin: auto;
+    top: 5px;"
+                          onclick="">نمایش استعلام و پیش فاکتور</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="footer" id="footer">
+    <div class="footer" id="footer" style="position: fixed;z-index:999">
         <div class="pull-left hidden-xs hidden-sm"
              style="position: absolute;bottom: 20px;left: 20px;width: 10%">
-            <img src="https://trustseal.enamad.ir/logo.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g" alt="" onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)" style="cursor:pointer;float: right;width: 50%" id="Eb1cp9upTf96fW4g">            <img class="img-responsive"  style="cursor: pointer;width: 50%;float: right" onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=1008235&p=rfthobpdobpdmcsiuiwkxlaodshw", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=1008235&p=nbpdlymalymaaqgwodrfqftiujyn'/>
+            <img src="https://trustseal.enamad.ir/logo.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g" alt=""
+                 onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)"
+                 style="cursor:pointer;float: right;width: 50%" id="Eb1cp9upTf96fW4g"> <img class="img-responsive"
+                                                                                            style="cursor: pointer;width: 50%;float: right"
+                                                                                            onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=1008235&p=rfthobpdobpdmcsiuiwkxlaodshw", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")'
+                                                                                            alt='logo-samandehi'
+                                                                                            src='https://logo.samandehi.ir/logo.aspx?id=1008235&p=nbpdlymalymaaqgwodrfqftiujyn'/>
         </div>
+        <div class="col-md-4" id="footerIcon" style="position: absolute;
+       bottom: 60px;
+    left: 33.5%;
+    margin: auto;
+    display: none;
+    float: none;">
+            <div class="col-md-3">
+                <div class="tooltip1">
+                    <img class="" onclick="show('chargePart2Baste')" src="img/bime.png" style="">
+                    <span class="tooltiptext">بیمه</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tooltip1">
+                    <img class="" onclick="show('bilit')" src="img/bilit.png" style="">
+                    <span class="tooltiptext">بلیط مسافرتی</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tooltip1">
+                    <img class="" onclick="show('ghabzStep2')" src="img/ghabz.png" style="">
+                    <span class="tooltiptext">پرداخت قبوض</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tooltip1">
+                    <img class="" onclick="show('chargePart2Baste')" src="img/charge&Baste.png" style="">
+                    <span class="tooltiptext">شارژ و بسته اینترنتی</span>
+                </div>
+            </div>
+
+        </div>
+
         <span style="border-top: 1px solid #ffffff;width: auto   ">
             <span>
                 <img src="img/iconLeftTelegram.png">
                 <img src="img/iconLeftInstagram.png">
                 <img src="img/iconLeftTwitter.png">
             </span>
-                |
+            |
             <span>معرفی اینکام</span>
             |
             <span>تماس با ما</span>
             |
             <span>دانلود اپلیکیشن</span>
-            </span>
+        </span>
     </div>
 </div>
 
 
 <script>
     $(document).ready(function () {
-        $("#goDate").pDatepicker();
+        $("#goDate").pDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+        });
+
+        $("#goDate2").pDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+        });
+        $("#goDate3").pDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+        });
     });
 </script>
 <!--login submit recover-->
 <script>
-    $('#myModal').keypress(function(e) {
-        // language=JQuery-CSS
-        var a  = $('#code').val();
-        if(a===""){
-            if(e.which === 13) {
-                firstLogin();
+
+    $(document).on('keydown input click', function (e) {
+        var key = e.which;
+        if (key === 13) {
+            if ($('#myModal').is(':visible')) {
+                var a = $('#code').val();
+                if (a === "") {
+                    firstLogin();
+                } else {
+                    submitCode();
+                }
             }
-        }else{
-            if(e.which === 13) {
-                submitCode();
+            if ($('#myModal3').is(':visible')) {
+                login('');
+            }
+            if ($('#myModal1').is(':visible')) {
+                submit();
+            }
+            if ($('#myModal12').is(':visible')) {
+                recoverPassword();
             }
         }
 
     });
+
 </script>
+<div class="modal fade" id="myModalFaktor" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="padding:35px 50px;">
+                <button type="button" class="close" onclick="$('#myModalFaktor').modal('toggle')">
+                    &times;
+                </button>
+                <h4>پیش فاکتور</h4>
+            </div>
+            <div class="modal-body" style="padding:40px 37px;">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="name" style="color:black" id="NameFacktor"> </label>
+                        <br>
+                        <br>
+                        <label for="name" style="color:black" id="NumberFacktor">شماره سرویس</label>
+                        <br>
+                        <br>
+                        <label for="name" style="color:black" id="priceFacktor">مبلغ</label>
+                        <br>
+                        <br>
+                        <?php
+                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
+                            ?>
+                            <label for="name" style="color:black" id="offerFacktor">تخفیف شما روی این
+                                محصول</label>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="form-group" style="    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin-top: 10px;
+    top: 25px;
+direction: rtl  ">
+                                    <span type="submit" class="btn btn-warning btn-lg"  onclick="payMoney('baste')"
+                                          style="float: right;background: #ed3833;
+    color: #ffffff;"><img
+                                                class="" src="img/melatBank.png" style="    width: 24px;
+    margin-left: 15px;
+    position: relative;
+    top: -1px;">پرداخت آنلاین
+                                    </span>
+                        <?php
+                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
+                            ?>
+                            <button type="submit" class="btn btn-info btn-lg"
+                                    onclick="payMoneyEtebar('baste')" style="float: left;"><span
+                                        style="    margin-left: 15px;
+    position: relative;
+    top: 1px;"
+                                        class="fas fa-wallet"></span>پرداخت از کیف پول
+                            </button>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -1806,7 +2124,7 @@ direction: rtl  ">
                         <input type="text" id="mobile"
                                class="form-control input-lg ng-pristine ng-valid ng-touched"
                                dir="ltr"
-                               style="height: 50px;padding-right: 0;
+                               style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                         >
                         <i class="fa fa-phone fa-fw form-control-feedback" style="float: left;
@@ -1816,8 +2134,6 @@ direction: rtl  ">
 
                     </div>
                 </div>
-
-
                 <div class="form-group" id="loginSubmitStep2" style="display: none">
                     <br>
                     <p>لطفا کد دریافتی در تلفن همراه خود را وارد کنید</p>
@@ -1828,7 +2144,7 @@ direction: rtl  ">
                             <input type="text" id="code"
                                    class="form-control input-lg ng-pristine ng-valid ng-touched"
                                    dir="ltr"
-                                   style="height: 50px;padding-right: 0;
+                                   style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                             >
                             <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
@@ -1838,7 +2154,6 @@ direction: rtl  ">
 
                         </div>
                     </div>
-
                     <br>
                     <span onclick="firstLogin()" id="btnSms1" class="btn btn-info pull-left ">ارسال مجدد کد
                         </span>
@@ -1854,24 +2169,6 @@ direction: rtl  ">
         </div>
     </div>
 </div>
-
-<script>
-    $('#myModal').keypress(function(e) {
-        // language=JQuery-CSS
-        var a  = $('#code').val();
-        if(a===""){
-            if(e.which === 13) {
-                firstLogin();
-            }
-        }else{
-            if(e.which === 13) {
-                submitCode();
-            }
-        }
-
-    });
-</script>
-
 <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -1890,7 +2187,7 @@ direction: rtl  ">
                         <input type="text" id="name"
                                class="form-control input-lg ng-pristine ng-valid ng-touched"
                                dir="ltr"
-                               style="height: 50px;padding-right: 5px;
+                               style="height: 30px;padding-right: 5px;
     padding-left: 42.5px;;text-align: right;direction: rtl;font-size:16px"
                         >
                         <i class="fa fa-user-alt fa-fw form-control-feedback" style="float: left;
@@ -1901,10 +2198,11 @@ direction: rtl  ">
                     </div>
                     <div class="form-group input-group has-feedback">
                         <input type="text" id="pwd"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
                                dir="ltr"
-                               style="height: 50px;padding-right: 0;
+                               style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
+                               placeholder="یک رمز عبور برای خود مشخص کنید"
                         >
                         <i class="fa fa-lock-open fa-fw form-control-feedback" style="float: left;
     posit`ion: absolute;
@@ -1914,10 +2212,11 @@ direction: rtl  ">
                     </div>
                     <div class="form-group input-group has-feedback">
                         <input type="text" id="codeAgent"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
                                dir="ltr"
-                               style="height: 50px;padding-right: 0;
+                               style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
+                               placeholder="اختیاری"
                         >
                         <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
     position: absolute;
@@ -1956,7 +2255,7 @@ direction: rtl  ">
                         <input type="text" id="password"
                                class="form-control input-lg ng-pristine ng-valid ng-touched"
                                dir="ltr"
-                               style="height: 50px;padding-right: 0;
+                               style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                         >
                         <i class="fa fa-lock fa-fw form-control-feedback" style="float: left;
@@ -1993,7 +2292,8 @@ direction: rtl  ">
                 <h4><span class="glyphicon glyphicon-paste"></span> بازیابی کلمه عبور </h4>
             </div>
             <div class="modal-body" style="padding:40px 50px;">
-                <div class="alert alert-danger" id="ForegetError" style="direction: rtl;text-align: right;display: none;">
+                <div class="alert alert-danger" id="ForegetError"
+                     style="direction: rtl;text-align: right;display: none;">
                     <p id="">کد وارد شده اشتباه است.</p>
                 </div>
                 <form role="form">
@@ -2002,7 +2302,7 @@ direction: rtl  ">
                             <input type="text" id="nemberBack"
                                    class="form-control input-lg ng-pristine ng-valid ng-touched"
                                    dir="ltr"
-                                   style="height: 50px;padding-right: 0;
+                                   style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                             >
                             <i class="fa fa-code fa-fw form-control-feedback" style="float: left;
@@ -2016,13 +2316,13 @@ direction: rtl  ">
                             <input type="text" id="passrecover"
                                    class="form-control input-lg ng-pristine ng-valid ng-touched"
                                    dir="ltr"
-                                   style="height: 50px;padding-right: 0;
+                                   style="height: 30px;padding-right: 0;
     padding-left: 42.5px;"
                             >
                             <i class="fa fa-lock-open fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                            <div class="input-group-addon"> رمز عبور جدید </div>
+                            <div class="input-group-addon"> رمز عبور جدید</div>
                         </div>
                     </div>
 
@@ -2043,8 +2343,6 @@ direction: rtl  ">
         </div>
     </div>
 </div>
-
-
 <div class="modal fade" id="modalMsgAlert" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -2063,17 +2361,33 @@ direction: rtl  ">
 <?php
 if (isset($_POST['mode']) && $_POST['mode'] != ''){
 $model = $_POST['mode'];
+$onclick='';
 if ($model == 1) {
     $textModel = "افزایش اعتبار";
+    $onclick ="$('#nameUser').click()";
 }
 if ($model == 2) {
     $textModel = "خرید بسته اینترنتی";
+    echo "<script>show('chargePart2Baste')</script>";
 }
 if ($model == 3) {
     $textModel = "خرید شارژ مستقیم ";
+    echo "<script>show('chargePart2Baste')</script>";
 }
 if ($model == 4) {
     $textModel = "خرید پین ";
+    echo "<script>show('chargePart2Baste')</script>";
+}
+if($_POST['oldUser'] == '1') {
+    $a = 'پیامک دعوت ارسال نشد ، شماره ';
+    $a .= $_POST['mobile'];
+    $a .= ' قبلا در اینکام عضو شده است';
+    $color="#b85c5c";
+}else{
+    $a = 'پیامک دعوت با موفقیت به شماره  ';
+    $a .= $_POST['mobile'];
+    $a .= ' ارسال شد.';
+    $color="#5cb85c";
 }
 ?>
 <div class="modal fade" id="modalPay" role="dialog">
@@ -2081,7 +2395,7 @@ if ($model == 4) {
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header" style="padding:35px 50px;">
-                <button type="button" class="close" onclick="$('#modalPay').modal('toggle');$('#nameUser').click()">
+                <button type="button" class="close" onclick="$('#modalPay').modal('toggle');<?php echo  $onclick ?>">
                     &times;
                 </button>
                 <h4>  <?php echo $textModel ?> با موفقیت انجام شد </h4>
@@ -2123,6 +2437,15 @@ if ($model == 4) {
                         <br>
                         شماره سرویس :
                         <?php echo $_POST['mobile'] ?>
+                        <br>
+                        <br>
+
+                    </p>
+                    <p style="text-align: center;margin-bottom: 20px">
+                        <b style="background:<?php echo  $color?>;color:#fff;border-radius: 10px;padding: 7px;"> <?php
+                            echo $a;
+                            ?> </b>
+
                     </p>
                     <?php
                     }
@@ -2144,6 +2467,14 @@ if ($model == 4) {
                             <br>
                             شماره سرویس :
                             <?php echo $_POST['mobile'] ?>
+                            <br>
+                            <br>
+                        </p>
+                        <p style="text-align: center;margin-bottom: 20px">
+                            <b style="background:<?php echo  $color?>;color:#fff;border-radius: 10px;padding: 7px;"> <?php
+                                echo $a;
+                                ?> </b>
+
                         </p>
                         <?php
                         }
@@ -2169,11 +2500,18 @@ if ($model == 4) {
                                 <br>
                                 شماره سریال :
                                 <?php echo $_POST['serial'] ?>
+                                <br>
+                                <br>
+                            </p>
+                            <p style="text-align: center;margin-bottom: 20px">
+                                <b style="background:<?php echo  $color?>;color:#fff;border-radius: 10px;padding: 7px;"> <?php
+                                    echo $a;
+                                    ?> </b>
 
                             </p>
                             <?php
                             }
-                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
+                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true && $model != 1){
                             ?>
 
                             <div class="col-xs-12" style="border-top: 2px solid #e4e4e4;">
@@ -2186,14 +2524,14 @@ if ($model == 4) {
                                 <br>
                                 افزودن شماره سرویس به دفترچه تلفن
                                 <br>
-                                <input id="NumberContactAdd" value="<?php echo $_SESSION['number'] ?>"
+                                <input id="NumberContactAdd" value="<?php echo $_POST['mobile'] ?>"
                                        style="display: none;">
                                 <div class="form-group input-group has-feedback" style="    margin-top: 15px;">
                                     <input type="text" id="nameConctact"
                                            class="form-control input-lg ng-pristine ng-valid ng-touched"
                                            dir=""
                                            style="text-align: right;
-    height: 50px;
+    height: 30px;
     padding-right: 9px;
     padding-left: 42.5px;"
                                     >
@@ -2223,7 +2561,6 @@ if ($model == 4) {
                                         $.ajax({
                                             url: 'ajax/contactAdd.php',
                                             data: {
-                                                price: price.replace(/,/g, ''),
                                                 name: name,
                                                 number: mobile
                                             },
@@ -2267,13 +2604,13 @@ if ($model == 4) {
                         type: 'POST',
                         success: function (data) {
                             if (data["Error"] === false) {
-                                if(f==="msg"){
+                                if (f === "msg") {
                                     $('#modalMsgAlert').modal();
                                     $("#modalMsgAlretText").text(data['MSG']);
                                 }
-                                $("#"+e).removeClass("active");
-                                $("#bag"+e).hide();
-                                if(data["result"]===true) {
+                                $("#" + e).removeClass("active");
+                                $("#bag" + e).hide();
+                                if (data["result"] === true) {
                                     if (f == "noti") {
                                         let countN = $('#showMsgNoti').text();
                                         $('#showMsgNoti').text(countN - 1);
@@ -2292,6 +2629,34 @@ if ($model == 4) {
                     $("#InvTellShow").text($("#input3").val());
                 }
             </script>
-            <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="98efa367-67d2-4844-8685-f5e613094620";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+            <script type="text/javascript">
+
+                window.$crisp = [];
+                window.CRISP_WEBSITE_ID = "98efa367-67d2-4844-8685-f5e613094620";
+                (function () {
+                    d = document;
+                    s = d.createElement("script");
+                    s.src = "https://client.crisp.chat/l.js";
+                    s.async = 1;
+                    d.getElementsByTagName("head")[0].appendChild(s);
+                })();</script>
 </body>
+<script src="js/tabel.js"></script>
+<script src="js/jqTable.js"></script>
+<script>
+    if ($('.warm-canvas').length) {
+        $('.warm-canvas').glassyWorms({
+            colors: ['#ffffff55', '#ffffff55'],
+            useStyles: true,
+            numParticles: 500,
+            tailLength: 40,
+            maxForce: 8,
+            friction: 0.75,
+            gravity: 4,
+            interval: 3
+            // colors: ['#000'],
+            // element: $('<canvas class="worms"></canvas>')[0]
+        });
+    }
+</script>
 </html>
