@@ -90,8 +90,10 @@ function checkThis() {
     var number = $('#number1').val();
     if(number.length > 0){
         $('#ContactList').hide();
+        $('.tableSearch').hide();
     }else{
         $('#ContactList').show();
+
     }
     if (number.length > 2) {
         ActiveThis('btnModel1');
@@ -995,4 +997,45 @@ function submitInvCode() {
 }
 $(document).ready(function() {
     $('#example').DataTable();
+    $('#example1').DataTable();
 } );
+function addContact() {
+    let name , mobile;
+    name = $('#contactNameP').val();
+    mobile = $('#contactMobileP').val();
+    $.ajax({
+        url:'ajax/contactAdd.php',
+        data:{
+            name: name,
+            number: mobile
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+
+
+                $('#justOne').hide();
+                $('#contactAddSuccess').show();
+                let cot = "'";
+                let child = '<tr id="contact_'+data['id']+'"><td>'+data['number']+'</td><td>'+name+'</td><td>'+mobile+'</td><td><input type="button" class="btn btn-xs btn-danger" value="حذف" onclick="deleteContact('+cot+data['id']+cot+')"></td></tr>'
+                $('#contactListTabelP').appendChild(child);
+            }
+        }
+    });
+}
+function deleteContact(e) {
+    $.ajax({
+        url:'ajax/deleteContact.php',
+        data:{
+            id: e
+        },
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            if(data["Error"]===false){
+                $('#contact_'+e).hide();
+            }
+        }
+    });
+}

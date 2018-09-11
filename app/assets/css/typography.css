@@ -96,12 +96,12 @@ span {
 /* em and strong */
 
 em {
-    font: 15px/30px;
+    font-size: 30px;
 }
 
 strong,
 b {
-    font: 15px/30px;
+    font-size: 15px;
 }
 
 small {
@@ -581,10 +581,10 @@ div#preloader {
 }
 
 .pt--130 {
-    padding-top: 130px
+    padding-top: 130px;
 }
 
-- .pt--140 {
+.pt--140 {
     padding-top: 140px
 }
 

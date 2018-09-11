@@ -1073,6 +1073,9 @@ width: 75%;
 div#example_length {
     float: left;
 }
+div#example1_length {
+    float: left;
+}
 .dataTables_wrapper label{
     color:#000000;
 }
@@ -1089,4 +1092,7 @@ div#example_length {
 
 .form-group-lg .form-control + .form-control-feedback, .input-group-lg + .form-control-feedback, .input-lg + .form-control-feedback{
     line-height: 30px!important;
+}
+canvas.worms.sketch {
+    z-index: 1;
 }

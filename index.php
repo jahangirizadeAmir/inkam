@@ -52,8 +52,12 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     padding: 3px;
 " onclick="
               $('#userOption').hide();
+              $('#report').hide();
               $('#miniDashbord').hide();
              $('#userProfile').hide();
+                     $('#contactListP').hide();
+        $('#subReport').slideUp();
+
              $('#homeDashbord').show();
              hideMenu()">
             <i class="fa fa-home iconMenuLeft red"
@@ -69,10 +73,15 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     padding: 3px;
 " onclick="
 $('#homeDashbord').hide();
+              $('#report').hide();
+
         $('#MyUser').hide();
+        $('#contactListP').hide();
         $('#userOption').show();
         $('#miniDashbord').show();
         $('#userProfile').hide();
+                $('#subReport').slideUp();
+
         removeBlur();">
             <i class="fa fa-home iconMenuLeft red"
                style="    position: relative;
@@ -87,9 +96,14 @@ $('#homeDashbord').hide();
         <li style="padding: 3px;" onclick="
         $('#homeDashbord').hide();
         $('#MyUser').hide();
+                      $('#report').hide();
+
+        $('#contactListP').hide();
         $('#userOption').show();
         $('#miniDashbord').hide();
         $('#userProfile').show();
+                $('#subReport').slideUp();
+
         removeBlur();
 
 ">
@@ -106,9 +120,12 @@ $('#homeDashbord').hide();
             onclick="
         $('#homeDashbord').hide();
         $('#MyUser').show();
+        $('#report').hide();
+        $('#contactListP').hide();
         $('#miniDashbord').hide();
         $('#userOption').show();
         $('#userProfile').hide();
+        $('#subReport').slideUp();
         removeBlur();
 "
         >
@@ -118,23 +135,51 @@ $('#homeDashbord').hide();
             <span style="color: #e4e4e4;
     margin-right: 48px;">مدیریت زیرمجموعه</span>
         </li>
-        <li style="padding: 3px;">
+
+
+
+        <li style="padding: 3px;"
+            onclick="
+        $('#homeDashbord').hide();
+        $('#MyUser').hide();
+        $('#report').show();
+        $('#contactListP').hide();
+        $('#miniDashbord').hide();
+        $('#userOption').show();
+        $('#userProfile').hide();
+        $('#subReport').slideUp();
+        removeBlur();">
             <i class="fa fa-credit-card iconMenuLeft red"
                style="position: relative;top: 10px;"></i>
             گزارشات <br>
             <span style="color: #e4e4e4;
     margin-right: 48px;">گزارشات مالی</span>
+
         </li>
-        <li style="padding: 3px;">
+
+
+
+        <li style="padding: 3px;"
+            onclick="
+        $('#homeDashbord').hide();
+        $('#MyUser').hide();
+        $('#contactListP').show();
+                $('#report').hide();
+
+        $('#miniDashbord').hide();
+        $('#userOption').show();
+        $('#userProfile').hide();
+        removeBlur();">
             <i class="fa fa-address-book iconMenuLeft red"
-               style="position: relative;top: 10px;"></i>
+               style="position: relative;top: 10px;"
+            ></i>
             دفترچه تلفن <br>
             <span style="color: #e4e4e4;
     margin-right: 48px;">لیست شماره تلفن</span>
         </li>
     </ul>
 </div>
-<div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 999;margin-bottom: 15px">
+<div class="col-md-12 col-sm-12 col-xs-12" style="position: absolute;z-index: 310;margin-bottom: 15px">
     <ul id="itemLeft" class="menuLeft col-md-6 col-sm-6 col-xs-6"
         style="position: relative;z-index: 888;width: 100%">
         <li class=""><a href="index.php"><img src="img/logoType.png" class="logo"></a></li>
@@ -550,9 +595,10 @@ if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
-    z-index: 999;
+        z-index: 5000;
     top: 50%;" id="userOption">
-        <ul class="dropdown-menu extended logout col-md-6" id="miniDashbord" style="display: none">
+        <ul class="dropdown-menu extended logout col-md-6" id="miniDashbord" style="display: none;position: relative;
+    z-index: 500;">
             <li class="col-md-9 col-sm-6 col-xs-12" id="dashbord2" style="   padding: 0px;
     margin-top: 10px;">
                 <p style="
@@ -667,8 +713,7 @@ echo $rowPriceOwne['sum'];
                         <ul style="
     position: absolute;
     width: 100%;
-    border: 1px solid #e4e4e4;
-z-index: 9999999999" class="priceSelect" id="selectShaba2">
+    border: 1px solid #e4e4e4;" class="priceSelect" id="selectShaba2">
                             <li>می توانید یکی از شماره های شبا ذخیره شده را انتخاب نمایید.</li>
                             <?php
                             while ($rowSelectShaba = mysqli_fetch_assoc($selectShaba)) {
@@ -756,7 +801,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
 
         </ul>
     <div id="userProfile" class="col-md-6"
-         style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none">
+         style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none;z-index: 500;position: relative;">
         <h3>ویرایش اطلاعات کاربری</h3>
         <div class="alert alert-success" id="EditSuc" style="display: none;">
             ویرایش اطلاعات با موفقیت انجام شد
@@ -840,6 +885,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
                     <input type="text" id="editCode"
                            class="form-control input-lg ng-pristine ng-valid ng-touched"
                            dir="rtl"
+                           disabled
                            style="height: 30px;padding-right: 5px;
     padding-left: 42.5px;"
                            value="<?php echo $userOwnerName ?>"
@@ -857,7 +903,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
         <span type="button" class="btn btn-info2" onClick="EditPrifile()">ویرایش اطلاعات</span>
     </div>
     <div id="MyUser" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;
-    float: none;display: none;overflow: auto;    height: auto;
+    float: none;display: none;overflow: auto;    height: auto;z-index: 500;position: relative;
     max-height: 600px;">
         <h3>مدیریت کاربران</h3>
 
@@ -907,7 +953,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
             </div>
         </div>
         <div class="form-group" style="overflow: hidden;">
-        <h5>روش های دعوت کاربران</h5>
+        <h5>دوستان خود را به اینکام دعوت کنید</h5>
             <div class="alert alert-success" id="profileInvUserSu" style="display: none;direction: rtl">
             </div>
             <div class="col-md-9" style="padding: 0;
@@ -915,7 +961,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
         <input class="form-control pRtl" id="smsInv" type="text" placeholder="شماره تماس">
             </div>
             <div class="col-md-3">
-                <input type="button" onclick="SendSmsInv()" class="btn btn-info2" value="ارسال پیام کوتاه">
+                <input type="button" onclick="SendSmsInv()" class="btn btn-info2" value="ارسال پیامک دعوت">
             </div>
         </div>
         
@@ -993,12 +1039,13 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
         </div>
         <h5>لیست کاربران</h5>
 
-        <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <table id="example" class="table table-striped table-bordered" style="width:100%;direction: rtl">
             <thead>
             <tr>
-                <th>نام کاربری و شماره موبایل</th>
-                <th>دعوت از طریق</th>
+                <th>نام نام خانوادگی - شماره موبایل</th>
+                <th>عضو شده با شناسه</th>
                 <th>درآمد برای شما</th>
+                <th>تاریخ عضویت</th>
 
             </tr>
             </thead>
@@ -1011,14 +1058,15 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
                         <td>کاربری یافت نشد</td>
                         <td>نامشخص</td>
                         <td>0</td>
+                        <td>نامشحص</td>
                     </tr>';
 
             }else {
 
-                while ($rowUserInv = mysqli_fetch_assoc($selectInvUser)) {
+                while ($rowUserInv = mysqli_fetch_assoc($selectUserInv)) {
                     $userInvId = $rowUserInv['userId'];
                     $userInvCode = $rowUserInv['userInvCode'];
-                    $selectInvCode = mysqli_query($conn->conn(), "SELECT * FROM inviteCode where inviteCode.inviteCodeId='$invCode'");
+                    $selectInvCode = mysqli_query($conn->conn(), "SELECT * FROM inviteCode where inviteCode.inviteCodeId='$userInvCode'");
                     $rowInvCode = mysqli_fetch_assoc($selectInvCode);
                     $invCodeer = $rowInvCode['inviteCodeText'];
 
@@ -1029,9 +1077,11 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
                     ?>
 
                     <tr>
-                        <td><?php echo $rowUserInv['userFullname'] ?> / <?php echo $rowUserInv['userMobile'] ?></td>
+                        <td><?php echo $rowUserInv['userFullname'] ?> - <?php echo substr($rowUserInv['userMobile'],7,4)."***".substr($rowUserInv['userMobile'],0,4) ?></td>
                         <td><?php echo $invCodeer ?></td>
                         <td><?php echo $lastPay ?></td>
+                        <td><?php echo @jalali($rowUserInv['userRegDate']) ?></td>
+
                     </tr>
                     <?php
                 }
@@ -1041,14 +1091,229 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
 
         </table>
     </div>
+
+    <div id="report" class="col-md-10" style="background: #ffffff;padding: 30px;margin: auto;
+    display: none;overflow: auto;    height: auto;z-index: 500;position: relative;
+    max-height: 600px;">
+
+        <table class="table table-hover" style="direction: rtl">
+            <thead>
+                <th>ردیف</th>
+                <th>افزایش</th>
+                <th>کاهش</th>
+                <th>مانده کیف پول</th>
+                <th>محصول</th>
+                <th>جزییات محصول</th>
+                <th>توضیحات</th>
+                <th>وضعیت</th>
+                <th>شماره پیگیری</th>
+                <th>تاریخ و ساعت</th>
+            </thead>
+            <tbody>
+            <?php
+            $i = 1;
+            $typeOfPayment="موفق";
+            $color="green";
+            $selectPaymentList = mysqli_query($conn->conn(),"SELECT * FROM pay where pay.payUserId='$userId'");
+            while ($rowPaymentList = mysqli_fetch_assoc($selectPaymentList)){
+                if(
+                    $rowPaymentList['payModel']=="5" ||
+                    $rowPaymentList['payModel']=="6" ||
+                    $rowPaymentList['payModel']=="1" ||
+                    $rowPaymentList['payModel']=="20"
+                ){
+                    $upeer = "+".$rowPaymentList['payPrice'];
+
+                }else{
+                    $upeer="0";
+                }
+                if(
+                    $rowPaymentList['payModel']=="2" ||
+                    $rowPaymentList['payModel']=="3" ||
+                    $rowPaymentList['payModel']=="4" ||
+                    $rowPaymentList['payModel']=="10"
+                ){
+                    $countDown = "-".$rowPaymentList['payPrice'];
+                }else{
+                    $countDown="0";
+                }
+
+
+                if($rowPaymentList['payModel']=="2"){
+                    $productName = 'بسته اینترنتی';
+                    $service = $rowPaymentList['payService'];
+                }elseif($rowPaymentList['payModel']=="3"){
+                    $productName = 'شارژ مستقیم';
+                    $service = $rowPaymentList['payService'];
+                }
+                elseif($rowPaymentList['payModel']=="4"){
+                    $productName = 'پین شارژ';
+                    $service = $rowPaymentList['payPin'].'<br>'.$rowPaymentList['paySerial'];
+
+                }else{
+                    $productName='';
+                }
+
+                if($rowPaymentList['payModel']=='5'){
+                    $detail="درآمد از خرید کاربر";
+                }
+                elseif($rowPaymentList['payModel']=='6'){
+                    $detail="درآمد از خرید پنل";
+                }elseif($rowPaymentList['payModel']=='1'){
+                    $detail="افزایش اعتبار";
+                }elseif($rowPaymentList['payModel']=='10'){
+                    $detail="درخواست واریز وجه";
+                    //Status Of GetMoney
+                    $payId = $rowPaymentList['payId'];
+                    $selectGetMoney = mysqli_query($conn->conn(),"SELECT * FROM getMoney where getMoney.getMoneyId='$payId'");
+                    $rowPayGet = mysqli_fetch_assoc($selectGetMoney);
+                    $Status = $rowPayGet['getMoneyStatus'];
+                    if($Status=="0"){
+                     $typeOfPayment = "درانتظار";
+                     $color="#000";
+                    }
+                }else{
+                    $detail='';
+                }
+
+                $date = jalali($rowPaymentList['payRegDate']);
+                $time = $rowPaymentList['payRegTime'];
+
+                $dateAndTime = $date.'-'.$time;
+
+
+
+
+
+            ?>
+                <td><?php echo $i?></td>
+                <td style="color:green"><?php echo $upeer?></td>
+                <td style="color:red"><?php echo $countDown?></td>
+                <td style=""><?php echo $rowPaymentList['lastUserMoney']?></td>
+                <td style=""><?php echo $productName?></td>
+                <td style=""><?php echo $service?></td>
+                <td style=""><?php echo $detail?></td>
+                <td style="color:<?php echo $color ?>"><?php echo $typeOfPayment?></td>
+                <td style=""><?php echo $rowPaymentList['payRef']?></td>
+                <td style=""><?php echo $dateAndTime?></td>
+                <?php
+                $i++;
+            }
+            ?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div id="contactListP" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;
+    float: none;display: none;overflow: auto;    height: auto;z-index: 500;position: relative;
+    max-height: 600px;">
+        <h2>اضافه کردن به دفتر تلفن</h2>
+        <div class="alert alert-success" id="contactAddSuccess" style="direction: rtl;display: none">
+            کاربر با موفقیت به دفتر تلفن اضافه شد.
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group input-group has-feedback">
+                <input type="text" id="contactNameP"
+                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                       dir="ltr"
+                       style="height: 30px;padding-right: 0;
+    padding-left: 42.5px;"
+                >
+                <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                <div class="input-group-addon">نام و نام خانوادگی</div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group input-group has-feedback">
+                <input type="text" id="contactMobileP"
+                       class="form-control input-lg ng-pristine ng-valid ng-touched"
+                       dir="ltr"
+                       style="height: 30px;padding-right: 0;
+    padding-left: 42.5px;"
+                >
+                <i class="fa fa-mobile fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                <div class="input-group-addon">شماره تلفن</div>
+            </div>
+        </div>
+        <div class="col-xs-12" style="text-align: center;">
+            <input type="button" value="ثبت" class="btn btn-info2" onclick="addContact()">
+        </div>
+
+        <h2>لیست دفتر تلفن</h2>
+
+
+        <table id="example1" class="table table-striped table-bordered" style="width:100%;direction: rtl">
+            <thead>
+            <tr>
+                <th>شماره</th>
+                <th>نام</th>
+                <th>شماره تلفن همراه</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody id="contactListTabelP">
+
+            <?php
+           $selectContact = mysqli_query($conn->conn(),"SELECT * FROM contact where contact.contactUserId='$userId'");
+            if(mysqli_num_rows($selectContact)==0){
+                echo '<tr id="justOne">
+                        <td>0</td>
+                        <td>کاربری یافت نشد</td>
+                        <td>نامشخص</td>
+                        <td>نامشخص</td>
+                    </tr>';
+
+            }else {
+
+                while ($rowUserInv = mysqli_fetch_assoc($selectContact)) {
+                    $contactId = $rowUserInv['contactId'];
+                    $contactName =$rowUserInv['contactName'];
+                    $contactNum = $rowUserInv['contactNum'];
+                    $contactMobile = $rowUserInv['contactNumber'];
+                    ?>
+
+                    <tr id="contact_<?php echo $contactId ?>">
+                        <td><?php echo $contactNum ?></td>
+                        <td><?php echo $contactMobile ?></td>
+                        <td><?php echo $contactName ?></td>
+                        <td><input type="button" value="حذف"
+                                   onclick="deleteContact('<?php echo $contactId ?>')"
+                                   class="btn btn-xs btn-danger"></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
+            </tbody>
+
+        </table>
+
+
+    </div>
     <?php
     }
     ?>
 </div>
 </div>
 <div class="col-md-12 col-sm-12 col-xs-12 "
-     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: block;z-index: 888">
-    <div class="col-md-12 col-sm-12 col-xs-12" id="icons">
+     id="homeDashbord" style="padding:0;position: relative;overflow: visible;height: 100%;display: block;">
+    <div class="col-md-12 col-sm-12 col-xs-12" id="icons" style="z-index: 199">
         <div id="part1">
             <div class="col-md-2 hidden-xs hidden-sm animated bounceInRight">
             </div>
@@ -1085,7 +1350,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
             </div>
         </div>
     </div>
-    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="z-index: 3">
+    <div id="chargePart2Baste" class="col-md-10 col-xs-12 col-sm-12" style="z-index: 300">
         <div class="col-md-7" style="margin: auto;
     float: none;
     border: 2px solid #fff;
@@ -1477,7 +1742,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba2">
             </div>
         </div>
     </div>`
-    <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 9px;display: none">
+    <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 9px;display: none;z-index: 300">
         <div class="col-md-12" id="airPlane" >
             <div class="col-md-2 col-xs-3 col-sm-2  col-md-offset-3" style="padding: 0;text-align: center;cursor: pointer">
                 <img src="img/bus.png"  id="B3"
@@ -1927,7 +2192,7 @@ top:0px;
             </div>
         </div>
     </div>
-    <div class="footer" id="footer" style="position: fixed;z-index:999">
+    <div class="footer" id="footer" style="position: fixed;z-index:299">
         <div class="pull-left hidden-xs hidden-sm"
              style="position: absolute;bottom: 20px;left: 20px;width: 10%">
             <img src="https://trustseal.enamad.ir/logo.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g" alt=""

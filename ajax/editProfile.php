@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         if($_POST['code']!=''){
             $code = $db->real($_POST['code']);
-            if($OwnerId=''){
+            if($OwnerId==''){
                 $selectInviteCode = mysqli_query($conn, "
               SELECT * FROM inviteCode where inviteCodeText ='$code'");
                 if (mysqli_num_rows($selectInviteCode) == 0) {
@@ -74,11 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 } else {
                     $row = mysqli_fetch_assoc($selectInviteCode);
                     $userOwnerId = $row['inviteCodeUserId'];
+                    $invCodeId = $row['inviteCodeId'];
                     require_once "../inc/noti.php";
                     $noti = new noti();
                     $noti->sendNoti($userOwnerId,
                         "تبریک ! ".$_SESSION['mobile']." به کاربران شما اضافه شد. ");
-                    $up.="UPDATE user SET user.UserOwner='$userOwnerId' WHERE user.userId='$userId';";
+                    $up.="UPDATE user SET user.UserOwner='$userOwnerId',user.userInvCode='$invCodeId' WHERE user.userId='$userId';";
                 }
             }
         }

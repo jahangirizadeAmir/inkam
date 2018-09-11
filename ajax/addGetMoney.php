@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 if($userMoney>=$Price){
                     $lastMoney = $userMoney-$Price;
-                    $insert = mysqli_query($conn->conn(),"INSERT INTO getMoney (getMoneyId, getMoneyUserId, getMoneyShaba, getMoneyBank, getMoneyRegDate, getMoneyRegTime, getMoneyPrice) values ('$id','$userId','$Shaba','$bankName','$date','$time','$Price')");
+                    $insert = mysqli_query($conn->conn(),"INSERT INTO getMoney (getMoneyId, getMoneyUserId, getMoneyShaba, getMoneyBank, getMoneyRegDate, getMoneyRegTime, getMoneyPrice,getMoneyStatus) values ('$id','$userId','$Shaba','$bankName','$date','$time','$Price','0')");
                     if($insert){
                         $update = mysqli_query($conn->conn(),"UPDATE user SET userMoney='$lastMoney' where user.userId='$userId'");
                         if($update){
@@ -55,6 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $insertShaba = mysqli_query($conn->conn(),"INSERT INTO shaba (shabaId, shabaUserId, shabaNumber, shabaBank)
                                   VALUES ('$iDShaba','$userId','$Shaba','$bankName')");
                             }
+                            $insert = mysqli_query($conn->conn(), "
+                            INSERT INTO pay 
+                            (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,payService,payPin,lastUserMoney)
+                             VALUES
+                            ('$id','$id','$date','$time','$userId','','10','$Price','','',$lastMoney)
+                             ");
                             $call = array("Error"=>false,"MSG"=>"در خواست با موفقیت ثبت شد و در لیست انتظار قرار گرفت .","money"=>$lastMoney);
                             echo json_encode($call);
                             return;

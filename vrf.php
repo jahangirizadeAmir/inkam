@@ -16,7 +16,7 @@ if(isset($_POST)) {
     $sharj = new sharj();
     $conn = new db();
     $pin = '21';
-    $mobile='12141241212412412';
+    $mobile='21';
     $oldUser = '0';
     $serial = '22';
     //model==1 walet afzayesh Etebar
@@ -27,12 +27,26 @@ if(isset($_POST)) {
 
     if (isset($_POST['etebar']) && $_POST['etebar'] == true) {
         if(isset($_SESSION['mobile']) && $_SESSION['mobile']!='') {
+            $price = $conn->real($_SESSION['price']);
             require_once "inc/my_frame.php";
             if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+
                 $mobile = $conn->real($_SESSION['mobile']);
                 $id = $conn->real($_SESSION['userId']);
+
+                if (isset($_SESSION['userId'])) {
+                    $userId = $conn->real($_SESSION['userId']);
+                } else {
+                    $userId = '';
+                }
+
                 $selectUser = mysqli_query($conn->conn(),"SELECT * FROM user where userId='$id'");
+
                 $rowuser = mysqli_fetch_assoc($selectUser);
+                $money = $rowuser['userMoney'];
+                $lastMoney = (int)$money - (int)$price;
+                $update = mysqli_query($conn->conn(), "UPDATE user set user.userMoney='$lastMoney' where userId='$userId'");
+
                 $userName = $rowuser['userFullName'];
                 $userMobile = $rowuser['userMobile'];
                 $userLevel = $rowuser['userLevel'];
@@ -70,14 +84,8 @@ if(isset($_POST)) {
             $op = 2;
         }
 
-        if (isset($_SESSION['userId'])) {
-            $userId = $conn->real($_SESSION['userId']);
-        } else {
-            $userId = '';
-        }
         $id = $conn->generate_id();
         $trans = $id;
-        $price = $conn->real($_SESSION['price']);
         $date = $conn->date();
         $time = $conn->time();
         $trans = '';
@@ -122,37 +130,37 @@ if(isset($_POST)) {
         }
         $insert = mysqli_query($conn->conn(), "
             INSERT INTO pay 
-            (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+            (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,payService,payPin,lastUserMoney,paySerial)
              VALUES
-            ('$id',$id,'$date','$time','$userId','$product','$model','$price')
+            ('$id','$id','$date','$time','$userId','$product','$model','$price','$mobile','$pin','$lastMoney','$serial')
              ");
         if ($insert) {
             echo '<div id="melatBank"></div>
 <script language="javascript" type="text/javascript"> 
 				function postRefId () {
-				var form = document.createElement("form");
+				let form = document.createElement("form");
 				form.setAttribute("method", "POST");
 				form.setAttribute("action", "index.php");         
 				form.setAttribute("target", "_self");
-				var hiddenField = document.createElement("input");              
+				let hiddenField = document.createElement("input");              
 				hiddenField.setAttribute("name", "mode");
 				hiddenField.setAttribute("value", ' . $model . ');
-				var hiddenField2 = document.createElement("input");              
+				let hiddenField2 = document.createElement("input");              
 				hiddenField2.setAttribute("name","refId");
 				hiddenField2.setAttribute("value",' . $trans . ');
-				var hiddenField3 = document.createElement("input");              
+				let hiddenField3 = document.createElement("input");              
 				hiddenField3.setAttribute("name","mobile");
 				hiddenField3.setAttribute("value",' . $mobile . ');
-				var hiddenField4 = document.createElement("input");              
+				let hiddenField4 = document.createElement("input");              
 				hiddenField4.setAttribute("name", "price");
 				hiddenField4.setAttribute("value", ' . $price . ');
-				var hiddenField5 = document.createElement("input");              
+				let hiddenField5 = document.createElement("input");              
 				hiddenField5.setAttribute("name", "sharjModel");
 				hiddenField5.setAttribute("value", ' . $_SESSION['modelSharj'] . ');
-				var hiddenField6 = document.createElement("input");              
+				let hiddenField6 = document.createElement("input");              
 				hiddenField6.setAttribute("name", "serial");
 				hiddenField6.setAttribute("value", ' . $serial . ');
-				var hiddenField7 = document.createElement("input");              
+				let hiddenField7 = document.createElement("input");              
 				hiddenField7.setAttribute("name", "pin");
 				hiddenField7.setAttribute("value", ' . $pin . ');
 				form.appendChild(hiddenField);
@@ -213,6 +221,14 @@ if(isset($_POST)) {
 //    print_r($_SESSION);
             if ($results["status"] == "success") {
                 $trans = $results["trans"];
+                if (isset($_SESSION['userId'])) {
+                    $userId = $conn->real($_SESSION['userId']);
+                } else {
+                    $userId = '';
+                }
+                $select = mysqli_query($conn->conn(), "SELECT * FROM user where userId='$userId'");
+                $row = mysqli_fetch_assoc($select);
+                $money = $row['userMoney'];
                 if (isset($_SESSION['model']) ) {
                     if($_SESSION['model'] != 'walet') {
                         $operator = $conn->real($_SESSION['operator']);
@@ -227,24 +243,17 @@ if(isset($_POST)) {
                             $op = 2;
                         }
                     }
-                    if (isset($_SESSION['userId'])) {
-                        $userId = $conn->real($_SESSION['userId']);
-                    } else {
-                        $userId = '';
-                    }
                     $id = $conn->generate_id();
                     $price = $conn->real($_SESSION['price']);
                     $date = $conn->date();
                     $time = $conn->time();
                     if ($_SESSION['model'] == 'walet') {
                         $_SESSION['modelSharj'] = '123123123';
-
                         $model = '1';
-                        $select = mysqli_query($conn->conn(), "SELECT * FROM user where userId='$userId'");
-                        $row = mysqli_fetch_assoc($select);
-                        $money = $row['userMoney'];
                         $lastMoney = (int)$money + (int)$price;
                         $update = mysqli_query($conn->conn(), "UPDATE user set user.userMoney='$lastMoney' where userId='$userId'");
+                    }else{
+                        $lastMoney=$money;
                     }
                     if ($_SESSION['model'] == 'baste') {
                         $model = "2";
@@ -284,40 +293,40 @@ if(isset($_POST)) {
                     }
                     $insert = mysqli_query($conn->conn(), "
             INSERT INTO pay 
-            (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+            (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,payService,payPin,lastUserMoney,paySerial)
              VALUES
-            ('$id','$trans','$date','$time','$userId','$product','$model','$price')
+            ('$id','$id','$date','$time','$userId','$product','$model','$price','$mobile','$pin','$lastMoney','$serial')
              ");
                     if ($insert) {
                         echo '<div id="melatBank"></div>
 <script language="javascript" type="text/javascript"> 
 				function postRefId () {
-				var form = document.createElement("form");
+				let form = document.createElement("form");
 				form.setAttribute("method", "POST");
 				form.setAttribute("action", "index.php");         
 				form.setAttribute("target", "_self");
-				var hiddenField = document.createElement("input");              
+				let hiddenField = document.createElement("input");              
 				hiddenField.setAttribute("name", "mode");
 				hiddenField.setAttribute("value", ' . $model . ');
-				var hiddenField2 = document.createElement("input");              
+				let hiddenField2 = document.createElement("input");              
 				hiddenField2.setAttribute("name","refId");
 				hiddenField2.setAttribute("value",' . $trans . ');
-				var hiddenField3 = document.createElement("input");              
+				let hiddenField3 = document.createElement("input");              
 				hiddenField3.setAttribute("name","mobile");
 				hiddenField3.setAttribute("value",' . $mobile . ');
-				var hiddenField4 = document.createElement("input");              
+				let hiddenField4 = document.createElement("input");              
 				hiddenField4.setAttribute("name", "price");
 				hiddenField4.setAttribute("value", ' . $price . ');
-				var hiddenField5 = document.createElement("input");              
+				let hiddenField5 = document.createElement("input");              
 				hiddenField5.setAttribute("name", "sharjModel");
 				hiddenField5.setAttribute("value", ' . $_SESSION['modelSharj'] . ');
-				var hiddenField6 = document.createElement("input");              
+				let hiddenField6 = document.createElement("input");              
 				hiddenField6.setAttribute("name", "serial");
 				hiddenField6.setAttribute("value", ' . $serial . ');
-				var hiddenField7 = document.createElement("input");              
+				let hiddenField7 = document.createElement("input");              
 				hiddenField7.setAttribute("name", "pin");
 				hiddenField7.setAttribute("value", ' . $pin . ');
-				var hiddenField8 = document.createElement("input");              
+				let hiddenField8 = document.createElement("input");              
 				hiddenField8.setAttribute("name", "oldUser");
 				hiddenField8.setAttribute("value", '.$oldUser.');
 				form.appendChild(hiddenField);

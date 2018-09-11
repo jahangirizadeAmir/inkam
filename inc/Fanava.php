@@ -22,7 +22,6 @@ public function __construct()
 {
     session_start();
 }
-
     public function GetToken()
     {
         $ch = curl_init("https://nafis.fanavacard.com/token_manager/AuthenticateUser/");
@@ -34,9 +33,7 @@ public function __construct()
         $this->token = $jsonResult['Token'];
         $_SESSION['Token']=$this->token;
     }
-
     public function SendRequest($amount){
-
         $this->GetToken();
         //token
         //MerchantCode
@@ -47,7 +44,6 @@ public function __construct()
         //Stan
         //RedirectURL
         //IP
-
         $InvoiceNumber = rand(100000,999999);
         $Stan = rand(100000,999999);
 
@@ -97,7 +93,6 @@ echo '<div id="melatBank"></div>
 				hiddenField5.setAttribute("name", "Amount");
 				hiddenField5.setAttribute("value", "'.$amount.'");
 				
-				
 	            var hiddenField6 = document.createElement("input");              
 				hiddenField6.setAttribute("name", "InvoiceNumber");
 				hiddenField6.setAttribute("value", "'.$InvoiceNumber.'");
@@ -105,7 +100,6 @@ echo '<div id="melatBank"></div>
 	            var hiddenField7 = document.createElement("input");              
 				hiddenField7.setAttribute("name", "Stan");
 				hiddenField7.setAttribute("value", "'.$Stan.'");
-				
 				
 	            var hiddenField8 = document.createElement("input");              
 				hiddenField8.setAttribute("name", "RedirectURL");

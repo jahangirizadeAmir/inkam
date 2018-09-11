@@ -95,6 +95,18 @@ class PaySharj
             $msg = "مبلغ".$lastPercent."تومان بابت خرید از پنل به اعتبار شما اضافه شد";
             $this->noti->sendNoti($userId,$msg);
             $this->update($userId,$money);
+
+            $id = $this->conn->generate_id();
+            $trans = $id;
+            $date = $this->conn->date();
+            $time = $this->conn->time();
+            $product = 'درآمد از خرید';
+            $model = '6';
+            $insert = mysqli_query($this->conn->conn(), "
+                      INSERT INTO pay 
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,lastUserMoney)
+                       VALUES
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$lastMoney')");
         }
         //user Level 1
         //agent Level 2
@@ -115,9 +127,9 @@ class PaySharj
             $model = '6';
             $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
-                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,lastUserMoney)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price')");
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$lastMoney')");
 
 
         }
@@ -144,9 +156,9 @@ class PaySharj
                     $model = '5';
                     $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
-                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,userPay)
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,userPay,lastUserMoney)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$userPay')
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$userPay','$lastMoney')
                      ");
                 }
                 if($level==2){
@@ -162,9 +174,10 @@ class PaySharj
                     $model = '5';
                     $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
-                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice)
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,userPay,lastUserMoney)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price')");
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$userPay','$lastMoney')
+                     ");
                 }
         }
     }
