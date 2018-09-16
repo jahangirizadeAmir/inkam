@@ -16,7 +16,9 @@ class PaySharj
     private $conn;
     private $operator;
     private $noti;
-    public function __construct($operator,$model)
+    private $mobile;
+    private $text;
+    public function __construct($operator,$model,$mobile='',$text='')
     {
         //model == 1 ? mostaghim && baste
         //model == 2 ? code
@@ -24,6 +26,8 @@ class PaySharj
         //operator 2 = irancell
         //operator 3 = rightell
 
+        $this->mobile=$mobile;
+        $this->text=$text;
         if($operator=="1"){
             if($model=="1") {
                 $this->percentAgent = 1.5;
@@ -87,49 +91,50 @@ class PaySharj
         $userAgent = $row["UserOwner"];
         $money = $row["userMoney"];
         if($level==1){
-
             $this->userOwner($userAgent, $price,$userId);
-            $percent = ( (int)($price/100) * (int) $this->percentUser);
+            $percent = (float)($price/100) * (float) $this->percentUser;
             $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
             $lastMoney = (int) $money + (int) $lastPercent;
-            $msg = "مبلغ".$lastPercent."تومان بابت خرید از پنل به اعتبار شما اضافه شد";
+            $msg = " مبلغ ".$lastPercent." تومان بابت خرید از پنل به اعتبار شما اضافه شد";
             $this->noti->sendNoti($userId,$msg);
-            $this->update($userId,$money);
+            $this->update($userId,$lastMoney);
 
             $id = $this->conn->generate_id();
             $trans = $id;
             $date = $this->conn->date();
             $time = $this->conn->time();
-            $product = 'درآمد از خرید';
+            $time = date('H:i:s',strtotime('+1 second',strtotime($time)));
+            $product = '01';
             $model = '6';
             $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
-                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,lastUserMoney)
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,lastUserMoney,payService,payText)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$lastMoney')");
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$lastPercent','$lastMoney','$this->mobile','$this->text')");
         }
         //user Level 1
         //agent Level 2
         //SubAgent Level 3
         if($level==2){
-            $percent = ( (int)($price/100) * (int) $this->percentAgentInv);
+            $percent = (float)($price/100) * (float) $this->percentAgent;
             $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
             $lastMoney = (int) $money + (int) $lastPercent;
-            $this->update($userId,$money);
-            $msg = "مبلغ".$lastPercent."تومان بابت خرید از پنل به اعتبار شما اضافه شد";
+            $this->update($userId,$lastMoney);
+            $msg = " مبلغ ".$lastPercent." تومان بابت خرید از پنل به اعتبار شما اضافه شد ";
             $this->noti->sendNoti($userId,$msg);
 
             $id = $this->conn->generate_id();
             $trans = $id;
             $date = $this->conn->date();
             $time = $this->conn->time();
-            $product = 'درآمد از خرید';
+            $time = date('H:i:s',strtotime('+1 second',strtotime($time)));
+            $product = '01';
             $model = '6';
             $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
-                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,lastUserMoney)
+                      (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,lastUserMoney,payService,payText)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$lastMoney')");
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$lastPercent','$lastMoney','$this->mobile','$this->text')");
 
 
         }
@@ -140,43 +145,50 @@ class PaySharj
             $rowUser = mysqli_fetch_assoc($select);
             $level = $rowUser["userLevel"];
             $money = $rowUser["userMoney"];
-            $msg = "مبلغ".$price."تومان بابت خرید کاربر به اعتبار شما اضافه شد";
-            $this->noti->sendNoti($userId,$msg);
+
 
             if($level==1){
-                    $percent = ( (int)($price/100) * (int) $this->percentUserInv);
+                    $percent = (float)($price/100) * (float) $this->percentUserInv;
                     $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
                     $lastMoney = (int) $money + (int) $lastPercent;
-                    $this->update($userId,$money);
+                    $this->update($userId,$lastMoney);
                     $id = $this->conn->generate_id();
                     $trans = $id;
                     $date = $this->conn->date();
                     $time = $this->conn->time();
-                    $product = 'درآمد از کاربر';
+                    $time = date('H:i:s',strtotime('+1 second',strtotime($time)));
+
+                $product = '01';
                     $model = '5';
+                $msg = " مبلغ ".$lastPercent." تومان بابت خرید کاربر به اعتبار شما اضافه شد";
+                $this->noti->sendNoti($userId,$msg);
                     $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
                       (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,userPay,lastUserMoney)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$userPay','$lastMoney')
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$lastPercent','$userPay','$lastMoney')
                      ");
                 }
+
                 if($level==2){
-                    $percent = ( (int)($price/100) * (int) $this->percentAgentInv);
+                    $percent =(float)($price/100) * (float) $this->percentAgentInv;
                     $lastPercent = round($percent,0,PHP_ROUND_HALF_DOWN);
                     $lastMoney = (int) $money + (int) $lastPercent;
-                    $this->update($userId,$money);
+                    $this->update($userId,$lastMoney);
                     $id = $this->conn->generate_id();
                     $trans = $id;
                     $date = $this->conn->date();
                     $time = $this->conn->time();
-                    $product = 'درآمد از کاربر';
+                    $time = date('H:i:s',strtotime('+1 second',strtotime($time)));
+                    $product = '01';
                     $model = '5';
+                    $msg = " مبلغ ".$lastPercent." تومان بابت خرید کاربر به اعتبار شما اضافه شد";
+                    $this->noti->sendNoti($userId,$msg);
                     $insert = mysqli_query($this->conn->conn(), "
                       INSERT INTO pay 
                       (payId, payRef, payRegDate, payRegTime, payUserId, payProduct, payModel,payPrice,userPay,lastUserMoney)
                        VALUES
-                     ('$id','$trans','$date','$time','$userId','$product','$model','$price','$userPay','$lastMoney')
+                     ('$id','$trans','$date','$time','$userId','$product','$model','$lastPercent','$userPay','$lastMoney')
                      ");
                 }
         }
@@ -201,7 +213,9 @@ class PaySharj
             return false;
         }
         $last = (((int) $price / 100)*$precent)/10;
-        return round($last);
+        $lastPercent = round($last,0,PHP_ROUND_HALF_DOWN);
+        return $lastPercent;
+
     }
 
 }

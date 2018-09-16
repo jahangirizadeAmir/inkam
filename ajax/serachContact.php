@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $userId = $conn->real($_SESSION['userId']);
 
         $selectContact = mysqli_query($conn->conn(),"SELECT * FROM contact 
-        where contactUserId='$userId' and (contact.contactName  like '%$search%' 
+        where contactUserId='$userId' and (contact.contactNumber  like '%$search%' 
         OR contact.contactNum like '%$search%')");
         if(mysqli_num_rows($selectContact)==0){
             $html = ' <tr>
@@ -31,13 +31,37 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             $html = '';
             $cot = "'";
             while ($row= mysqli_fetch_assoc($selectContact)){
-                $html = '<tr onclick="SelectNumberContact('.$cot.$row['contactNumber'].$cot.')"><td>'.$row['contactNum'].'</td><td>'.$row['contactName'].'</td> <td>'.$row['contactNumber'].'</td></tr>';
+                $html .= '<tr onclick="SelectNumberContact('.$cot.$row['contactName'].$cot.')"><td>'.$row['contactNum'].'</td><td>'.$row['contactNumber'].'</td> <td>'.$row['contactName'].'</td></tr>';
             }
         }
         $call = array("Error"=>false,"html"=>$html);
         echo json_encode($call);
         return;
     }else{
-        echo '1';
+        if($_POST['serach']==''){
+            include "../inc/db.php";
+            $conn = new db();
+            $userId = $conn->real($_SESSION['userId']);
+            $selectContact1 = mysqli_query($conn->conn(),"SELECT * FROM contact 
+            where contactUserId='$userId'");
+
+            if(mysqli_num_rows($selectContact1)==0){
+                $html = ' <tr>
+                                <td>0</td>
+                                <td>کاربری موجود نیست</td>
+                                <td>***********</td>
+                            </tr>';
+            }else{
+                $html = '';
+                $cot = "'";
+                while ($row= mysqli_fetch_assoc($selectContact1)){
+                    $html .= '<tr onclick="SelectNumberContact('.$cot.$row['contactName'].$cot.')"><td>'.$row['contactNum'].'</td><td>'.$row['contactNumber'].'</td> <td>'.$row['contactName'].'</td></tr>';
+                }
+            }
+            $call = array("Error"=>false,"html"=>$html);
+            echo json_encode($call);
+            return;
+
+        }
     }
 }

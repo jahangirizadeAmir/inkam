@@ -10,7 +10,7 @@ class sharj
     private $userName="t29fUm_WxeVh5J";
     private $password="-.GYnWA0oLDJw";
     private $last;
-    private $url="https://ws.nekatelecom.com/";
+    private $url="https://ws.nekatelecom.com/topup";
 
 
     public function __construct()
@@ -23,7 +23,8 @@ class sharj
                           $operator,
                           $amazing="false",
                           $code=null,
-                          $seller_name='اینکام')
+                          $seller_name='اینکام'
+    )
     {
         $this->url.="topup";
         if($code!=null){

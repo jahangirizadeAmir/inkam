@@ -26,13 +26,16 @@ if(isset($_POST)) {
 
 
     if (isset($_POST['etebar']) && $_POST['etebar'] == true) {
+        $refId='';
+        $product = '01';
+
         if(isset($_SESSION['mobile']) && $_SESSION['mobile']!='') {
             $price = $conn->real($_SESSION['price']);
             require_once "inc/my_frame.php";
             if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
 
                 $mobile = $conn->real($_SESSION['mobile']);
-                $id = $conn->real($_SESSION['userId']);
+                $idUserLogin = $conn->real($_SESSION['userId']);
 
                 if (isset($_SESSION['userId'])) {
                     $userId = $conn->real($_SESSION['userId']);
@@ -40,14 +43,14 @@ if(isset($_POST)) {
                     $userId = '';
                 }
 
-                $selectUser = mysqli_query($conn->conn(),"SELECT * FROM user where userId='$id'");
+                $selectUser = mysqli_query($conn->conn(),"SELECT * FROM user where userId='$idUserLogin'");
 
                 $rowuser = mysqli_fetch_assoc($selectUser);
                 $money = $rowuser['userMoney'];
                 $lastMoney = (int)$money - (int)$price;
                 $update = mysqli_query($conn->conn(), "UPDATE user set user.userMoney='$lastMoney' where userId='$userId'");
 
-                $userName = $rowuser['userFullName'];
+                $userName = $rowuser['userFullname'];
                 $userMobile = $rowuser['userMobile'];
                 $userLevel = $rowuser['userLevel'];
                 if($userLevel=="2"){
@@ -88,44 +91,48 @@ if(isset($_POST)) {
         $trans = $id;
         $date = $conn->date();
         $time = $conn->time();
-        $trans = '';
 
 
         if ($_SESSION['model'] == 'baste') {
             $model = "2";
-            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                $paySharj = new PaySharj($op, 1);
-
-            }
             $simModel = $conn->real($_SESSION['simModel']);
             $code = $conn->real($_SESSION['code']);
             $mobile = $conn->real($_SESSION['mobile']);
             $sharj->topup($price, $mobile, $operator, "false", $code,$sellerName);
+            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                $paySharj = new PaySharj($op, 1,$mobile,"2");
+                $paySharj->SharjAndBaste($price,$userId);
+
+            }
 
         }
         if ($_SESSION['model'] == "sharj") {
             if ($_SESSION['modelSharj'] == 1) {
                 $model = "3";
-                if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                    $paySharj = new PaySharj($op, 1);
-                }
                 $mobile = $conn->real($_SESSION['mobile']);
                 $real = $price * 10;
                 //(mci|hamrah),(ir,irancell),(rtl,rightel)
                 $a = $sharj->topup($real, $mobile, $operator, $_SESSION['amz'],'',$sellerName);
+                if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                    $paySharj = new PaySharj($op, 1,$mobile,"3");
+                    $paySharj->SharjAndBaste($price,$userId);
+
+                }
 
             }
             if ($_SESSION['modelSharj'] == 2) {
                 $model = "4";
-                if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                    $paySharj = new PaySharj($op, 2);
-                }
                 $simModel = $conn->real($_SESSION['simModel']);
                 $mobile = $conn->real($_SESSION['mobile']);
                 $real = $price * 10;
                 $b = $sharj->pin($op, $real);
                 $pin = $b[0]['pin'];
                 $serial = $b[0]['serial'];
+                if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                    $paySharj = new PaySharj($op, 2,$mobile,"4");
+                    $paySharj->SharjAndBaste($price,$userId);
+
+                }
             }
         }
         $insert = mysqli_query($conn->conn(), "
@@ -180,6 +187,7 @@ if(isset($_POST)) {
         }
     }else{
         if(isset($_SESSION['mobile']) && $_SESSION['mobile']!='') {
+            $product = '02';
             if ($_SESSION['model'] != 'walet') {
                 require_once "inc/my_frame.php";
                 if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
@@ -257,38 +265,42 @@ if(isset($_POST)) {
                     }
                     if ($_SESSION['model'] == 'baste') {
                         $model = "2";
-                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                            $paySharj = new PaySharj($op, 1);
-                        }
                         $simModel = $conn->real($_SESSION['simModel']);
                         $code = $conn->real($_SESSION['code']);
                         $mobile = $conn->real($_SESSION['mobile']);
                         $sharj->topup($price, $mobile, $operator, "false", $code,$sellerName);
+                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                            $paySharj = new PaySharj($op, 1,$mobile,"2");
+                            $paySharj->SharjAndBaste($price,$userId);
+
+                        }
 
                     }
                     if ($_SESSION['model'] == "sharj") {
                         if ($_SESSION['modelSharj'] == 1) {
                             $model = "3";
-                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                                $paySharj = new PaySharj($op, 1);
-                            }
                             $mobile = $conn->real($_SESSION['mobile']);
                             $real = $price * 10;
                             //(mci|hamrah),(ir,irancell),(rtl,rightel)
                             $a = $sharj->topup($real, $mobile, $operator, $_SESSION['amz'],'',$sellerName);
+                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                                $paySharj = new PaySharj($op, 1,$mobile,"3");
+                                $paySharj->SharjAndBaste($price,$userId);
+                            }
 
                         }
                         if ($_SESSION['modelSharj'] == 2) {
                             $model = "4";
-                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
-                                $paySharj = new PaySharj($op, 2);
-                            }
                             $simModel = $conn->real($_SESSION['simModel']);
                             $mobile = $conn->real($_SESSION['mobile']);
                             $real = $price * 10;
                             $b = $sharj->pin($op, $real);
                             $pin = $b[0]['pin'];
                             $serial = $b[0]['serial'];
+                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                                $paySharj = new PaySharj($op, 2,$mobile,"4");
+                                $paySharj->SharjAndBaste($price,$userId);
+                            }
                         }
                     }
                     $insert = mysqli_query($conn->conn(), "

@@ -37,32 +37,35 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
     <link href="css/vesam.css" rel="stylesheet">
     <style>
         .modal-header, h4, .close {
-            background-color: #5cb85c;color: white !important;text-align: center;font-size: 30px;
+            background-color: #5cb85c;
+            color: white !important;
+            text-align: center;
+            font-size: 30px;
         }
+
         .modal-footer {
             background-color: #f9f9f9;
         }
     </style>
 </head>
 <body class="slider-area warm-canvas">
-<canvas class="worms sketch" height="531" width="1440" style="position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;"></canvas>
+<canvas class="worms sketch" height="531" width="1440"
+        style="position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;"></canvas>
 <div class="pull-right col-md-2 col-sm-6 col-xs-12 menuDiv" id="menuDiv">
     <ul class="menuList">
         <li style="
     padding: 3px;
 " onclick="
-              $('#userOption').hide();
-              $('#report').hide();
-              $('#miniDashbord').hide();
-             $('#userProfile').hide();
-                     $('#contactListP').hide();
-        $('#subReport').slideUp();
-
-             $('#homeDashbord').show();
-             hideMenu()">
-            <i class="fa fa-home iconMenuLeft red"
+            ProfileChange('homeDashbord');
+                        hideMenu();
+            ">
+            <i class="iconMenuLeft inkam"
                style="    position: relative;
-    top: 10px;"></i>
+    top: 10px;"><img style="width: 37px;
+    /* height: 10px; */
+    padding: 9px;
+    position: relative;
+    bottom: 3px;" src="img/iconDoor.png"></i>
             صفحه اصلی
             <br>
             <span style="color: #e4e4e4;
@@ -72,39 +75,23 @@ if (isset($_SESSION['userId']) && $_SESSION['userId'] != "") {
         <li style="
     padding: 3px;
 " onclick="
-$('#homeDashbord').hide();
-              $('#report').hide();
-
-        $('#MyUser').hide();
-        $('#contactListP').hide();
         $('#userOption').show();
-        $('#miniDashbord').show();
-        $('#userProfile').hide();
-                $('#subReport').slideUp();
-
-        removeBlur();">
-            <i class="fa fa-home iconMenuLeft red"
+        ProfileChange('miniDashbord');
+">
+            <i class="fas fa-tachometer-alt iconMenuLeft orange"
                style="    position: relative;
     top: 10px;"></i>
-پیشخوان
+            پیشخوان
             <br>
             <span style="color: #e4e4e4;
-    margin-right: 48px;">اطلاعات کاربردی</span>
+    margin-right: 48px;">خلاصه حساب کاربری ، افزایش اعتبار ، درخواست واریز وجه</span>
         </li>
 
 
         <li style="padding: 3px;" onclick="
-        $('#homeDashbord').hide();
-        $('#MyUser').hide();
-                      $('#report').hide();
 
-        $('#contactListP').hide();
         $('#userOption').show();
-        $('#miniDashbord').hide();
-        $('#userProfile').show();
-                $('#subReport').slideUp();
-
-        removeBlur();
+        ProfileChange('userProfile');
 
 ">
             <i class="fa fa-user-alt iconMenuLeft blue"
@@ -112,70 +99,49 @@ $('#homeDashbord').hide();
     top: 10px;"></i>
             ویرایش پروفایل <br>
             <span style="color: #e4e4e4;
-    margin-right: 48px;">ویرایش اطلاعات کاربری</span>
+    margin-right: 48px;">تغییر رمز عبور ، ثبت کد معرف ، تغییر نام و نام خانوادگی</span>
         </li>
 
 
         <li style="padding: 3px;"
             onclick="
-        $('#homeDashbord').hide();
-        $('#MyUser').show();
-        $('#report').hide();
-        $('#contactListP').hide();
-        $('#miniDashbord').hide();
         $('#userOption').show();
-        $('#userProfile').hide();
-        $('#subReport').slideUp();
-        removeBlur();
+        ProfileChange('MyUser');
 "
         >
-            <i class="fa fa-users iconMenuLeft yellow"
+            <i class="fa fa-users iconMenuLeft red"
                style="position: relative;
     top: 10px;"></i> مدیریت کاربران<br>
             <span style="color: #e4e4e4;
-    margin-right: 48px;">مدیریت زیرمجموعه</span>
+    margin-right: 48px;">دعوت کاربر ، مدیریت شناسه ها ، لیست کاربران</span>
         </li>
-
 
 
         <li style="padding: 3px;"
             onclick="
-        $('#homeDashbord').hide();
-        $('#MyUser').hide();
-        $('#report').show();
-        $('#contactListP').hide();
-        $('#miniDashbord').hide();
         $('#userOption').show();
-        $('#userProfile').hide();
-        $('#subReport').slideUp();
-        removeBlur();">
-            <i class="fa fa-credit-card iconMenuLeft red"
+        ProfileChange('report');
+">
+            <i class="fas fa-chart-line iconMenuLeft green"
                style="position: relative;top: 10px;"></i>
             گزارشات <br>
             <span style="color: #e4e4e4;
-    margin-right: 48px;">گزارشات مالی</span>
+    margin-right: 48px;">گزارشات مالی ،‌ گزارشات خرید ، گزارشات درآمد</span>
 
         </li>
 
 
-
         <li style="padding: 3px;"
             onclick="
-        $('#homeDashbord').hide();
-        $('#MyUser').hide();
-        $('#contactListP').show();
-                $('#report').hide();
-
-        $('#miniDashbord').hide();
         $('#userOption').show();
-        $('#userProfile').hide();
-        removeBlur();">
-            <i class="fa fa-address-book iconMenuLeft red"
+        ProfileChange('contactListP');
+        ">
+            <i class="fa fa-address-book iconMenuLeft rebeccapurple"
                style="position: relative;top: 10px;"
             ></i>
             دفترچه تلفن <br>
             <span style="color: #e4e4e4;
-    margin-right: 48px;">لیست شماره تلفن</span>
+    margin-right: 48px;">لیست دفترچه تلفن</span>
         </li>
     </ul>
 </div>
@@ -241,7 +207,7 @@ $('#homeDashbord').hide();
                 $htmlMsg = "";
                 $cot = "'";
                 $selectMSg = mysqli_query($conn->conn(), "
-SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
+SELECT * From noti where noti.notiUserId='$userId' ORDER BY date(noti.notiRegDate) DESC , time(noti.notiRegTime) DESC 
 ");
                 while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                     if ($rowMsg['notiView'] == 0) {
@@ -249,12 +215,12 @@ SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
                         $htmlMsg .= '<li style="" class="noti active" id="' . $rowMsg["notiId"] . '" onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
                             <div class="notiBag" id="bag' . $rowMsg["notiId"] . '" style=""></div>
                             <p>' . $rowMsg['notiShortText'] . '</p>
-                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '</p>
+                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '-' . $rowMsg['notiRegTime'] . '</p>
                         </li>';
                     } else {
                         $htmlMsg .= '<li style="" id="' . $rowMsg["notiId"] . '" class="noti " onclick="showModalMsg(' . $cot . $rowMsg["notiId"] . $cot . ',' . $cot . 'noti' . $cot . ')">
                             <p>' . $rowMsg['notiShortText'] . '</p>
-                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '</p>
+                            <p style="font-size: 10px;color: #999999;">' . $conn->jalali($rowMsg['notiRegDate']) . '-' . $rowMsg['notiRegTime'] . '</p>
                         </li>';
                     }
                 }
@@ -263,11 +229,12 @@ SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
                 <span class="badge bg-danger" id="showMsgNoti"
                       style="left: 37px;top: 5px;background-color: red"><?php echo $i ?></span>
                 <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
-                    aria-labelledby="menuLeft1" style="width: 257px!important;">
+                    aria-labelledby="menuLeft1" style="    width: 257px!important;height: 300px;
+    overflow: auto;">
                     <div class="notify-arrow-left notify-arrow-green"></div>
                     <?php
                     echo '<li style="width: 100%">
-                            <p class="green">شما ' . $i . ' پیام جدید دارید</p>
+                            <p class="green" id="notInCount">شما ' . $i . ' اعلان جدید دارید</p>
                         </li>';
                     echo $htmlMsg;
                     ?>
@@ -281,7 +248,7 @@ SELECT * From noti where noti.notiUserId='$userId' LIMIT 5
                 $i = 0;
                 $htmlMsg = "";
                 $selectMSg = mysqli_query($conn->conn(), "
-SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
+SELECT * From msg where msg.msgUserId='$userId' ORDER BY date(msg.msgRegDate) DESC , time(msg.msgRegTime) DESC
 ");
                 while ($rowMsg = mysqli_fetch_assoc($selectMSg)) {
                     if ($rowMsg['msgView'] == 0) {
@@ -306,12 +273,13 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                 <img src="img/msg.png" class="not img-responsive" id="menuLeft3" data-toggle="dropdown">
                 <span class="badge bg-primary" id="showMsgMsg"
                       style="left: 37px;top: 5px;background-color: orange"><?php echo $i ?></span>
-                <ul class="dropdown-menu dropdown-menu-left  extended tasks-bar" role="menu"
+                <ul class="dropdown-menu dropdown-menu-left extended tasks-bar" style="height: 300px;
+    overflow: auto;" role="menu"
                     aria-labelledby="menuLeft1">
                     <div class="notify-arrow-left notify-arrow-green"></div>
                     <?php
-                    echo '<li style="width: 100%">
-                            <p class="green">شما ' . $i . ' پیام جدید دارید</p>
+                    echo '<li style="width: 100%" >
+                            <p class="green" id="MSGInCount">شما ' . $i . ' پیام جدید دارید</p>
                         </li>';
                     echo $htmlMsg;
                     ?>
@@ -328,7 +296,7 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
               style=""><i class="fas fa-sort-down" style="    font-size: 18px;
     position: absolute;
     left: 21px;
-    top: 8px;"></i> <?php echo $_SESSION['userName'] ?></span>;
+    top: 8px;"></i> <?php echo $_SESSION['userName'] ?></span>
         <ul class="dropdown-menu extended logout" id="menuProfile" style="display: none">
             <div class="notify-arrow-center notify-arrow-green" style="    right: 137px;
     border-bottom-color: white!important;
@@ -370,7 +338,8 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
                             ?>
                         </span>
                     </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
+                    <button onclick="$('#userOption').show();ProfileChange('MyUser');" class="btn btn-info2"
+                            style="margin-top: 10px;">
                         جزییات بیشتر
                     </button>
                 </div>
@@ -384,20 +353,23 @@ SELECT * From msg where msg.msgUserId='$userId' LIMIT 5
     left: 0px;
     position: absolute;">
 <?php
-$selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+
+$selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='5'");
 $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
 if ($rowPriceOwne['sum'] == '')
     echo '0 تومان';
-echo $rowPriceOwne['sum'];
+else
+    echo $rowPriceOwne['sum'] . ' تومان ';
 ?>
                           </span>
                     </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
+                    <button class="btn btn-info2" onclick="$('#userOption').show();ProfileChange('MyUser');"
+                            style="margin-top: 10px;">
                         جزییات بیشتر
                     </button>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                    <span>درآمد از خرید پنل</span>
+                    <span>درآمد خرید از پنل</span>
                     <div class="twoCircle">
                        <span style="    direction: rtl;
     font-size: 16px;
@@ -409,11 +381,14 @@ echo $rowPriceOwne['sum'];
                            $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
                            if ($rowPriceOwne['sum'] == '')
                                echo '0 تومان';
-                           echo $rowPriceOwne['sum'];
+                           else
+                               echo $rowPriceOwne['sum'] . " تومان ";
                            ?>
                         </span>
                     </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
+                    <button
+                            onclick="$('#userOption').show();ProfileChange('report');"
+                            class="btn btn-info2" style="margin-top: 10px;">
                         جزییات بیشتر
                     </button>
                 </div>
@@ -572,7 +547,7 @@ z-index: 9999999999" class="priceSelect" id="selectShaba">
     cursor: pointer;
     width: 140px;" id="loginSubmitBtn" onclick="$('#myModal').modal();">ورود / عضویت</span>
         <span class="pull-right menu" id="nameUser" onclick="showProfileMenu()"
-              style="display: none"><?php echo $_SESSION['userName'] ?></span>;
+              style="display: none"><?php echo $_SESSION['userName'] ?></span>
 
         <?php
     }
@@ -595,23 +570,23 @@ if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
-        z-index: 5000;
+        z-index: 300;
     top: 50%;" id="userOption">
-        <ul class="dropdown-menu extended logout col-md-6" id="miniDashbord" style="display: none;position: relative;
+    <ul class="dropdown-menu extended logout col-md-6" id="miniDashbord" style="display: none;position: relative;
     z-index: 500;">
-            <li class="col-md-9 col-sm-6 col-xs-12" id="dashbord2" style="   padding: 0px;
+        <li class="col-md-9 col-sm-6 col-xs-12" id="dashbord2" style="   padding: 0px;
     margin-top: 10px;">
-                <p style="
+            <p style="
     text-align: center;
     /* padding: 10px; */
 ">
-                    <?php
-                    $selectUser = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userId'");
-                    $rowSelectUser = mysqli_fetch_assoc($selectUser);
-                    $money = $rowSelectUser['userMoney'];
+                <?php
+                $selectUser = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userId'");
+                $rowSelectUser = mysqli_fetch_assoc($selectUser);
+                $money = $rowSelectUser['userMoney'];
 
-                    ?>
-                    <span style="
+                ?>
+                <span style="
     width: auto;
     text-align: center;
     padding: 10px;
@@ -619,10 +594,10 @@ if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
     border-radius: 10px;
     color: #fff;
 " id="spanMoney2"> موجودی کیف پول : <?php echo toMoney($money) ?> تومان </span>
-                </p>
-                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                    <span>تعداد کاربران شما</span>
-                    <div class="oneCircle">
+            </p>
+            <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                <span>تعداد کاربران شما</span>
+                <div class="oneCircle">
                         <span style="    direction: rtl;
     font-size: 16px;
     top: 39px;
@@ -634,36 +609,39 @@ if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true){
                             echo $Count;
                             ?>
                         </span>
-                    </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
-                        جزییات بیشتر
-                    </button>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                    <span>درآمد از خرید  کاربر</span>
+                <button onclick="$('#userOption').show();ProfileChange('MyUser');" class="btn btn-info2"
+                        style="margin-top: 10px;">
+                    جزییات بیشتر
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                <span>درآمد از خرید  کاربر</span>
 
-                    <div class="threeCircle">
+                <div class="threeCircle">
                           <span style="    direction: rtl;
     font-size: 16px;
     top: 39px;
     left: 0px;
     position: absolute;">
 <?php
-$selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+$selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='5'");
 $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
 if ($rowPriceOwne['sum'] == '')
     echo '0 تومان';
-echo $rowPriceOwne['sum'];
+else
+    echo $rowPriceOwne['sum'] . ' تومان ';
 ?>
                           </span>
-                    </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
-                        جزییات بیشتر
-                    </button>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12  Circle">
-                    <span>درآمد از خرید پنل</span>
-                    <div class="twoCircle">
+                <button onclick="$('#userOption').show();ProfileChange('MyUser');" class="btn btn-info2"
+                        style="margin-top: 10px;">
+                    جزییات بیشتر
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12  Circle">
+                <span>درآمد خرید از پنل</span>
+                <div class="twoCircle">
                        <span style="    direction: rtl;
     font-size: 16px;
     top: 39px;
@@ -674,135 +652,134 @@ echo $rowPriceOwne['sum'];
                            $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
                            if ($rowPriceOwne['sum'] == '')
                                echo '0 تومان';
-                           echo $rowPriceOwne['sum'];
+                           else
+                               echo $rowPriceOwne['sum'] . ' تومان ';
                            ?>
                         </span>
-                    </div>
-                    <button class="btn btn-info2" style="margin-top: 10px;">
-                        جزییات بیشتر
-                    </button>
                 </div>
+                <button onclick="$('#userOption').show();ProfileChange('report');" class="btn btn-info2"
+                        style="margin-top: 10px;">
+                    جزییات بیشتر
+                </button>
+            </div>
 
 
+        </li>
 
-
-            </li>
-
-            <li class="col-md-9 col-sm-6 col-xs-12" style="padding :15px 70px 6px;display: none" id="getManey2">
-                <p style="padding: 5px;
+        <li class="col-md-9 col-sm-6 col-xs-12" style="padding :15px 70px 6px;display: none" id="getManey2">
+            <p style="padding: 5px;
     background: rgba(255, 0, 0, 0.5);
     color: white;display: none" id="getMoneyError2">مبلغ به درستی وارد نشده است</p>
-                <div class="form-group">
-                    <label for="getManeyText" style="color: black">مبلغ را به تومان وارد کنید</label>
-                    <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control"
-                           id="getManeyText23">
-                </div>
-                <script>
-                    $("#getManeyText23").maskMoney();
-                </script>
-                <div class="form-group" style="position: relative;">
-                    <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
-                    <input class="form-control"
-                           onfocus="showShaba2(this.value)"
-                           onkeypress="showShaba2(this.value)"
-                           type="text" id="shaba2">
-                    <?php
-                    $selectShaba = mysqli_query($conn->conn(), "SELECT * FROM shaba where shabaUserId = '$userId'");
-                    if (mysqli_num_rows($selectShaba) > 0) {
-                        ?>
-                        <ul style="
+            <div class="form-group">
+                <label for="getManeyText" style="color: black">مبلغ را به تومان وارد کنید</label>
+                <input type="text" data-allowzero="true" data-precision="0" data-decimal=" " class="form-control"
+                       id="getManeyText23">
+            </div>
+            <script>
+                $("#getManeyText23").maskMoney();
+            </script>
+            <div class="form-group" style="position: relative;">
+                <label for="getManeyText" style="color: black">شماره شبا را وارد کنید</label>
+                <input class="form-control"
+                       onfocus="showShaba2(this.value)"
+                       onkeypress="showShaba2(this.value)"
+                       type="text" id="shaba2">
+                <?php
+                $selectShaba = mysqli_query($conn->conn(), "SELECT * FROM shaba where shabaUserId = '$userId'");
+                if (mysqli_num_rows($selectShaba) > 0) {
+                    ?>
+                    <ul style="
     position: absolute;
     width: 100%;
     border: 1px solid #e4e4e4;" class="priceSelect" id="selectShaba2">
-                            <li>می توانید یکی از شماره های شبا ذخیره شده را انتخاب نمایید.</li>
-                            <?php
-                            while ($rowSelectShaba = mysqli_fetch_assoc($selectShaba)) {
-                                ?>
-                                <li onclick="fillShaba2('<?php echo $rowSelectShaba['shabaId'] ?>')">
-                                    <?php echo $rowSelectShaba['shabaNumber'] ?>
-                                    - <?php echo $rowSelectShaba['shabaBank']; ?>
-                                </li>
-
-                                <?php
-                            }
-                            ?>
-                        </ul>
-
+                        <li>می توانید یکی از شماره های شبا ذخیره شده را انتخاب نمایید.</li>
                         <?php
-                    }
-                    ?>
+                        while ($rowSelectShaba = mysqli_fetch_assoc($selectShaba)) {
+                            ?>
+                            <li onclick="fillShaba2('<?php echo $rowSelectShaba['shabaId'] ?>')">
+                                <?php echo $rowSelectShaba['shabaNumber'] ?>
+                                - <?php echo $rowSelectShaba['shabaBank']; ?>
+                            </li>
 
-                </div>
-                <div class="form-group">
-                    <label for="getManeyText" style="color: black">نام بانک را وارد کنید</label>
-                    <input class="form-control"
-                           type="text" id="BankShaba2">
-                </div>
-                <div class="form-group">
-                    <span style="float: right;color: #000000;width: auto;position: relative;top: 6px;margin-left: 5px;">ذخیره سازی شبا</span>
-                    <input type="checkbox" id="shabaSave2" checked>
-                    <label for="go"></label>
-                </div>
-                <div class="form-group">
-                    <input type="button" value="ثبت" style="    background: #4fb2a0;
+                            <?php
+                        }
+                        ?>
+                    </ul>
+
+                    <?php
+                }
+                ?>
+
+            </div>
+            <div class="form-group">
+                <label for="getManeyText" style="color: black">نام بانک را وارد کنید</label>
+                <input class="form-control"
+                       type="text" id="BankShaba2">
+            </div>
+            <div class="form-group">
+                <span style="float: right;color: #000000;width: auto;position: relative;top: 6px;margin-left: 5px;">ذخیره سازی شبا</span>
+                <input type="checkbox" id="shabaSave2" checked>
+                <label for="go"></label>
+            </div>
+            <div class="form-group">
+                <input type="button" value="ثبت" style="    background: #4fb2a0;
     color: #fff;" onClick="SendRequestGetMoney2()"
-                           class="btn btn-group-sm btn-info">
-                </div>
-            </li>
-            <li class="col-md-9 col-sm-6 col-xs-12" style="    height: 100%;
+                       class="btn btn-group-sm btn-info">
+            </div>
+        </li>
+        <li class="col-md-9 col-sm-6 col-xs-12" style="    height: 100%;
     padding: 70px;
     padding-bottom: 10px;
     padding-top: 51px;display: none" id="payMoney2">
-                <div class="form-group" style="direction: rtl;">
-                    <div class="row">
-                        <input type="button" onclick="fillPricePay2('20,000')" value="۲۰,۰۰۰ تومان"
-                               class="btn btn-info2">
-                        <input type="button" onclick="fillPricePay2('50,000')" value="۵۰,۰۰۰ تومان"
-                               class="btn btn-info2">
-                        <input type="button" onclick="fillPricePay2('100,000')" value="۱۰۰,۰۰۰ تومان"
-                               class="btn btn-info2">
-                    </div>
-                    <div class="row" style="margin-top: 10px">
-                        <input type="button" onclick="fillPricePay2('300,000')" value="۳۰۰,۰۰۰ تومان"
-                               class="btn btn-info2">
-                        <input type="button" onclick="fillPricePay2('500,000')" value="۵۰۰,۰۰۰ تومان"
-                               class="btn btn-info2">
-                        <input type="button" onclick="fillPricePay2('1,000,000')" value="۱,۰۰۰,۰۰۰ تومان"
-                               class="btn btn-info2">
-                    </div>
+            <div class="form-group" style="direction: rtl;">
+                <div class="row">
+                    <input type="button" onclick="fillPricePay2('20,000')" value="۲۰,۰۰۰ تومان"
+                           class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay2('50,000')" value="۵۰,۰۰۰ تومان"
+                           class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay2('100,000')" value="۱۰۰,۰۰۰ تومان"
+                           class="btn btn-info2">
                 </div>
-                <div class="form-group">
-                    <label for="getManeyText" style="color: black">می توانید مبلغ دلخواه خود را وارد کنید</label>
-                    <input data-allowzero="true" data-precision="0" data-decimal=" " type="text" style="direction: rtl"
-                           class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText3">
+                <div class="row" style="margin-top: 10px">
+                    <input type="button" onclick="fillPricePay2('300,000')" value="۳۰۰,۰۰۰ تومان"
+                           class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay2('500,000')" value="۵۰۰,۰۰۰ تومان"
+                           class="btn btn-info2">
+                    <input type="button" onclick="fillPricePay2('1,000,000')" value="۱,۰۰۰,۰۰۰ تومان"
+                           class="btn btn-info2">
                 </div>
-                <div class="form-group">
-                    <input type="button" onclick="payMoney('walet')" style="    background: #4fb2a0;
+            </div>
+            <div class="form-group">
+                <label for="getManeyText" style="color: black">می توانید مبلغ دلخواه خود را وارد کنید</label>
+                <input data-allowzero="true" data-precision="0" data-decimal=" " type="text" style="direction: rtl"
+                       class="form-control" placeholder="مبلغ را به تومان وارد کنید." id="getManeyText3">
+            </div>
+            <div class="form-group">
+                <input type="button" onclick="payMoney2('walet')" style="    background: #4fb2a0;
     color: #fff;" value="پرداخت" class="btn">
-                </div>
-                <script>
-                    $("#getManeyText").maskMoney();
-                </script>
-            </li>
+            </div>
+            <script>
+                $("#getManeyText").maskMoney();
+            </script>
+        </li>
 
-            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
-                <div class="sul_verticallSplitter"></div>
-                <a href="#" id="OnePr2" class="active"
-                   onclick="profileShow('dashbord2','getManey2','payMoney2','OnePr2')">داشبورد</a>
-            </li>
-            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
-                <a href="#" id="TwoPr2"
-                   onclick="profileShow('payMoney2','getManey2','dashbord2','TwoPr2')">افزایش اعتبار</a>
-            </li>
-            <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
-                <a href="#" id="ThreePr2"
-                   onclick="profileShow('getManey2','payMoney2','dashbord2','ThreePr2')"> درخواست واریز اعتبار</a>
-            </li>
+        <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
+            <div class="sul_verticallSplitter"></div>
+            <a href="#" id="OnePr2" class="active"
+               onclick="profileShow('dashbord2','getManey2','payMoney2','OnePr2')">داشبورد</a>
+        </li>
+        <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
+            <a href="#" id="TwoPr2"
+               onclick="profileShow('payMoney2','getManey2','dashbord2','TwoPr2')">افزایش اعتبار</a>
+        </li>
+        <li class="col-md-3 col-sm-6 col-xs-12" style="padding:0px 10px 1px 10px;">
+            <a href="#" id="ThreePr2"
+               onclick="profileShow('getManey2','payMoney2','dashbord2','ThreePr2')"> درخواست واریز اعتبار</a>
+        </li>
 
-        </ul>
+    </ul>
     <div id="userProfile" class="col-md-6"
          style="background: #ffffff;padding: 30px;margin: auto;float: none;display: none;z-index: 500;position: relative;">
-        <h3>ویرایش اطلاعات کاربری</h3>
         <div class="alert alert-success" id="EditSuc" style="display: none;">
             ویرایش اطلاعات با موفقیت انجام شد
         </div>
@@ -821,7 +798,7 @@ echo $rowPriceOwne['sum'];
                 <i class="fa fa-user fa-fw form-control-feedback" style="float: left;
     position: absolute;
     left: 2px;"></i>
-                <div class="input-group-addon">نام و نام خانوادگی / نام شرکت</div>
+                <div class="input-group-addon">نام و نام خانوادگی / فروشگاه</div>
             </div>
         </div>
         <div class="col-xs-12">
@@ -857,28 +834,7 @@ echo $rowPriceOwne['sum'];
         $selectUserProfile = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userId'");
         $rowUser = mysqli_fetch_assoc($selectUserProfile);
         $userOwner = $rowUser['UserOwner'];
-        if ($userOwner == '') {
-            ?>
-            <div class="col-xs-12">
-                <div class="form-group input-group has-feedback">
-                    <input type="text" id="editCode"
-                           class="form-control input-lg ng-pristine ng-valid ng-touched"
-                           dir="ltr"
-                           style="height: 30px;padding-right: 0;
-    padding-left: 42.5px;"
-                    >
-                    <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
-    position: absolute;
-    left: 2px;"></i>
-                    <div class="input-group-addon">کدمعرف</div>
-                </div>
-            </div>
-
-            <?php
-        } else {
-            $selectOwner = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userOwner'");
-            $rowOwner = mysqli_fetch_assoc($selectOwner);
-            $userOwnerName = $rowOwner['userFullname'];
+        if ($rowUser['userLevel'] == '2') {
             ?>
             <div class="col-xs-12">
                 <div class="form-group input-group has-feedback">
@@ -888,7 +844,7 @@ echo $rowPriceOwne['sum'];
                            disabled
                            style="height: 30px;padding-right: 5px;
     padding-left: 42.5px;"
-                           value="<?php echo $userOwnerName ?>"
+                           value="اینکام"
                     >
                     <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
     position: absolute;
@@ -898,14 +854,56 @@ echo $rowPriceOwne['sum'];
             </div>
 
             <?php
+        } else {
+            if ($userOwner == '') {
+                ?>
+                <div class="col-xs-12">
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="editCode"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="ltr"
+                               style="height: 30px;padding-right: 0;
+    padding-left: 42.5px;"
+                        >
+                        <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon">کدمعرف</div>
+                    </div>
+                </div>
+
+                <?php
+            } else {
+                $selectOwner = mysqli_query($conn->conn(), "SELECT * FROM user where user.userId='$userOwner'");
+                $rowOwner = mysqli_fetch_assoc($selectOwner);
+                $userOwnerName = $rowOwner['userFullname'];
+                ?>
+                <div class="col-xs-12">
+                    <div class="form-group input-group has-feedback">
+                        <input type="text" id="editCode"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched"
+                               dir="rtl"
+                               disabled
+                               style="height: 30px;padding-right: 5px;
+    padding-left: 42.5px;"
+                               value="<?php echo $userOwnerName ?>"
+                        >
+                        <i class="fa fa-code-branch fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                        <div class="input-group-addon">نام معرف</div>
+                    </div>
+                </div>
+
+                <?php
+            }
         }
         ?>
         <span type="button" class="btn btn-info2" onClick="EditPrifile()">ویرایش اطلاعات</span>
     </div>
-    <div id="MyUser" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;
+    <div id="MyUser" class="col-md-7" style="background: #ffffff;padding: 17px;margin: auto;
     float: none;display: none;overflow: auto;    height: auto;z-index: 500;position: relative;
-    max-height: 600px;">
-        <h3>مدیریت کاربران</h3>
+    max-height: 500px;">
 
         <div class="row state-overview">
             <div class="col-lg-4 col-sm-6">
@@ -915,7 +913,7 @@ echo $rowPriceOwne['sum'];
                     </div>
 
                     <div class="value">
-                        <h1 class="count"><?php echo $Count;?></h1>
+                        <h1 class="count"><?php echo $Count; ?></h1>
                         <p>تعداد کل کاربران</p>
                     </div>
                 </section>
@@ -927,12 +925,15 @@ echo $rowPriceOwne['sum'];
                     </div>
                     <div class="value">
                         <?php
-                        $selectUserPayment = mysqli_query($conn->conn(),"SELECT SUM(pay.payPrice) as sumPrice from pay,user where pay.payUserId=user.userId and user.UserOwner='$userId' and pay.payModel!='1'");
+                        $selectUserPayment = mysqli_query($conn->conn(), "SELECT SUM(pay.payPrice) as sumPrice from pay,user where pay.payUserId=user.userId
+ and user.UserOwner='$userId' and pay.payModel!='1' and pay.payModel!='5' and pay.payModel!='6' and pay.payModel!='10' ");
                         $rowPayPrice = mysqli_fetch_assoc($selectUserPayment);
 
                         ?>
-                        <h1 class=" count2"><?php  $rowPayPrice['sumPrice']==null?$a="0":$a=$rowPayPrice['sumPrice'];echo $a; ?></h1>
-                        <p>کل خرید کاربران</p>
+                        <h1 class=" count2"
+                            style="direction: rtl;"><?php $rowPayPrice['sumPrice'] == null ? $a = "0" : $a = $rowPayPrice['sumPrice'];
+                            echo $a . ' تومان '; ?></h1>
+                        <p>مجموع مبلغ خرید کاربران</p>
                     </div>
                 </section>
             </div>
@@ -942,83 +943,90 @@ echo $rowPriceOwne['sum'];
                         <i class="fa fa-shopping-cart"></i>
                     </div>
                     <div class="value">
-                        <h1 class=" count3"><?php
-                            if ($rowPriceOwne['sum'] == '')
-                                echo '0';
-                            echo $rowPriceOwne['sum'];
-                        ?></h1>
-                        <p>سود شما از خرید کاربران</p>
+                        <h1 style="direction: rtl;" class=" count3"><?php
+                            $selectPriceOwne2 = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='5'");
+                            $rowPriceOwne2 = mysqli_fetch_assoc($selectPriceOwne2);
+                            if ($rowPriceOwne2['sum'] == '')
+                                echo '0 تومان';
+                            else {
+                                echo $rowPriceOwne2['sum'] . ' تومان ';
+                            }
+                            ?>
+                        </h1>
+                        <p>درآمد از خرید کاربران</p>
                     </div>
                 </section>
             </div>
         </div>
         <div class="form-group" style="overflow: hidden;">
-        <h5>دوستان خود را به اینکام دعوت کنید</h5>
+            <h5>دوستان خود را به اینکام دعوت کنید</h5>
             <div class="alert alert-success" id="profileInvUserSu" style="display: none;direction: rtl">
             </div>
-            <div class="col-md-9" style="padding: 0;
+            <div class="col-md-8" style="padding: 0;
     float: right;">
-        <input class="form-control pRtl" id="smsInv" type="text" placeholder="شماره تماس">
+                <input class="form-control pRtl" id="smsInv" type="text" placeholder="شماره تماس">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input type="button" onclick="SendSmsInv()" class="btn btn-info2" value="ارسال پیامک دعوت">
             </div>
         </div>
-        
+
         <h5>شناسه های شما</h5>
         <table class="table table-hover" style="direction: rtl">
             <thead>
             <tr>
                 <th>شناسه</th>
                 <th>تعداد کاربران</th>
-                <th>وضعیت</th>
+                <th>شناسه پیشفرض</th>
             </tr>
             </thead>
             <tbody id="TableInvCode">
             <?php
-                $selectInv = mysqli_query($conn->conn(),"SELECT * FROM inviteCode where inviteCodeUserId='$userId'");
-                while ($rowInv = mysqli_fetch_assoc($selectInv)){
-                    $invId = $rowInv['inviteCodeId'];
-                    $invCode = $rowInv['inviteCodeText'];
-                    $selectInvUser = mysqli_query($conn->conn(),"SELECT * FROM user where user.UserOwner='$userId' AND user.userInvCode='$invId'");
-                    $CountInvUser = mysqli_num_rows($selectInvUser);?>
+            $selectInv = mysqli_query($conn->conn(), "SELECT * FROM inviteCode where inviteCodeUserId='$userId'");
+            while ($rowInv = mysqli_fetch_assoc($selectInv)) {
+                $invId = $rowInv['inviteCodeId'];
+                $invCode = $rowInv['inviteCodeText'];
+                $selectInvUser = mysqli_query($conn->conn(), "SELECT * FROM user where user.UserOwner='$userId' AND user.userInvCode='$invId'");
+                $CountInvUser = mysqli_num_rows($selectInvUser); ?>
 
-                    <tr>
-                        <td><?php echo $invCode; ?></td>
-                        <td><?php echo $CountInvUser; ?></td>
-                        <td>
+                <tr>
+                    <td><?php echo $invCode; ?></td>
+                    <td><?php echo $CountInvUser; ?></td>
+                    <td>
+                        <?php
+                        if ($rowInv['status'] == '1') {
+                            ?>
+
+                            <i class="fa fa-star active inv" id="StarInv<?php echo $invId ?>"
+                               onclick="addStar('<?php echo $invId ?>')" style="cursor: pointer"></i>
+
                             <?php
-                            if($rowInv['status']=='1'){
+                        } else {
                             ?>
 
-                                <i class="fa fa-star active inv" id="StarInv<?php echo $invId ?>" onclick="addStar('<?php echo $invId ?>')" style="cursor: pointer"></i>
-
-                                <?php
-                            }else{
-                                ?>
-
-                                <i class="fa fa-star inv" id="StarInv<?php echo $invId ?>" onclick="addStar('<?php echo $invId ?>')" style="cursor: pointer"></i>
+                            <i class="fa fa-star inv" id="StarInv<?php echo $invId ?>"
+                               onclick="addStar('<?php echo $invId ?>')" style="cursor: pointer"></i>
 
 
-                                <?php
-                            }
-                            ?>
-                        </td>
-                    </tr>
+                            <?php
+                        }
+                        ?>
+                    </td>
+                </tr>
 
 
-            <?php
-                }
+                <?php
+            }
             ?>
 
             </tbody>
         </table>
         <h5>اضافه کردن شناسه جدید</h5>
         <div class="col-xs-12"
-             style="padding: 0;margin-top: 10px;text-align: center" >
+             style="padding: 0;margin-top: 10px;text-align: center">
             <div class="form-group input-group has-feedback"
                  style=""
-                >
+            >
                 <input type="text"
                        class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
                        dir="ltr"
@@ -1052,8 +1060,8 @@ echo $rowPriceOwne['sum'];
             <tbody>
 
             <?php
-            $selectUserInv = mysqli_query($conn->conn(),"SELECT * FROM user where user.UserOwner='$userId'");
-            if(mysqli_num_rows($selectUserInv)==0){
+            $selectUserInv = mysqli_query($conn->conn(), "SELECT * FROM user where user.UserOwner='$userId'");
+            if (mysqli_num_rows($selectUserInv) == 0) {
                 echo ' <tr>
                         <td>کاربری یافت نشد</td>
                         <td>نامشخص</td>
@@ -1061,7 +1069,7 @@ echo $rowPriceOwne['sum'];
                         <td>نامشحص</td>
                     </tr>';
 
-            }else {
+            } else {
 
                 while ($rowUserInv = mysqli_fetch_assoc($selectUserInv)) {
                     $userInvId = $rowUserInv['userId'];
@@ -1077,9 +1085,10 @@ echo $rowPriceOwne['sum'];
                     ?>
 
                     <tr>
-                        <td><?php echo $rowUserInv['userFullname'] ?> - <?php echo substr($rowUserInv['userMobile'],7,4)."***".substr($rowUserInv['userMobile'],0,4) ?></td>
+                        <td><?php echo $rowUserInv['userFullname'] ?>
+                            - <?php echo substr($rowUserInv['userMobile'], 7, 4) . "***" . substr($rowUserInv['userMobile'], 0, 4) ?></td>
                         <td><?php echo $invCodeer ?></td>
-                        <td><?php echo $lastPay ?></td>
+                        <td><?php echo $lastPay . " تومان " ?></td>
                         <td><?php echo @jalali($rowUserInv['userRegDate']) ?></td>
 
                     </tr>
@@ -1095,122 +1104,284 @@ echo $rowPriceOwne['sum'];
     <div id="report" class="col-md-10" style="background: #ffffff;padding: 30px;margin: auto;
     display: none;overflow: auto;    height: auto;z-index: 500;position: relative;
     max-height: 600px;">
+        <div class="col-xs-12">
+            <div class="col-xs-7 pull-right" >
+            <div class="col-xs-12" style="direction: rtl;    margin-top: 12px;padding: 0">
+
+                <select id="RTrakonesh" class="col-xs-3 pull-right" >
+                    <option selected disabled value="">محل تراکنش</option>
+                    <option value="p1" id="p1">پنل</option>
+                    <option value="p2" id="p2">کاربر</option>
+                </select>
+                <select id="RAddRemove" class="col-xs-3 pull-right"  >
+                    <option selected disabled value="">کاهش | افزایش</option>
+                    <option value="p3" id="p3">کاهش</option>
+                    <option value="p4" id="p4">افزایش</option>
+                </select>
+                <select id="RModelPardakht" class="col-xs-3 pull-right" >
+                    <option selected disabled>روش پرداخت</option>
+                    <option value="p5" id="p5">آنلاین</option>
+                    <option value="p6" id="p6">کیف پول</option>
+                </select>
+                <select id="RProduct" class="col-xs-3 pull-right"  >
+                    <option selected disabled value="">محصول</option>
+                    <option value="p7" id="p7">شارژ مستقیم</option>
+                    <option value="p8" id="p8">پین شارژ</option>
+                    <option value="p9" id="p9">بسته اینترنتی</option>
+                    <option value="p10" id="p10">افزایش اعتبار</option>
+                </select>
+            </div>
+            <div class="col-xs-12" style="margin-bottom: 0;margin-top: 13px;padding: 0">
+                <div class="form-group input-group has-feedback" id="">
+                    <input type="text" id="Rsearch"
+                           class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                           dir="ltr"
+                           style="height: 30px;padding-right: 0;
+    padding-left: 42.5px;
+    border-bottom-left-radius: 0;"
+                           autocomplete="off"
+                           placeholder="شماره سرویس ،‌ پین شارژ ،‌شناسه قبض"
+                    >
+                    <i class="fa fa-barcode fa-fw form-control-feedback" style="float: left;
+    position: absolute;
+    left: 2px;"></i>
+                    <div class="input-group-addon" style="padding: 6px 15px;border-bottom-right-radius: 0;"> جزییات
+                        پرداخت
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <div class="col-xs-3 pull-right">
+                <div class="col-xs-12 pull-right" style="padding: 0;margin-top: 10px; ">
+                    <div class="form-group input-group has-feedback" style="" id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl pwt-datepicker-input-element"
+                               dir="ltr" autocomplete="off" style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;" placeholder="از تاریخ" id="goDate4" >
+                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">از تاریخ</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 pull-right" style="padding: 0;">
+                    <div class="form-group input-group has-feedback" style="" id="">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl pwt-datepicker-input-element"
+                               dir="ltr" autocomplete="off" style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;" placeholder="تا تاریخ" id="goDate5" >
+                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                        <div class="input-group-addon" style="direction: rtl">تا تاریخ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-1 pull-left" style="text-align: center">
+                <span class="btn btn-lg btn-info2" style="
+    margin-top: 16px;
+" onclick="FilterTabelReport()">جستجو</span>
+            </div>
+
+
+        </div>
+
+        <div class="row state-overview">
+            <div class="col-lg-4 col-sm-6">
+                <section class="panel" style="border: 2px solid;">
+                    <div class="symbol terques" style="    left: -7px;
+    position: relative;">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="value">
+                        <h1 class="count" id="myUserBuy" style="direction: rtl"> <?php
+                            $selectUserPayment = mysqli_query($conn->conn(), "SELECT SUM(pay.payPrice) as sumPrice from pay,user where pay.payUserId=user.userId
+                              and user.UserOwner='$userId' and pay.payModel!='1' and pay.payModel!='5' and pay.payModel!='6' and pay.payModel!='10' ");
+                            $rowPayPrice = mysqli_fetch_assoc($selectUserPayment);
+
+                            ?>
+
+                            <?php $rowPayPrice['sumPrice'] == null ? $a = "0" : $a = $rowPayPrice['sumPrice'];
+                                echo $a; ?>
+                            تومان
+
+                        </h1>
+                        <p>مجموع مبلغ خرید کاربران</p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <section class="panel" style="border: 2px solid;">
+                    <div class="symbol red" style="    left: -7px;
+    position: relative;">
+                        <i class="fa fa-tags"></i>
+                    </div>
+                    <div class="value">
+                        <h1 class=" count2" id="myUserMyWalet" style="direction: rtl;"><?php
+                            $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='5'");
+                            $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+                            if ($rowPriceOwne['sum'] == '')
+                                echo '0 تومان';
+                            else
+                                echo $rowPriceOwne['sum'] . " تومان ";
+                            ?></h1>
+                        <p>درآمد از خرید کاربران</p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <section class="panel" style="border: 2px solid;">
+                    <div class="symbol yellow"  style=" left: -7px;
+                         position: relative;">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="value">
+                        <h1 style="direction: rtl;" class=" count3" id="myBuyeMyWalet">
+                            <?php
+                            $selectPriceOwne = mysqli_query($conn->conn(), "SELECT sum(payPrice) as sum FROM pay where pay.payUserId='$userId' AND pay.payModel='6'");
+                            $rowPriceOwne = mysqli_fetch_assoc($selectPriceOwne);
+                            if ($rowPriceOwne['sum'] == '')
+                                echo '  تومان';
+                            else
+                                echo $rowPriceOwne['sum'] . " تومان ";
+                            ?>
+                        </h1>
+                        <p>درآمد خرید از پنل</p>
+                    </div>
+                </section>
+            </div>
+        </div>
 
         <table class="table table-hover" style="direction: rtl">
             <thead>
-                <th>ردیف</th>
-                <th>افزایش</th>
-                <th>کاهش</th>
-                <th>مانده کیف پول</th>
-                <th>محصول</th>
-                <th>جزییات محصول</th>
-                <th>توضیحات</th>
-                <th>وضعیت</th>
-                <th>شماره پیگیری</th>
-                <th>تاریخ و ساعت</th>
+            <th>ردیف</th>
+            <th>روش پرداخت</th>
+            <th>افزایش</th>
+            <th>کاهش</th>
+            <th>مانده کیف پول</th>
+            <th>محصول</th>
+            <th>جزییات محصول</th>
+            <th>توضیحات</th>
+            <th>وضعیت</th>
+            <th>شماره پیگیری</th>
+            <th>تاریخ و ساعت</th>
             </thead>
-            <tbody>
+            <tbody id="ReportTBody">
             <?php
             $i = 1;
-            $typeOfPayment="موفق";
-            $color="green";
-            $selectPaymentList = mysqli_query($conn->conn(),"SELECT * FROM pay where pay.payUserId='$userId'");
-            while ($rowPaymentList = mysqli_fetch_assoc($selectPaymentList)){
-                if(
-                    $rowPaymentList['payModel']=="5" ||
-                    $rowPaymentList['payModel']=="6" ||
-                    $rowPaymentList['payModel']=="1" ||
-                    $rowPaymentList['payModel']=="20"
-                ){
-                    $upeer = "+".$rowPaymentList['payPrice'];
+            $typeOfPayment = "موفق";
+            $color = "green";
+            $selectPaymentList = mysqli_query($conn->conn(), "SELECT * FROM pay where pay.payUserId='$userId' ORDER BY date(payRegDate) DESC , time(payRegTime) DESC");
+            while ($rowPaymentList = mysqli_fetch_assoc($selectPaymentList)) {
+                if (
+                    $rowPaymentList['payModel'] == "5" ||
+                    $rowPaymentList['payModel'] == "6" ||
+                    $rowPaymentList['payModel'] == "1" ||
+                    $rowPaymentList['payModel'] == "20"
+                ) {
+                    $upeer = $rowPaymentList['payPrice'] . "+" . " تومان ";
 
-                }else{
-                    $upeer="0";
+                } else {
+                    $upeer = "0";
                 }
-                if(
-                    $rowPaymentList['payModel']=="2" ||
-                    $rowPaymentList['payModel']=="3" ||
-                    $rowPaymentList['payModel']=="4" ||
-                    $rowPaymentList['payModel']=="10"
-                ){
-                    $countDown = "-".$rowPaymentList['payPrice'];
-                }else{
-                    $countDown="0";
+                if (
+                    $rowPaymentList['payModel'] == "2" ||
+                    $rowPaymentList['payModel'] == "3" ||
+                    $rowPaymentList['payModel'] == "4" ||
+                    $rowPaymentList['payModel'] == "10"
+                ) {
+                    $countDown = $rowPaymentList['payPrice'] . "-" . " تومان ";
+                } else {
+                    $countDown = "0";
                 }
 
 
-                if($rowPaymentList['payModel']=="2"){
+                if ($rowPaymentList['payModel'] == "2") {
                     $productName = 'بسته اینترنتی';
                     $service = $rowPaymentList['payService'];
-                }elseif($rowPaymentList['payModel']=="3"){
+                } elseif ($rowPaymentList['payModel'] == "3") {
                     $productName = 'شارژ مستقیم';
                     $service = $rowPaymentList['payService'];
-                }
-                elseif($rowPaymentList['payModel']=="4"){
+                } elseif ($rowPaymentList['payModel'] == "4") {
                     $productName = 'پین شارژ';
-                    $service = $rowPaymentList['payPin'].'<br>'.$rowPaymentList['paySerial'];
+                    $service = $rowPaymentList['payPin'] . '<br>' . $rowPaymentList['paySerial'];
 
-                }else{
-                    $productName='';
+                } else {
+                    $productName = '';
                 }
 
-                if($rowPaymentList['payModel']=='5'){
-                    $detail="درآمد از خرید کاربر";
-                }
-                elseif($rowPaymentList['payModel']=='6'){
-                    $detail="درآمد از خرید پنل";
-                }elseif($rowPaymentList['payModel']=='1'){
-                    $detail="افزایش اعتبار";
-                }elseif($rowPaymentList['payModel']=='10'){
-                    $detail="درخواست واریز وجه";
+                if ($rowPaymentList['payModel'] == '5') {
+                    $detail = "درآمد از خرید کاربر";
+                    $service = $rowPaymentList['payService'];
+
+                } elseif ($rowPaymentList['payModel'] == '6') {
+                    $detail = "درآمد خرید از پنل";
+                    $service = $rowPaymentList['payService'];
+
+                    if ($rowPaymentList['payText'] == "2") {
+                        $productName = 'بسته اینترنتی';
+                    } elseif ($rowPaymentList['payText'] == "3") {
+                        $productName = 'شارژ مستقیم';
+                    } elseif ($rowPaymentList['payText'] == "4") {
+                        $productName = 'پین شارژ';
+                    } else {
+                        $productName = '';
+                    }
+
+                } elseif ($rowPaymentList['payModel'] == '1') {
+                    $detail = "افزایش اعتبار";
+                    $service = $rowPaymentList['payService'];
+
+                } elseif ($rowPaymentList['payModel'] == '10') {
+                    $detail = "درخواست واریز وجه";
+                    $service = $rowPaymentList['payService'];
+
                     //Status Of GetMoney
                     $payId = $rowPaymentList['payId'];
-                    $selectGetMoney = mysqli_query($conn->conn(),"SELECT * FROM getMoney where getMoney.getMoneyId='$payId'");
+                    $selectGetMoney = mysqli_query($conn->conn(), "SELECT * FROM getMoney where getMoney.getMoneyId='$payId'");
                     $rowPayGet = mysqli_fetch_assoc($selectGetMoney);
                     $Status = $rowPayGet['getMoneyStatus'];
-                    if($Status=="0"){
-                     $typeOfPayment = "درانتظار";
-                     $color="#000";
+                    if ($Status == "0") {
+                        $typeOfPayment = "درانتظار";
+                        $color = "#000";
                     }
-                }else{
-                    $detail='';
+                } else {
+                    $detail = '';
+                }
+                if($rowPaymentList['payProduct']=='01'){
+                    $textModelPay = 'کیف پول';
+                }if($rowPaymentList['payProduct']=='02'){
+                    $textModelPay = 'آنلاین';
                 }
 
                 $date = jalali($rowPaymentList['payRegDate']);
                 $time = $rowPaymentList['payRegTime'];
 
-                $dateAndTime = $date.'-'.$time;
+                $dateAndTime = $date . ' - ' . $time;
 
 
-
-
-
-            ?>
-                <td><?php echo $i?></td>
-                <td style="color:green"><?php echo $upeer?></td>
-                <td style="color:red"><?php echo $countDown?></td>
-                <td style=""><?php echo $rowPaymentList['lastUserMoney']?></td>
-                <td style=""><?php echo $productName?></td>
-                <td style=""><?php echo $service?></td>
-                <td style=""><?php echo $detail?></td>
-                <td style="color:<?php echo $color ?>"><?php echo $typeOfPayment?></td>
-                <td style=""><?php echo $rowPaymentList['payRef']?></td>
-                <td style=""><?php echo $dateAndTime?></td>
+                ?>
+                <tr>
+                    <td><?php echo $i ?></td>
+                    <td><?php echo $textModelPay ?></td>
+                    <td style="color:green"><?php echo $upeer ?></td>
+                    <td style="color:red"><?php echo $countDown ?></td>
+                    <td style=""><?php echo $rowPaymentList['lastUserMoney'] . " تومان " ?></td>
+                    <td style=""><?php echo $productName ?></td>
+                    <td style=""><?php echo $service ?></td>
+                    <td style=""><?php echo $detail ?></td>
+                    <td style="color:<?php echo $color ?>"><?php echo $typeOfPayment ?></td>
+                    <td style=""><?php echo $rowPaymentList['payRef'] ?></td>
+                    <td style=""><?php echo $dateAndTime ?></td>
+                </tr>
                 <?php
                 $i++;
             }
             ?>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </tbody>
         </table>
 
@@ -1219,7 +1390,6 @@ echo $rowPriceOwne['sum'];
     <div id="contactListP" class="col-md-6" style="background: #ffffff;padding: 30px;margin: auto;
     float: none;display: none;overflow: auto;    height: auto;z-index: 500;position: relative;
     max-height: 600px;">
-        <h2>اضافه کردن به دفتر تلفن</h2>
         <div class="alert alert-success" id="contactAddSuccess" style="direction: rtl;display: none">
             کاربر با موفقیت به دفتر تلفن اضافه شد.
         </div>
@@ -1255,7 +1425,6 @@ echo $rowPriceOwne['sum'];
             <input type="button" value="ثبت" class="btn btn-info2" onclick="addContact()">
         </div>
 
-        <h2>لیست دفتر تلفن</h2>
 
 
         <table id="example1" class="table table-striped table-bordered" style="width:100%;direction: rtl">
@@ -1270,8 +1439,8 @@ echo $rowPriceOwne['sum'];
             <tbody id="contactListTabelP">
 
             <?php
-           $selectContact = mysqli_query($conn->conn(),"SELECT * FROM contact where contact.contactUserId='$userId'");
-            if(mysqli_num_rows($selectContact)==0){
+            $selectContact = mysqli_query($conn->conn(), "SELECT * FROM contact where contact.contactUserId='$userId'");
+            if (mysqli_num_rows($selectContact) == 0) {
                 echo '<tr id="justOne">
                         <td>0</td>
                         <td>کاربری یافت نشد</td>
@@ -1279,11 +1448,11 @@ echo $rowPriceOwne['sum'];
                         <td>نامشخص</td>
                     </tr>';
 
-            }else {
+            } else {
 
                 while ($rowUserInv = mysqli_fetch_assoc($selectContact)) {
                     $contactId = $rowUserInv['contactId'];
-                    $contactName =$rowUserInv['contactName'];
+                    $contactName = $rowUserInv['contactName'];
                     $contactNum = $rowUserInv['contactNum'];
                     $contactMobile = $rowUserInv['contactNumber'];
                     ?>
@@ -1317,28 +1486,49 @@ echo $rowPriceOwne['sum'];
         <div id="part1">
             <div class="col-md-2 hidden-xs hidden-sm animated bounceInRight">
             </div>
+<!--            <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight"-->
+<!--                 onmouseover="add('four')" id="four"-->
+<!--                 onmouseleave="remove('four')" style="padding: 10px;">-->
+<!--                <img onclick="show('chargePart2Baste')" src="img/bime.png" style="width: 80%">-->
+<!--                <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">بیــمه</p>-->
+<!--                <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">بیــمه</p>-->
+<!--            </div>-->
+<!--            <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight1"-->
+<!--                 onmouseover="add('three')" id="three"-->
+<!--                 onmouseleave="remove('three')" style="padding: 10px;">-->
+<!--                <img onclick="show('bilit')" src="img/bilit.png" style="width: 80%">-->
+<!--                <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">بلیط مسـافرتی</p>-->
+<!--                <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">بلیط مسـافرتی</p>-->
+<!---->
+<!--            </div>-->
+<!--            <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight2"-->
+<!--                 onmouseover="add('two')" id="two"-->
+<!--                 onmouseleave="remove('two')" style="padding: 10px;">-->
+<!--                <img onclick="show('ghabzStep2')" src="img/ghabz.png" style="width: 80%">-->
+<!--                <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">پرداخت قبوض</p>-->
+<!--                <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">پرداخت قبوض</p>-->
+<!--            </div>-->
+
             <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight"
-                 onmouseover="add('four')" id="four"
-                 onmouseleave="remove('four')" style="padding: 10px;">
-                <img onclick="show('chargePart2Baste')" src="img/bime.png" style="width: 80%">
+                style="padding: 10px;">
+                <img  src="img/bime.png" style="width: 80%;cursor: default" class="gray">
                 <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">بیــمه</p>
                 <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">بیــمه</p>
             </div>
             <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight1"
-                 onmouseover="add('three')" id="three"
-                 onmouseleave="remove('three')" style="padding: 10px;">
-                <img onclick="show('bilit')" src="img/bilit.png" style="width: 80%">
+                 style="padding: 10px;">
+                <img  src="img/bilit.png" style="width: 80%;cursor: default" class="gray">
                 <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">بلیط مسـافرتی</p>
                 <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">بلیط مسـافرتی</p>
 
             </div>
             <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight2"
-                 onmouseover="add('two')" id="two"
-                 onmouseleave="remove('two')" style="padding: 10px;">
-                <img onclick="show('ghabzStep2')" src="img/ghabz.png" style="width: 80%">
+                  style="padding: 10px;">
+                <img  src="img/ghabz.png" style="width: 80%;cursor: default" class="gray">
                 <p style="width: 100%;text-align: center;font-size: 16px;" class="hidden-sm hidden-xs">پرداخت قبوض</p>
                 <p style="width: 100%;text-align: center;font-size: 30px;" class="hidden-md hidden-lg">پرداخت قبوض</p>
             </div>
+
             <div class="col-md-2 col-xs-6 col-sm-6 animated bounceInRight3"
                  onmouseover="add('one')" id="one"
                  onmouseleave="remove('one')" style="padding: 10px;">
@@ -1397,6 +1587,7 @@ echo $rowPriceOwne['sum'];
                                onclick="$('.tableSearch').show()"
                                onkeypress="SerachContact()"
                                onkeydown="SerachContact()"
+                               onkeyup="SerachContact()"
                                placeholder="دفترچه تلفن">
                         <i class="fa fa-address-book fa-fw form-control-feedback" style="float: left;
     position: absolute;
@@ -1726,7 +1917,7 @@ echo $rowPriceOwne['sum'];
                         </ul>
                     </div>
                 </div>
-                <div  style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
+                <div style="text-align: center;margin-top: 20px;display: none" id="AccBtnCharge">
                     <span class="
                     btn
                     btn-info3
@@ -1741,18 +1932,20 @@ echo $rowPriceOwne['sum'];
 
             </div>
         </div>
-    </div>`
+    </div>
+
     <div id="bilit" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 9px;display: none;z-index: 300">
-        <div class="col-md-12" id="airPlane" >
-            <div class="col-md-2 col-xs-3 col-sm-2  col-md-offset-3" style="padding: 0;text-align: center;cursor: pointer">
-                <img src="img/bus.png"  id="B3"
+        <div class="col-md-12" id="airPlane">
+            <div class="col-md-2 col-xs-3 col-sm-2  col-md-offset-3"
+                 style="padding: 0;text-align: center;cursor: pointer">
+                <img src="img/bus.png" id="B3"
                      onclick="gabzStep(this.getAttribute('id'))"
                      class="" style="width: 50%;">
                 <p style="color: #fff;text-align: center;margin-top: 7px">بلیط اتوبوس</p>
 
             </div>
             <div class="col-md-2 col-xs-3 col-sm-2 " style="padding: 0;text-align: center;cursor: pointer">
-                <img src="img/train.png"  id="B2"
+                <img src="img/train.png" id="B2"
                      onclick="gabzStep(this.getAttribute('id'))"
                      class="gray" style="width: 50%;">
                 <p style="color: #fff;text-align: center;margin-top: 7px">بلیط قطار</p>
@@ -1776,149 +1969,186 @@ top:0px;
 
 
                 <div id="airplan" style="">
-                <div class="col-md-5 col-xs-12 col-sm-6" style="padding: 0;float: right;padding-right: 21px;">
-                    <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;">فقط رفت</span>
-                    <input type="radio" id="raft" name="safar" checked >
-                    <label for="raft" onclick="changeTeravell('one')"></label>
-                    <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;margin-right: 20px">رفت و برگشت</span>
-                    <input type="radio" id="raftobargash" name="safar" >
-                    <label for="raftobargash" onclick="changeTeravell('two')" ></label>
-                </div>
-                <div class="col-xs-12" style="text-align: center;">
+                    <div class="col-md-5 col-xs-12 col-sm-6" style="padding: 0;float: right;padding-right: 21px;">
+                        <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;">فقط رفت</span>
+                        <input type="radio" id="raft" name="safar" checked>
+                        <label for="raft" onclick="changeTeravell('one')"></label>
+                        <span style="float: right;color: #ffff;position: relative;top: 6px;margin-left: 5px;margin-right: 20px">رفت و برگشت</span>
+                        <input type="radio" id="raftobargash" name="safar">
+                        <label for="raftobargash" onclick="changeTeravell('two')"></label>
+                    </div>
+                    <div class="col-xs-12" style="text-align: center;">
 
-                <div class="col-xs-5 pull-left"
-                     style="padding: 0;margin-top: 10px;">
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
+                        <div class="col-xs-5 pull-left"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
-                               placeholder="نام شهر یا فرودگاه"
-                        >
-                        <i class="fa fa-plane-arrival form-control-feedback" style="float: left;
+                                       placeholder="نام شهر یا فرودگاه"
+                                >
+                                <i class="fa fa-plane-arrival form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">مقصد</div>
-                    </div>
-                </div>
+                                <div class="input-group-addon" style="direction: rtl">مقصد</div>
+                            </div>
+                        </div>
 
 
-                    <div class="col-xs-2">
-                        <div class="col-xs-6" style="margin: auto;float: none;">
-                        <i class="fa fa-long-arrow-alt-left col-xs-12 plane active"  style="    font-size: 40px;
+                        <div class="col-xs-2">
+                            <div class="col-xs-6" style="margin: auto;float: none;">
+                                <i class="fa fa-long-arrow-alt-left col-xs-12 plane active" style="    font-size: 40px;
     position: relative;
     top: 0px;"></i>
-                        <i class="fa fa-long-arrow-alt-right col-xs-12 plane" id="t2" style="font-size: 40px;
+                                <i class="fa fa-long-arrow-alt-right col-xs-12 plane" id="t2" style="font-size: 40px;
     position: relative;
     bottom: 21px;"></i>
+                            </div>
                         </div>
-                    </div>
 
-                <div class="col-xs-5 pull-right"
-                     style="padding: 0;margin-top: 10px;" >
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
+                        <div class="col-xs-5 pull-right"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
 
-                               placeholder="نام شهر یا فرودگاه"
-                        >
-                        <i class="fa fa-plane-departure form-control-feedback" style="float: left;
+                                       placeholder="نام شهر یا فرودگاه"
+                                >
+                                <i class="fa fa-plane-departure form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">مبدا</div>
+                                <div class="input-group-addon" style="direction: rtl">مبدا</div>
+                            </div>
+
+
+                        </div>
                     </div>
-
-
-                </div>
-            </div>
-                <div class="col-xs-12" style="text-align: center">
-                <div class="col-xs-3 pull-right"
-                     style="padding: 0;margin-top: 10px;" >
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
+                    <div class="col-xs-12" style="text-align: center">
+                        <div class="col-xs-3 pull-right"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
-                               placeholder="تاریخ"
-                               id="goDate"
-                        >
-                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+                                       placeholder="تاریخ"
+                                       id="goDate"
+                                >
+                                <i class="fa fa-calendar form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">تاریخ رفت</div>
-                    </div>
-                </div>
-                    <div class="col-xs-3 pull-right"
-                     style="padding: 0;margin-top: 10px; margin-left: 10px;margin-right: 10px" >
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
+                                <div class="input-group-addon" style="direction: rtl">تاریخ رفت</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 pull-right"
+                             style="padding: 0;margin-top: 10px; margin-left: 10px;margin-right: 10px">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
-                               placeholder="تاریخ"
-                               id="goDate2"
-                               disabled
-                        >
-                        <i class="fa fa-calendar form-control-feedback" style="float: left;
+                                       placeholder="تاریخ"
+                                       id="goDate2"
+                                       disabled
+                                >
+                                <i class="fa fa-calendar form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">تاریخ برگشت</div>
-                    </div>
-                </div>
-                    <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
-                        <div class="selectCol">
-                            <select name="quantity" id="flight_passenger_count_adult" class="value-input form-control color-black" onchange="$.check_Passenger_Bussiness();"> <option value="1">1  بزرگسال</option> <option value="2">2  بزرگسال</option> <option value="3">3  بزرگسال</option> <option value="4">4  بزرگسال</option> <option value="5">5  بزرگسال</option> <option value="6">6  بزرگسال</option> <option value="7">7  بزرگسال</option> <option value="8">8  بزرگسال</option> <option value="9">9  بزرگسال</option></select>
-                            <i class="ico fa fa-arrow-down"></i>
+                                <div class="input-group-addon" style="direction: rtl">تاریخ برگشت</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
-                    <div class="selectCol">
-                        <select name="quantity" id="flight_passenger_count_child" class="value-input form-control color-black" onchange="$.check_Passenger_Bussiness();"> <option value="0">0  کودک </option> <option value="1">1  کودک </option> <option value="2">2  کودک </option> <option value="3">3  کودک </option> <option value="4">4  کودک </option> <option value="5">5  کودک </option> <option value="6">6  کودک </option> <option value="7">7  کودک </option> <option value="8">8  کودک </option></select>
-                        <i class="ico fa fa-arrow-down"></i>
-                    </div>
-                    </div>
-                    <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
-                        <div class="selectCol">
-                            <select name="quantity" id="flight_passenger_count_infant" class="value-input form-control color-black" onchange="$.check_Passenger_Bussiness();"><option value="0">0  نوزاد</option><option value="1">1  نوزاد</option><option value="2">2  نوزاد</option><option value="3">3  نوزاد</option><option value="4">4  نوزاد</option><option value="5">5  نوزاد</option><option value="6">6  نوزاد</option><option value="7">7  نوزاد</option><option value="8">8  نوزاد</option><option value="9">9  نوزاد</option></select>
-                            <i class="ico fa fa-arrow-down"></i>
+                        <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                            <div class="selectCol">
+                                <select name="quantity" id="flight_passenger_count_adult"
+                                        class="value-input form-control color-black"
+                                        onchange="$.check_Passenger_Bussiness();">
+                                    <option value="1">1 بزرگسال</option>
+                                    <option value="2">2 بزرگسال</option>
+                                    <option value="3">3 بزرگسال</option>
+                                    <option value="4">4 بزرگسال</option>
+                                    <option value="5">5 بزرگسال</option>
+                                    <option value="6">6 بزرگسال</option>
+                                    <option value="7">7 بزرگسال</option>
+                                    <option value="8">8 بزرگسال</option>
+                                    <option value="9">9 بزرگسال</option>
+                                </select>
+                                <i class="ico fa fa-arrow-down"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-2 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                        <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                            <div class="selectCol">
+                                <select name="quantity" id="flight_passenger_count_child"
+                                        class="value-input form-control color-black"
+                                        onchange="$.check_Passenger_Bussiness();">
+                                    <option value="0">0 کودک</option>
+                                    <option value="1">1 کودک</option>
+                                    <option value="2">2 کودک</option>
+                                    <option value="3">3 کودک</option>
+                                    <option value="4">4 کودک</option>
+                                    <option value="5">5 کودک</option>
+                                    <option value="6">6 کودک</option>
+                                    <option value="7">7 کودک</option>
+                                    <option value="8">8 کودک</option>
+                                </select>
+                                <i class="ico fa fa-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-1 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
+                            <div class="selectCol">
+                                <select name="quantity" id="flight_passenger_count_infant"
+                                        class="value-input form-control color-black"
+                                        onchange="$.check_Passenger_Bussiness();">
+                                    <option value="0">0 نوزاد</option>
+                                    <option value="1">1 نوزاد</option>
+                                    <option value="2">2 نوزاد</option>
+                                    <option value="3">3 نوزاد</option>
+                                    <option value="4">4 نوزاد</option>
+                                    <option value="5">5 نوزاد</option>
+                                    <option value="6">6 نوزاد</option>
+                                    <option value="7">7 نوزاد</option>
+                                    <option value="8">8 نوزاد</option>
+                                    <option value="9">9 نوزاد</option>
+                                </select>
+                                <i class="ico fa fa-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 pull-right" style="padding: 0;margin: 5px;margin-top: 0">
 
-                    <div class="selectCol">
-                        <select class="form-control" id="Flying_Class">
-                            <option selected="selected" value="3">اکونومی</option>
-                            <option value="1">BUSINESS</option>
-                            <option value="2">PROMO</option>
-                        </select>
-                        <i class="ico fa fa-arrow-down"></i>
-                    </div>
-                    </div>
+                            <div class="selectCol">
+                                <select class="form-control" id="Flying_Class">
+                                    <option selected="selected" value="3">اکونومی</option>
+                                    <option value="1">BUSINESS</option>
+                                    <option value="2">PROMO</option>
+                                </select>
+                                <i class="ico fa fa-arrow-down"></i>
+                            </div>
+                        </div>
 
-                </div>
-                <div class="col-xs-12" style="text-align: center">
+                    </div>
+                    <div class="col-xs-12" style="text-align: center">
                 <span class="
                     btn
                     btn-info3
@@ -1926,138 +2156,138 @@ top:0px;
                     " style="position: relative;
     float: none;
     margin: auto;
-    top: 0px;" >جستجوی پرواز</span>
-                </div>
+    top: 0px;">جستجوی پرواز</span>
+                    </div>
                 </div>
                 <div id="bus" style="display: none">
 
-                <div class="col-xs-12" style="text-align: center;">
+                    <div class="col-xs-12" style="text-align: center;">
 
-                <div class="col-xs-5 pull-left"
-                     style="padding: 0;margin-top: 10px;">
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
+                        <div class="col-xs-5 pull-left"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
-                               placeholder="نام استان مقصد"
-                        >
-                        <i class="fa fa-bus form-control-feedback" style="float: left;
+                                       placeholder="نام استان مقصد"
+                                >
+                                <i class="fa fa-bus form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">استان مقصد</div>
-                    </div>
-                </div>
+                                <div class="input-group-addon" style="direction: rtl">استان مقصد</div>
+                            </div>
+                        </div>
 
 
-                    <div class="col-xs-2">
-                        <div class="col-xs-6" style="margin: auto;float: none;">
-                        <i class="fa fa-long-arrow-alt-left col-xs-12 plane active"  style="    font-size: 40px;
+                        <div class="col-xs-2">
+                            <div class="col-xs-6" style="margin: auto;float: none;">
+                                <i class="fa fa-long-arrow-alt-left col-xs-12 plane active" style="    font-size: 40px;
     position: relative;
     top: 70px;"></i>
-                        <i class="fa fa-long-arrow-alt-right col-xs-12 plane active" id="t2" style="font-size: 40px;
+                                <i class="fa fa-long-arrow-alt-right col-xs-12 plane active" id="t2" style="font-size: 40px;
     position: relative;
     bottom: -8px;"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-5 pull-right"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                                       placeholder="نام استان مبدا"
+                                >
+                                <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                                <div class="input-group-addon" style="direction: rtl">استان مبدا</div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-xs-5 pull-right"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                                       placeholder="نام شهر مبدا"
+                                >
+                                <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                                <div class="input-group-addon" style="direction: rtl">شهر مبدا</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-5 pull-left"
+                             style="padding: 0;margin-top: -14px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
+                               padding-left: 42.5px;"
+
+                                       placeholder="نام شهر مقصد"
+                                >
+                                <i class="fa fa-bus form-control-feedback" style="float: left;
+    position: absolute;
+        font-style: unset;
+    left: 2px;"></i>
+                                <div class="input-group-addon" style="direction: rtl">شهر مقصد</div>
+                            </div>
                         </div>
                     </div>
-
-                <div class="col-xs-5 pull-right"
-                     style="padding: 0;margin-top: 10px;" >
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
+                    <div class="col-xs-12" style="text-align: center">
+                        <div class="col-xs-5 pull-right"
+                             style="padding: 0;margin-top: 10px;">
+                            <div class="form-group input-group has-feedback"
+                                 style=""
+                                 id="">
+                                <input type="text"
+                                       class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                                       dir="ltr"
+                                       autocomplete="off"
+                                       style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
-
-                               placeholder="نام استان مبدا"
-                        >
-                        <i class="fa fa-bus form-control-feedback" style="float: left;
+                                       placeholder="تاریخ"
+                                       id="goDate3"
+                                >
+                                <i class="fa fa-calendar form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">استان مبدا</div>
-                    </div>
-
-
-                </div>
-                    <div class="col-xs-5 pull-right"
-                     style="padding: 0;margin-top: 10px;" >
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
-                               padding-left: 42.5px;"
-
-                               placeholder="نام شهر مبدا"
-                        >
-                        <i class="fa fa-bus form-control-feedback" style="float: left;
-    position: absolute;
-        font-style: unset;
-    left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">شهر مبدا</div>
-                    </div>
-                </div>
-
-                    <div class="col-xs-5 pull-left"
-                         style="padding: 0;margin-top: -14px;" >
-                        <div class="form-group input-group has-feedback"
-                             style=""
-                             id="">
-                            <input type="text"
-                                   class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                                   dir="ltr"
-                                   autocomplete="off"
-                                   style="height: 30px;padding-right: 0;
-                               padding-left: 42.5px;"
-
-                                   placeholder="نام شهر مقصد"
-                            >
-                            <i class="fa fa-bus form-control-feedback" style="float: left;
-    position: absolute;
-        font-style: unset;
-    left: 2px;"></i>
-                            <div class="input-group-addon" style="direction: rtl">شهر مقصد</div>
+                                <div class="input-group-addon" style="direction: rtl">تاریخ رفت</div>
+                            </div>
                         </div>
-                    </div>
-            </div>
-                <div class="col-xs-12" style="text-align: center">
-                <div class="col-xs-5 pull-right"
-                     style="padding: 0;margin-top: 10px;" >
-                    <div class="form-group input-group has-feedback"
-                         style=""
-                         id="">
-                        <input type="text"
-                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                               dir="ltr"
-                               autocomplete="off"
-                               style="height: 30px;padding-right: 0;
-                               padding-left: 42.5px;"
-                               placeholder="تاریخ"
-                               id="goDate3"
-                        >
-                        <i class="fa fa-calendar form-control-feedback" style="float: left;
-    position: absolute;
-        font-style: unset;
-    left: 2px;"></i>
-                        <div class="input-group-addon" style="direction: rtl">تاریخ رفت</div>
-                    </div>
-                </div>
 
 
-                <div class="col-xs-12" style="text-align: center">
+                        <div class="col-xs-12" style="text-align: center">
                 <span class="
                     btn
                     btn-info3
@@ -2065,18 +2295,16 @@ top:0px;
                     " style="position: relative;
     float: none;
     margin: auto;
-    top: 0px;" >جستجوی بلیط</span>
-                </div>
+    top: 0px;">جستجوی بلیط</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-
-
 
 
     </div>
-    <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 25px;">
+    <div id="ghabzStep2" class="col-md-10 col-xs-12 col-sm-12" style="min-height: 310px;top: 25px;    z-index: 300;">
         <div class="col-md-12">
             <div class="col-md-2 col-xs-3 col-sm-2" style="padding: 0;text-align: center;cursor: pointer">
                 <img src="img/gas.png" id="G1" onclick="gabzStep(this.getAttribute('id'))"
@@ -2155,29 +2383,29 @@ top:0px;
                         <div class="input-group-addon" style="direction: rtl">شناسه پرداخت</div>
                     </div>
                 </div>
-                    <div class="col-xs-6 pull-right"
-                         style="padding: 4px;margin-top: -2px;" id="">
+                <div class="col-xs-6 pull-right"
+                     style="padding: 4px;margin-top: -2px;" id="">
 
-                        <div class="form-group input-group has-feedback"
-                             style=""
-                             id="price">
-                            <input type="text"
-                                   class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
-                                   dir="ltr"
-                                   autocomplete="off"
-                                   style="height: 30px;padding-right: 0;
+                    <div class="form-group input-group has-feedback"
+                         style=""
+                         id="price">
+                        <input type="text"
+                               class="form-control input-lg ng-pristine ng-valid ng-touched pRtl"
+                               dir="ltr"
+                               autocomplete="off"
+                               style="height: 30px;padding-right: 0;
                                padding-left: 42.5px;"
-                                   placeholder="شناسه قبض"
-                                   id=""
-                            >
-                            <i class="fa fa-barcode form-control-feedback" style="float: left;
+                               placeholder="شناسه قبض"
+                               id=""
+                        >
+                        <i class="fa fa-barcode form-control-feedback" style="float: left;
     position: absolute;
         font-style: unset;
     left: 2px;"></i>
-                            <div class="input-group-addon" style="direction: rtl">شناسه قبض</div>
-                        </div>
+                        <div class="input-group-addon" style="direction: rtl">شناسه قبض</div>
+                    </div>
                 </div>
-                    <div style="text-align: center;margin-top: 20px;" id="">
+                <div style="text-align: center;margin-top: 20px;" id="">
                     <span class="
                     btn
                     btn-info3
@@ -2187,56 +2415,59 @@ top:0px;
     margin: auto;
     top: 5px;"
                           onclick="">نمایش استعلام و پیش فاکتور</span>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer" id="footer" style="position: fixed;z-index:299">
-        <div class="pull-left hidden-xs hidden-sm"
-             style="position: absolute;bottom: 20px;left: 20px;width: 10%">
-            <img src="https://trustseal.enamad.ir/logo.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g" alt=""
-                 onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)"
-                 style="cursor:pointer;float: right;width: 50%" id="Eb1cp9upTf96fW4g"> <img class="img-responsive"
-                                                                                            style="cursor: pointer;width: 50%;float: right"
-                                                                                            onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=1008235&p=rfthobpdobpdmcsiuiwkxlaodshw", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")'
-                                                                                            alt='logo-samandehi'
-                                                                                            src='https://logo.samandehi.ir/logo.aspx?id=1008235&p=nbpdlymalymaaqgwodrfqftiujyn'/>
-        </div>
-        <div class="col-md-4" id="footerIcon" style="position: absolute;
+</div>
+<div class="footer" id="footer" style="position: fixed;z-index:299">
+    <div class="pull-left hidden-xs hidden-sm"
+         style="position: absolute;bottom: 20px;left: 20px;width: 10%">
+        <img src="https://trustseal.enamad.ir/logo.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g" alt=""
+             onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=94496&amp;p=Eb1cp9upTf96fW4g&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)"
+             style="cursor:pointer;float: right;width: 50%" id="Eb1cp9upTf96fW4g"> <img class="img-responsive"
+                                                                                        style="cursor: pointer;width: 50%;float: right"
+                                                                                        onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=1008235&p=rfthobpdobpdmcsiuiwkxlaodshw", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")'
+                                                                                        alt='logo-samandehi'
+                                                                                        src='https://logo.samandehi.ir/logo.aspx?id=1008235&p=nbpdlymalymaaqgwodrfqftiujyn'/>
+    </div>
+    <div class="col-md-4" id="footerIcon" style="position: absolute;
        bottom: 60px;
     left: 33.5%;
     margin: auto;
     display: none;
     float: none;">
-            <div class="col-md-3">
-                <div class="tooltip1">
-                    <img class="" onclick="show('chargePart2Baste')" src="img/bime.png" style="">
-                    <span class="tooltiptext">بیمه</span>
-                </div>
+        <div class="col-md-3">
+            <div class="tooltip1" style="cursor: default">
+<!--                <img class="" onclick="show('chargePart2Baste')" src="img/bime.png" style="">-->
+                <img class="gray" onclick="show('chargePart2Baste')" src="img/bime.png" style="">
+                <span class="tooltiptext">بیمه</span>
             </div>
-            <div class="col-md-3">
-                <div class="tooltip1">
-                    <img class="" onclick="show('bilit')" src="img/bilit.png" style="">
-                    <span class="tooltiptext">بلیط مسافرتی</span>
-                </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tooltip1" style="cursor: default">
+<!--                <img class="" onclick="show('bilit')" src="img/bilit.png" style="">-->
+                <img class="gray" onclick="show('bilit')" src="img/bilit.png" style="">
+                <span class="tooltiptext">بلیط مسافرتی</span>
             </div>
-            <div class="col-md-3">
-                <div class="tooltip1">
-                    <img class="" onclick="show('ghabzStep2')" src="img/ghabz.png" style="">
-                    <span class="tooltiptext">پرداخت قبوض</span>
-                </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tooltip1" style="cursor: default">
+<!--                <img class="" onclick="show('ghabzStep2')" src="img/ghabz.png" style="">-->
+                <img class="gray" onclick="show('ghabzStep2')" src="img/ghabz.png" style="">
+                <span class="tooltiptext">پرداخت قبوض</span>
             </div>
-            <div class="col-md-3">
-                <div class="tooltip1">
-                    <img class="" onclick="show('chargePart2Baste')" src="img/charge&Baste.png" style="">
-                    <span class="tooltiptext">شارژ و بسته اینترنتی</span>
-                </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tooltip1" ƒ>
+                <img class="" onclick="show('chargePart2Baste')" src="img/charge&Baste.png" style="">
+                <span class="tooltiptext">شارژ و بسته اینترنتی</span>
             </div>
-
         </div>
 
-        <span style="border-top: 1px solid #ffffff;width: auto   ">
+    </div>
+
+    <span style="border-top: 1px solid #ffffff;width: auto   ">
             <span>
                 <img src="img/iconLeftTelegram.png">
                 <img src="img/iconLeftInstagram.png">
@@ -2249,7 +2480,7 @@ top:0px;
             |
             <span>دانلود اپلیکیشن</span>
         </span>
-    </div>
+</div>
 </div>
 
 
@@ -2265,6 +2496,14 @@ top:0px;
             format: 'YYYY/MM/DD',
         });
         $("#goDate3").pDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+        });
+        $("#goDate4").pDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+        });
+        $("#goDate5").pDatepicker({
             observer: true,
             format: 'YYYY/MM/DD',
         });
@@ -2335,7 +2574,7 @@ top:0px;
     margin-top: 10px;
     top: 25px;
 direction: rtl  ">
-                                    <span type="submit" class="btn btn-warning btn-lg"  onclick="payMoney('baste')"
+                                    <span type="submit" class="btn btn-warning btn-lg" onclick="payMoney('baste')"
                                           style="float: right;background: #ed3833;
     color: #ffffff;"><img
                                                 class="" src="img/melatBank.png" style="    width: 24px;
@@ -2346,13 +2585,13 @@ direction: rtl  ">
                         <?php
                         if (isset($_SESSION['userLogin']) && $_SESSION['userLogin']) {
                             ?>
-                            <button type="submit" class="btn btn-info btn-lg"
+                            <span class="btn btn-info btn-lg"
                                     onclick="payMoneyEtebar('baste')" style="float: left;"><span
                                         style="    margin-left: 15px;
     position: relative;
     top: 1px;"
                                         class="fas fa-wallet"></span>پرداخت از کیف پول
-                            </button>
+                            </span>
                             <?php
                         }
                         ?>
@@ -2489,7 +2728,7 @@ direction: rtl  ">
                         <div class="input-group-addon">کد معرف</div>
 
                     </div>
-                    <span type="button" onclick="submit()" class="btn btn-success btn-block"> ثبت نام
+                    <span type="button" onclick="submit()" id="submitButton" class="btn btn-success btn-block"> ثبت نام
                     </span>
                 </form>
             </div>
@@ -2626,10 +2865,10 @@ direction: rtl  ">
 <?php
 if (isset($_POST['mode']) && $_POST['mode'] != ''){
 $model = $_POST['mode'];
-$onclick='';
+$onclick = '';
 if ($model == 1) {
     $textModel = "افزایش اعتبار";
-    $onclick ="$('#nameUser').click()";
+    $onclick = "$('#nameUser').click()";
 }
 if ($model == 2) {
     $textModel = "خرید بسته اینترنتی";
@@ -2643,16 +2882,16 @@ if ($model == 4) {
     $textModel = "خرید پین ";
     echo "<script>show('chargePart2Baste')</script>";
 }
-if($_POST['oldUser'] == '1') {
+if ($_POST['oldUser'] == '1') {
     $a = 'پیامک دعوت ارسال نشد ، شماره ';
     $a .= $_POST['mobile'];
     $a .= ' قبلا در اینکام عضو شده است';
-    $color="#b85c5c";
-}else{
-    $a = 'پیامک دعوت با موفقیت به شماره  ';
+    $color = "#b85c5c";
+} else {
+    $a = 'پیامک دعوت با موفقیت به شماره ';
     $a .= $_POST['mobile'];
     $a .= ' ارسال شد.';
-    $color="#5cb85c";
+    $color = "#5cb85c";
 }
 ?>
 <div class="modal fade" id="modalPay" role="dialog">
@@ -2660,7 +2899,7 @@ if($_POST['oldUser'] == '1') {
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header" style="padding:35px 50px;">
-                <button type="button" class="close" onclick="$('#modalPay').modal('toggle');<?php echo  $onclick ?>">
+                <button type="button" class="close" onclick="$('#modalPay').modal('toggle');<?php echo $onclick ?>">
                     &times;
                 </button>
                 <h4>  <?php echo $textModel ?> با موفقیت انجام شد </h4>
@@ -2668,7 +2907,7 @@ if($_POST['oldUser'] == '1') {
             <?php
             if ($model == 1){
             ?>
-            <div class="modal-body" style="padding:40px 50px;">
+            <div class="modal-body" style="padding:32px 15px;">
                 <p id="modalMsgAlretText">
                     شماره پیگیری تراکنش :
                     <?php echo $_POST['refId'] ?>
@@ -2689,7 +2928,7 @@ if($_POST['oldUser'] == '1') {
                 <?php
                 if ($model == 2){
                 ?>
-                <div class="modal-body" style="padding:40px 50px;">
+                <div class="modal-body" style="padding:40px 15px;">
                     <p id="modalMsgAlretText">
                         شماره پیگیری تراکنش :
                         <?php echo $_POST['refId'] ?>
@@ -2706,20 +2945,24 @@ if($_POST['oldUser'] == '1') {
                         <br>
 
                     </p>
-                    <p style="text-align: center;margin-bottom: 20px">
-                        <b style="background:<?php echo  $color?>;color:#fff;border-radius: 10px;padding: 7px;"> <?php
-                            echo $a;
-                            ?> </b>
-
-                    </p>
                     <?php
+                    if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                        ?>
+                        <p style="text-align: center;margin-bottom: 20px">
+                            <b style="background:<?php echo $color ?>;color:#fff;border-radius: 10px;padding: 7px;font-size:11px"> <?php
+                                echo $a;
+                                ?> </b>
+
+                        </p>
+                        <?php
+                    }
                     }
                     ?>
 
                     <?php
                     if ($model == 3){
                     ?>
-                    <div class="modal-body" style="padding:40px 50px;">
+                    <div class="modal-body" style="padding:40px 15px;">
                         <p id="modalMsgAlretText">
                             شماره پیگیری تراکنش :
                             <?php echo $_POST['refId'] ?>
@@ -2735,20 +2978,25 @@ if($_POST['oldUser'] == '1') {
                             <br>
                             <br>
                         </p>
-                        <p style="text-align: center;margin-bottom: 20px">
-                            <b style="background:<?php echo  $color?>;color:#fff;border-radius: 10px;padding: 7px;"> <?php
-                                echo $a;
-                                ?> </b>
-
-                        </p>
                         <?php
+                        if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                            ?>
+                            <p style="text-align: center;margin-bottom: 20px">
+                                <b style="background:<?php echo $color ?>;color:#fff;border-radius: 10px;padding: 7px;font-size:11px"> <?php
+                                    echo $a;
+                                    ?> </b>
+
+                            </p>
+
+                            <?php
+                        }
                         }
                         ?>
 
                         <?php
                         if ($model == 4){
                         ?>
-                        <div class="modal-body" style="padding:40px 50px;">
+                        <div class="modal-body" style="padding:40px 15px;">
                             <p id="modalMsgAlretText">
                                 شماره پیگیری تراکنش :
                                 <?php echo $_POST['refId'] ?>
@@ -2768,20 +3016,27 @@ if($_POST['oldUser'] == '1') {
                                 <br>
                                 <br>
                             </p>
-                            <p style="text-align: center;margin-bottom: 20px">
-                                <b style="background:<?php echo  $color?>;color:#fff;border-radius: 10px;padding: 7px;"> <?php
-                                    echo $a;
-                                    ?> </b>
-
-                            </p>
                             <?php
+                            if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true) {
+                                ?>
+                                <p style="text-align: center;margin-bottom: 20px">
+                                    <b style="background:<?php echo $color ?>;color:#fff;border-radius: 10px;padding: 7px;font-size: 11px;"> <?php
+                                        echo $a;
+                                        ?> </b>
+
+                                </p>
+                                <?php
+                            }
                             }
                             if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] == true && $model != 1){
                             ?>
 
                             <div class="col-xs-12" style="border-top: 2px solid #e4e4e4;">
                                 <div class="alert alert-success" style="display: none;" id="SucContact">
-                                    شماره با موفقیت به سیستم اضافه شد.
+                                    شماره با موفقیت به سیستم اضافه شد
+                                </div>
+                                <div class="alert alert-danger" style="display: none;" id="ErrorContact">
+                                    این شماره در دفترچه تلفن شما قبلا ثبت شده است
                                 </div>
                                 <div class="alert alert-danger" style="display: none;" id="DangerContact">
                                     وارد کردن نام اجباریست
@@ -2813,7 +3068,9 @@ if($_POST['oldUser'] == '1') {
                                 </div>
                                 <script>
                                     function submitContact() {
+
                                         $('#SucContact').hide();
+                                        $('#ErrorContact').hide();
                                         $('#DangerContact').hide();
                                         var name, mobile;
 
@@ -2833,8 +3090,10 @@ if($_POST['oldUser'] == '1') {
                                             type: 'POST',
                                             success: function (data) {
                                                 if (data["Error"] === false) {
-
+                                                    SerachContact();
                                                     $('#SucContact').show();
+                                                }else{
+                                                    $('#ErrorContact').show();
                                                 }
                                             }
                                         });
@@ -2877,12 +3136,13 @@ if($_POST['oldUser'] == '1') {
                                 $("#bag" + e).hide();
                                 if (data["result"] === true) {
                                     if (f == "noti") {
-                                        let countN = $('#showMsgNoti').text();
-                                        $('#showMsgNoti').text(countN - 1);
+                                        let countN = $('#showMsgNoti').text()-1;
+                                        $('#showMsgNoti').text(countN);
+                                        $('#notInCount').text(' شما '+countN.toString()+' اعلان جدید دارید');
                                     } else if (f == "msg") {
-                                        let countN = $('#showMsgMsg').text();
-                                        $('#showMsgMsg').text(countN - 1);
-
+                                        let countN = $('#showMsgMsg').text()-1;
+                                        $('#showMsgMsg').text(countN);
+                                        $('#MSGInCount').text(' شما '+countN.toString()+' پیام جدید دارید');
                                     }
                                 }
                             }

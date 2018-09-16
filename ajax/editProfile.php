@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $db = new db();
         $conn = $db->conn();
         $userId = $db->real($_SESSION['userId']);
+        $up='';
         if(!empty($_POST['old'])) {
             $old = $db->real($_POST['old']);
             $old = passwordHash($old);
@@ -42,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if(
                 $_POST['pwd']!=''
             ) {
+
                 if (strlen($_POST['pwd']) >= 6) {
                     $pwd = $db->real($_POST['pwd']);
                     $pwd = passwordHash($pwd);
-                    $up .= "UPDATE user SET user.userPassword = '$pwd' where userId = '$userId'; ";
+                    $up .= " UPDATE user SET user.userPassword = '$pwd' where userId = '$userId'; ";
                 } else {
                     $call = array("Error" => true, "MSG" => "رمز عبور می بایست حداقل ۶ کاراکتر باشد ");
                     echo json_encode($call);
@@ -56,37 +58,39 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $selectUserGet = mysqli_query($conn,"SELECT * FROM user where user.userId='$userId'");
         $rowSelectuser = mysqli_fetch_assoc($selectUserGet);
         $OwnerId = $rowSelectuser['UserOwner'];
+        $userLevel= $rowSelectuser['userLevel'];
         if($_POST['name']!=''){
             $name = $db->real($_POST['name']);
-            $up ="UPDATE user Set user.userFullname = '$name' where user.userId='$userId'; ";
+            $up .="UPDATE user Set user.userFullname = '$name' where user.userId='$userId'; ";
             $_SESSION['userName']=$name;
         }
-
-        if($_POST['code']!=''){
-            $code = $db->real($_POST['code']);
-            if($OwnerId==''){
-                $selectInviteCode = mysqli_query($conn, "
+if($userLevel!='2') {
+    if ($_POST['code'] != '') {
+        $code = $db->real($_POST['code']);
+        if ($OwnerId == '' || $userLevel != '2') {
+            $selectInviteCode = mysqli_query($conn, "
               SELECT * FROM inviteCode where inviteCodeText ='$code'");
-                if (mysqli_num_rows($selectInviteCode) == 0) {
-                    $call = array("Error" => true, "MSG" => "کاربری با این کد معرف در سیستم موجود نیست");
-                    echo json_encode($call);
-                    endfile($conn);
-                } else {
-                    $row = mysqli_fetch_assoc($selectInviteCode);
-                    $userOwnerId = $row['inviteCodeUserId'];
-                    $invCodeId = $row['inviteCodeId'];
-                    require_once "../inc/noti.php";
-                    $noti = new noti();
-                    $noti->sendNoti($userOwnerId,
-                        "تبریک ! ".$_SESSION['mobile']." به کاربران شما اضافه شد. ");
-                    $up.="UPDATE user SET user.UserOwner='$userOwnerId',user.userInvCode='$invCodeId' WHERE user.userId='$userId';";
-                }
+            if (mysqli_num_rows($selectInviteCode) == 0) {
+                $call = array("Error" => true, "MSG" => "کاربری با این کد معرف در سیستم موجود نیست");
+                echo json_encode($call);
+                endfile($conn);
+            } else {
+                $row = mysqli_fetch_assoc($selectInviteCode);
+                $userOwnerId = $row['inviteCodeUserId'];
+                $invCodeId = $row['inviteCodeId'];
+                require_once "../inc/noti.php";
+                $noti = new noti();
+                $noti->sendNoti($userOwnerId,
+                    "تبریک ! " . $_SESSION['mobile'] . " به کاربران شما اضافه شد. ");
+                $up .= "UPDATE user SET user.UserOwner='$userOwnerId',user.userInvCode='$invCodeId' WHERE user.userId='$userId';";
             }
         }
+    }
+}
         if(isset($up)){
             $upadate = mysqli_multi_query($conn,$up);
             if($upadate) {
-                $call = array("Error" => false,"MSG"=>"ویرایش با موفقیت انجام شد.");
+                $call = array("Error" => false,"MSG"=>"");
                 echo json_encode($call);
                 return;
             }else{

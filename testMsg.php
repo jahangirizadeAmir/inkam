@@ -5,8 +5,8 @@
  * Date: 8/21/18
  * Time: 4:00 PM
  */
-include "inc/msg.php";
+include "inc/noti.php";
 
-$msg = new msg();
+$msg = new noti();
 
-$msg->sendMsg("20180821160232219813","WellCome");
+$msg->noti("20180821160232219813","WellCome");

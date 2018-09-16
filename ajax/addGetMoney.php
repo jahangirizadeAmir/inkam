@@ -4,9 +4,6 @@
  * User: amirjahangiri
  * Date: 8/21/18
  * Time: 6:09 PM
- *
- *
- *
  *             price: price,
                shaba: shaba,
                bankName: bankName

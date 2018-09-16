@@ -12,6 +12,9 @@ function menuShow() {
     $('#itemLeft').addClass('blur');
     $('#icons').addClass('blur');
     $('#footer').addClass('blur');
+    $('#chargePart2Baste').addClass('blur');
+    $('#bilit').addClass('blur');
+    $('#ghabzStep2').addClass('blur');
     $('#showMenu').show();
     $('#menuDiv').removeClass('fadeOutRight').addClass('animated').addClass('fadeInRight');
     document.getElementById("menuShow").setAttribute("onclick", "hideMenu()");
@@ -21,6 +24,9 @@ function hideMenu() {
     $('#itemLeft').removeClass('blur');
     $('#icons').removeClass('blur');
     $('#footer').removeClass('blur');
+    $('#chargePart2Baste').removeClass('blur');
+    $('#bilit').removeClass('blur');
+    $('#ghabzStep2').removeClass('blur');
     $('#showMenu').hide();
     $('#menuDiv').removeClass('fadeInRight').removeClass('animated').addClass('animated').addClass('fadeOutRight');
     document.getElementById("menuShow").setAttribute("src", "img/menuIcon.png");
@@ -93,7 +99,6 @@ function checkThis() {
         $('.tableSearch').hide();
     }else{
         $('#ContactList').show();
-
     }
     if (number.length > 2) {
         ActiveThis('btnModel1');
@@ -111,7 +116,12 @@ function checkThis() {
         $('#model').hide();
         $('#price').hide();
     }
-    if (number.substring(0, 3) === '091' || number.substring(0, 3) === '099' || number.substring(0, 3) === '91' || number.substring(0, 3) === '99') {
+    if (
+        number.substring(0, 3) === '091' ||
+        number.substring(0, 3) === '099' ||
+        number.substring(0, 2) === '91' ||
+        number.substring(0, 2) === '99'
+    ) {
         reload();
         $("#hamrah img").removeClass("gray");
         $("#rightellDiv").show();
@@ -123,19 +133,19 @@ function checkThis() {
         $('#btnModel1').click();
     }
     if (number.substring(0, 3) === '093' || number.substring(0, 3) === "090" || number.substring(0, 3) === '094' ||
-        number.substring(0, 3) === '93' || number.substring(0, 3) === "90" || number.substring(0, 3) === '94') {
-        reload();
-        $('#btnModel1').click();
+        number.substring(0, 3) === '93' || number.substring(0, 2) === "90" || number.substring(0, 2) === '94') {
 
-        $('#btnModel4').click();
+        reload();
         $("#irancell img").removeClass("gray");
         $("#rightellDiv").show();
         $("#irancellDiv").hide();
         $("#hamrahDiv").show();
         cheangeModel('2');
         model = 2;
+        $('#btnModel1').click();
+        $('#btnModel4').click();
     }
-    if (number.substring(0, 3) === "092" || number.substring(0, 3) === "92") {
+    if (number.substring(0, 3) === "092" || number.substring(0, 2) === "92") {
         $('#btnModel1').click();
         $('#btnModel4').click();
         reload();
@@ -145,6 +155,8 @@ function checkThis() {
         $("#hamrahDiv").show();
         cheangeModel('1');
         model = 1;
+        $('#btnModel1').click();
+        $('#btnModel4').click();
     }
 }
 function reload() {
@@ -808,7 +820,7 @@ function payMoney(e) {
     window.location.href="ajax/goToBank.php?price="+price+"&model="+e+"&code="+codeBaste+"&mobile="+mobile+'&operator='+model+'&sim='+simModel+'&azm='+amazing+'&modelSharj='+modelSharj;
 }
 function payMoney2(e) {
-    let price = $("#getManeyText2").val().replace(/,/g, '');
+    let price = $("#getManeyText3").val().replace(/,/g, '');
     let mobile = $("#number1").val();
     window.location.href="ajax/goToBank.php?price="+price+"&model="+e+"&code="+codeBaste+"&mobile="+mobile+'&operator='+model+'&sim='+simModel+'&azm='+amazing+'&modelSharj='+modelSharj;
 }
@@ -845,7 +857,6 @@ function SelectNumberContact(e) {
 function SerachContact() {
 
     var serach = $('#inputContact').val();
-    if(serach!='') {
         $.ajax({
             url: 'ajax/serachContact.php',
             data: {
@@ -859,67 +870,8 @@ function SerachContact() {
                 }
             }
         });
-    }
 }
-function firstRecover() {
-    $("#SendSmsReCover").html('<i class="fas fa-spinner fa-spin"></i>');
 
-    $.ajax({
-        url:'ajax/newRecoverPassword.php',
-        data:{
-        },
-        dataType: 'json',
-        type: 'POST',
-        success: function (data) {
-            if(data["Error"]===false){
-                $('#myModal3').modal('toggle');$('#myModal12').modal();
-                $("#SendSmsReCover").html('بازیابی کلمه عبور');
-
-            }
-        }
-    });
-
-}
-function recoverPassword() {
-    $('#ForegetError').hide();
-    let a = $('#nemberBack').val();
-    $.ajax({
-        url:'ajax/smsCheckRecoverPassword.php',
-        data:{
-            code:a
-        },
-        dataType: 'json',
-        type: 'POST',
-        success: function (data) {
-            if(data["Error"]===false){
-                $('#codeRecover').hide();
-                $('#newPassword').show();
-                $('#recoverBtn').text("تغییر رمز عبور");
-                $('#recoverBtn').attr("onclick","recoverLast()");
-            }else{
-                $('#ForegetError').show();
-            }
-        }
-    });
-}
-function recoverLast() {
-    let password = $('#passrecover').val();
-    $.ajax({
-        url:'ajax/lastRecoverPassword.php',
-        data:{
-            password:password
-        },
-        dataType: 'json',
-        type: 'POST',
-        success: function (data) {
-            if(data["Error"]===false){
-                location.reload();
-            }else{
-
-            }
-        }
-    });
-}
 function showFactor() {
     let priceInside = $('#lastPrice').val();
     if( codeBaste =='' &&  priceInside=='' ){
@@ -933,6 +885,9 @@ function removeBlur(){
     $('#itemLeft').removeClass('blur');
     $('#icons').removeClass('blur');
     $('#footer').removeClass('blur');
+    $('#chargePart2Baste').removeClass('blur');
+    $('#bilit').removeClass('blur');
+    $('#ghabzStep2').removeClass('blur');
 }
 
 //travell
@@ -1000,6 +955,7 @@ $(document).ready(function() {
     $('#example1').DataTable();
 } );
 function addContact() {
+
     let name , mobile;
     name = $('#contactNameP').val();
     mobile = $('#contactMobileP').val();
@@ -1013,13 +969,13 @@ function addContact() {
         type: 'POST',
         success: function (data) {
             if(data["Error"]===false){
-
-
                 $('#justOne').hide();
                 $('#contactAddSuccess').show();
                 let cot = "'";
                 let child = '<tr id="contact_'+data['id']+'"><td>'+data['number']+'</td><td>'+name+'</td><td>'+mobile+'</td><td><input type="button" class="btn btn-xs btn-danger" value="حذف" onclick="deleteContact('+cot+data['id']+cot+')"></td></tr>'
-                $('#contactListTabelP').appendChild(child);
+                $('#contactListTabelP').append(child);
+                SerachContact();
+
             }
         }
     });

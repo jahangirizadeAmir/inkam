@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $codeAgent = $db->real($_POST['code']);
         $name = $db->real( $_POST['name']);
         $pwd1 =  $db->real($_POST['pwd']);
-        if (!empty($code)) {
+        if (!empty($codeAgent)) {
             $selectInviteCode = mysqli_query($conn, "
               SELECT * FROM inviteCode where inviteCodeText ='$codeAgent'");
             if (mysqli_num_rows($selectInviteCode) == 0) {
@@ -36,12 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $inVid=$row['inviteCodeId'];
                 require_once "../inc/noti.php";
                 $noti = new noti();
-                $noti->sendNoti($userOwnerId,"تبریک ! ".$_SESSION['mobile']." به کاربران شما اضافه شد. ");
+                $noti->sendNoti($userOwnerId,"تبریک ! ".$_SESSION['mobile']." به کاربران شما اضافه شد");
             }
         }else{
             $inVid = '';
         }
-        $pwd = passwordHash($pwd1);
+        $pwd=$db->converNumberToEn($pwd1);
+        $pwd = passwordHash($pwd);
         $id = $db->generate_id();
         $mobile = $db->real($_SESSION['mobile']);
         $mobile=$db->converNumberToEn($mobile);

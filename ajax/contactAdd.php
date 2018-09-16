@@ -17,15 +17,26 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $conn = new db();
 
 
+        $b = $conn->converNumberToEn($_POST['number']);
         //Name And Number Change Becuase Error in html
-        $a = substr($_POST['number'],0,1);
+        $a = substr($b,0,1);
+
         if($a!="0"){
             $name = "0".$conn->real($_POST['number']);
         }else{
             $name = $conn->real($_POST['number']);
         }
+
         $number =$conn->real($_POST['name']);
         $userId = $conn->real($_SESSION['userId']);
+
+        $useRSelect = mysqli_query($conn->conn(),"SELECT * FROM contact where contact.contactName='$name' AND contact.contactUserId='$userId'");
+        if(mysqli_num_rows($useRSelect)>0){
+            $call = array("Error"=>true);
+            echo json_encode($call);
+            return;
+        }
+
         $id = $conn->generate_id();
         $date = $conn->date();
         $time = $conn->time();

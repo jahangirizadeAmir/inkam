@@ -5,6 +5,7 @@
  * Date: 7/25/18
  * Time: 5:54 PM
  */
+ini_set('default_socket_timeout', 600);
 if($_SERVER['REQUEST_METHOD']=="POST"){
     session_start();
     if(isset($_POST['mobile']) && !empty($_POST['mobile'])){
